@@ -106,7 +106,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	return message.wParam;
 }
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, 
+	WPARAM wParam, // 키보드
+	LPARAM lParam) // 마우스
 {
 	//키보드 입력 혹은 여러가지 메세지를 구분하여 작업을 할 수 있다.
 	switch (iMessage)
@@ -114,6 +116,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY: //종료 호출 메세지
 		PostQuitMessage(0);
 		return 0;
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_ESCAPE:
+			PostMessage(hWnd, WM_DESTROY, 0, 0);
+			break;
+		}
+		break;
 	}
 
 	//위 스위치문에서 직접 처리하지 않은 메세지 처리.
