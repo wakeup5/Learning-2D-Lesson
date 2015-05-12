@@ -110,7 +110,7 @@ inline void drawRectangleCenter(HDC hdc, int centerX, int centerY, int width, in
 	Rectangle(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 }
 
-/** drawRectangle 좌표와 크기를 입력받아 사각형을 그린다.
+/** drawEllipse 좌표와 크기를 받아 중심으로 원을 그린다.
 @date	2015/05/12
 @param	HDC 윈도우 dc의 핸들
 @param	int x left
@@ -118,20 +118,20 @@ inline void drawRectangleCenter(HDC hdc, int centerX, int centerY, int width, in
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawRectangle(HDC hdc, int x, int y, int width, int height)
+inline void drawEllipse(HDC hdc, int x, int y, int width, int height)
 {
-	Rectangle(hdc, x, y, x + width, y + height);
+	Ellipse(hdc, x, y, x + width, y + height);
 }
 
-/** drawRectangle 좌표와 크기를 입력받아 사각형을 그린다.
+/** drawEllipse RECT를 받아 중심으로 원을 그린다.
 @date	2015/05/12
 @brief	RECT를 받기 때문에 left, top, right, bottom 기준으로 입력 받는다.
 @param	HDC 윈도우 dc의 핸들
 @param	RECT
 */
-inline void drawRectangle(HDC hdc, RECT r)
+inline void drawEllipse(HDC hdc, RECT r)
 {
-	Rectangle(hdc, r.left, r.top, r.right, r.bottom);
+	Ellipse(hdc, r.left, r.top, r.right, r.bottom);
 }
 
 /** drawEllipseCenter 좌표를 중심으로 원을 그린다.

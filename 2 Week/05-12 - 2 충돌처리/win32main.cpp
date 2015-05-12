@@ -93,6 +93,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	
 		break;
 	case WM_PAINT:
+	{
 		hdc = BeginPaint(hWnd, &ps);
 		
 		r1 = makeRectCenter(250, 250, 200, 200);
@@ -100,9 +101,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 
 		//祸 磨窍扁
 		//规过 1
-		HBRUSH brush;
+		HBRUSH brush = CreateSolidBrush(RGB(255, 0, 0));
+		FillRect(hdc, &r1, brush);
+		DeleteObject(brush);
+
+		//规过 2
+		HBRUSH b2 = CreateHatchBrush(HS_CROSS, RGB(255, 0, 0));
+		FillRect(hdc, &makeRect(10, 10, 60, 60), b2);
+		DeleteObject(b2);
+
+		//奇
+		HPEN pen1 = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+		SelectObject(hdc, pen1);
+		drawRectangle(hdc, makeRect(400, 400, 50, 50));
 
 		EndPaint(hWnd, &ps);
+	}
 		break;
 	case WM_MOUSEMOVE:
 	{
@@ -121,7 +135,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		}
 		else
 		{
-			InvalidateRect(hWnd, NULL, true);
+			InvalidateRect(hWnd, NULL, false);
 		}
 
 		ReleaseDC(hWnd, hdc);
