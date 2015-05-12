@@ -7,7 +7,6 @@
 #include "stdafx.h"
 
 /** makePoint 좌표를 입력하면 포인트 변수를 만들어 리턴
-@author	박진한(wlsgks5@naver.com)
 @date	2015/05/12
 @param	x x좌표
 @param	y y좌표
@@ -19,7 +18,6 @@ inline POINT makePoint(int x, int y)
 }
 
 /** makeRect 좌표와 폭을 입력하면 Rect를 만들어 리턴
-@author	박진한(wlsgks5@naver.com)
 @date	2015/05/12
 @param	int x left
 @param	int y top
@@ -33,7 +31,6 @@ inline RECT makeRect(int x, int y, int width, int height)
 }
 
 /** makeRectCenter 중심 좌표를 중심으로 Rect를 만들어 리턴
-@author	박진한(wlsgks5@naver.com)
 @date	2015/05/12
 @param	int centerX 중심 x좌표
 @param	int centerY 중심 y좌표
@@ -47,7 +44,6 @@ inline RECT makeRectCenter(int centerX, int centerY, int width, int height)
 }
 
 /** drawLine 좌표를 입력받아 선을 그린다.
-@author	박진한(wlsgks5@naver.com)
 @date	2015/05/12
 @param	HDC 윈도우 dc의 핸들
 @param	int x1 시작 x좌표
@@ -62,7 +58,6 @@ inline void drawLine(HDC hdc, int x1, int y1, int x2, int y2)
 }
 
 /** drawLines 여러 좌표들을 받아 여러개의 선을 그린다.
-@author	박진한(wlsgks5@naver.com)
 @date	2015/05/12
 @param	HDC 윈도우 dc의 핸들
 @param	vector<POINT> 여러개의 포인터들
@@ -79,7 +74,6 @@ inline void drawLines(HDC hdc, std::vector<POINT> pointVector)
 }
 
 /** drawRectangle 좌표와 크기를 입력받아 사각형을 그린다.
-@author	박진한(wlsgks5@naver.com)
 @date	2015/05/12
 @param	HDC 윈도우 dc의 핸들
 @param	int x left
@@ -92,8 +86,18 @@ inline void drawRectangle(HDC hdc, int x, int y, int width, int height)
 	Rectangle(hdc, x, y, x + width, y + height);
 }
 
+/** drawRectangle RECT를 입력받아 사각형을 그린다.
+@date	2015/05/12
+@brief	RECT를 받기 때문에 left, top, right, bottom 기준으로 입력 받는다.
+@param	HDC 윈도우 dc의 핸들
+@param	RECT 
+*/
+inline void drawRectangle(HDC hdc, RECT r)
+{
+	Rectangle(hdc, r.left, r.top, r.right, r.bottom);
+}
+
 /** drawRectangleCenter 좌표를 중심으로 사각형을 그린다.
-@author	박진한(wlsgks5@naver.com)
 @date	2015/05/12
 @param	HDC 윈도우 dc의 핸들
 @param	int centerX 중심 좌표 x
@@ -106,8 +110,7 @@ inline void drawRectangleCenter(HDC hdc, int centerX, int centerY, int width, in
 	Rectangle(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 }
 
-/** drawEllipse 좌표와 크기를 입력받아 원을 그린다.
-@author	박진한(wlsgks5@naver.com)
+/** drawRectangle 좌표와 크기를 입력받아 사각형을 그린다.
 @date	2015/05/12
 @param	HDC 윈도우 dc의 핸들
 @param	int x left
@@ -115,13 +118,23 @@ inline void drawRectangleCenter(HDC hdc, int centerX, int centerY, int width, in
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawEllipse(HDC hdc, int x, int y, int width, int height)
+inline void drawRectangle(HDC hdc, int x, int y, int width, int height)
 {
-	Ellipse(hdc, x, y, x + width, y + height);
+	Rectangle(hdc, x, y, x + width, y + height);
+}
+
+/** drawRectangle 좌표와 크기를 입력받아 사각형을 그린다.
+@date	2015/05/12
+@brief	RECT를 받기 때문에 left, top, right, bottom 기준으로 입력 받는다.
+@param	HDC 윈도우 dc의 핸들
+@param	RECT
+*/
+inline void drawRectangle(HDC hdc, RECT r)
+{
+	Rectangle(hdc, r.left, r.top, r.right, r.bottom);
 }
 
 /** drawEllipseCenter 좌표를 중심으로 원을 그린다.
-@author	박진한(wlsgks5@naver.com)
 @date	2015/05/12
 @param	HDC 윈도우 dc의 핸들
 @param	int centerX 중심 좌표 x
@@ -135,7 +148,6 @@ inline void drawEllipseCenter(HDC hdc, int centerX, int centerY, int width, int 
 }
 
 /** checkInRect POINT가 RECT 내에 있는지 체크. 충돌 체크
-@author	박진한(wlsgks5@naver.com)
 @date	2015/05/12
 @param	POINT
 @param	RECT

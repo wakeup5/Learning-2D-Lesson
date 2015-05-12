@@ -98,6 +98,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		r1 = makeRectCenter(250, 250, 200, 200);
 		Rectangle(hdc, r1.left, r1.top, r1.right, r1.bottom);
 
+		//색 칠하기
+		//방법 1
+		HBRUSH brush;
+
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_MOUSEMOVE:
