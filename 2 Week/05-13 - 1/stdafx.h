@@ -21,11 +21,13 @@
 #include <math.h>
 #include <string>
 #include <vector>
+#include <time.h>
 
 //매크로 헤더
 #include "commonMacroFunction.h"
 
 //사용자 정의 헤더
+#include "RandomFunction.h"
 
 
 /* ========================================
@@ -49,6 +51,8 @@
 #define SAFE_DELETE_ARRAY(p)	{if (p) {delete[](p); (p)=NULL;}}
 #define SAFE_RELEASE(p)			{if (p) {(p)->release(); (p) = NULL;}}
 
+//RandomFunction
+#define RANDOM	RandomFunction::getSingleton();
 
 /* ========================================
 *  ## 전역변수 ##

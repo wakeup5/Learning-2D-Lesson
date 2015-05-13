@@ -33,6 +33,9 @@
     <ClInclude Include="SingletonBase.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
+    <ClInclude Include="RandomFunction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
