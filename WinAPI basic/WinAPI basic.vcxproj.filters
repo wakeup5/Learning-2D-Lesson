@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Game2DFramework">
+      <UniqueIdentifier>{dd092d7e-e6be-4ad1-a189-3f6946a92f29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game2DFramework\manager">
+      <UniqueIdentifier>{73ecb33e-8339-4a0e-be24-841cff24b2c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -23,6 +29,9 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
