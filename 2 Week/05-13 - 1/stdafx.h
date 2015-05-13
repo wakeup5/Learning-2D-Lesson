@@ -52,7 +52,7 @@
 #define SAFE_RELEASE(p)			{if (p) {(p)->release(); (p) = NULL;}}
 
 //RandomFunction
-#define RANDOM	RandomFunction::getSingleton();
+#define RANDOM	RandomFunction::getSingleton()
 
 /* ========================================
 *  ## 전역변수 ##

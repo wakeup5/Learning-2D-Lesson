@@ -15,7 +15,7 @@ public:
 
 	}
 
-	int getint(int num = 10)
+	int getInt(int num = 10)
 	{
 		return rand() % num;
 	}

@@ -85,35 +85,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	PAINTSTRUCT ps;
 	HDC hdc;
 
-	static POINT p1;
-	static RECT r1;
+	static RECT r1, r2;
+	static UINT timer;
 
-	static POINTRECT pr1;
-	
+	static int x = 0, y = 0;
+	static int speed = 3;
+		
 	switch (iMessage)
 	{
 	case WM_CREATE:
-		p1 = makePoint(WIN_SIZE_X / 2, WIN_SIZE_Y / 2);
-		r1 = makeRectCenter(p1, 100, 100);
-
-		pr1 = makePointRectCenter(WIN_SIZE_X / 2, WIN_SIZE_Y / 2, 100, 100);
+		timer = SetTimer(hWnd, 0, 10, NULL);
+		r1 = makeRectCenter(WIN_SIZE_X / 2, WIN_SIZE_Y / 2, 400, 400);
+		r2 = makeRectCenter(WIN_SIZE_X / 2, WIN_SIZE_Y / 2, 10, 10);
 		break;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		drawRectangle(hdc, pr1.rect);
+
+		drawRectangle(hdc, r1);
+		drawEllipse(hdc, r2);
+
 		EndPaint(hWnd, &ps);
 		break;
-	case WM_MOUSEMOVE:
-	{
-		hdc = GetDC(hWnd);
-
-		ReleaseDC(hWnd, hdc);
-
-		pr1 = makePointRectCenter(makeMousePoint(lParam), 100, 100);
-		InvalidateRect(hWnd, NULL, true);
+	case WM_TIMER://타이머
 		break;
-	}
 	case WM_DESTROY: //프로그램 종료시 발생.
+		KillTimer(hWnd, timer);
 		PostQuitMessage(0);
 		return 0;
 	}

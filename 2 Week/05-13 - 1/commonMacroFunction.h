@@ -264,7 +264,7 @@ inline bool checkInRect(POINT point, RECT rect)
 }
 inline bool checkCollision(POINT p, RECT r)
 {
-	checkInRect(p, r);
+	return checkInRect(p, r);
 }
 
 /** checkInRect RECT가 RECT 내에 있는지 체크.충돌 체크
@@ -289,5 +289,5 @@ inline bool checkInRect(RECT rect1, RECT rect2)
 }
 inline bool checkCollision(RECT r1, RECT r2)
 {
-	checkInRect(r1, r2);
+	return checkInRect(r1, r2);
 }
