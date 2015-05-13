@@ -85,8 +85,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	PAINTSTRUCT ps;
 	HDC hdc;
 
-	static RECT r1;
-
 	switch (iMessage)
 	{
 	case WM_CREATE:
@@ -95,30 +93,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		
-		r1 = makeRectCenter(250, 250, 200, 200);
-		Rectangle(hdc, r1.left, r1.top, r1.right, r1.bottom);
-
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_MOUSEMOVE:
 	{
 
 		hdc = GetDC(hWnd);
-
-		int mx = LOWORD(lParam);
-		int my = HIWORD(lParam);
-
-		char p[128];
-
-		if (checkInRect(makePoint(mx, my), r1))
-		{
-			wsprintf(p, "%4d, %4d", mx, my);
-			TextOut(hdc, 10, 10, p, _tcslen(p));
-		}
-		else
-		{
-			InvalidateRect(hWnd, NULL, true);
-		}
 
 		ReleaseDC(hWnd, hdc);
 	}
