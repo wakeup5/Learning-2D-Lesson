@@ -25,7 +25,7 @@ public:
 };
 
 template < typename T >
-T* SingletonBase < T >::Singleton = NULL;
+T* SingletonBase < T >::singleton = NULL;
 
 /** getSingleton
 인스턴스 반환. 미 생성시 생성후 반환
