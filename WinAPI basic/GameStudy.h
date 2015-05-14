@@ -15,7 +15,7 @@ public:
 
 	//virtual LRESULT mainProc(HWND, UINT, WPARAM, LPARAM);
 
-	GameStudy();
-	virtual ~GameStudy();
+	GameStudy(){}
+	virtual ~GameStudy(){}
 };
 

@@ -48,6 +48,9 @@
     <ClInclude Include="GameStudy.h">
       <Filter>GameStudy</Filter>
     </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>Game2DFramework\manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -61,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="GameStudy.cpp">
       <Filter>GameStudy</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>Game2DFramework\manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

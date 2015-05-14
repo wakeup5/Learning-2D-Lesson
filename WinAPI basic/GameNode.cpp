@@ -18,6 +18,8 @@ HRESULT GameNode::initialize(void)
 {
 	SetTimer(_hWnd, 0, 10, NULL);
 
+	KEYMANAGER->initialize();
+
 	return S_OK;
 }
 
@@ -25,6 +27,9 @@ HRESULT GameNode::initialize(void)
 void GameNode::release(void)
 {
 	KillTimer(_hWnd, 0);
+
+	KEYMANAGER->release();
+	KEYMANAGER->releaseSingleton();
 }
 
 //화면갱신
@@ -48,6 +53,7 @@ LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	switch (iMessage)
 	{
 	case WM_CREATE:
+		_mousePoint = makePoint(WIN_SIZE_X / 2, WIN_SIZE_Y / 2);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);

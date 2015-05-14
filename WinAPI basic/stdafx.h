@@ -29,6 +29,7 @@
 //사용자 정의 헤더
 #include "RandomFunction.h"
 #include "GameStudy.h"
+#include "KeyManager.h"
 
 /* ========================================
 *  ## 정의문 ##
@@ -51,8 +52,11 @@
 #define SAFE_DELETE_ARRAY(p)	{if (p) {delete[](p); (p)=NULL;}}
 #define SAFE_RELEASE(p)			{if (p) {(p)->release(); (p) = NULL;}}
 
-//RandomFunction
-#define RANDOM	RandomFunction::getSingleton()
+//class RandomFunction
+#define RANDOM RandomFunction::getSingleton()
+
+//class KeyManager
+#define KEYMANAGER KeyManager::getSingleton()
 
 /* ========================================
 *  ## 전역변수 ##
@@ -61,5 +65,3 @@ extern HINSTANCE _hInstance; // 프로그램 인스턴스
 extern HWND _hWnd; // 윈도우 핸들
 
 extern POINT _mousePoint;
-
-using namespace std;

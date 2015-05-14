@@ -82,6 +82,7 @@
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameStudy.h" />
+    <ClInclude Include="KeyManager.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="stdafx.h" />
@@ -90,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GameStudy.cpp" />
+    <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

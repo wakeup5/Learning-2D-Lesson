@@ -1,16 +1,6 @@
 #include "stdafx.h"
 #include "GameStudy.h"
 
-
-GameStudy::GameStudy()
-{
-}
-
-
-GameStudy::~GameStudy()
-{
-}
-
 //초기화
 HRESULT GameStudy::initialize(void)
 {
@@ -32,7 +22,10 @@ void GameStudy::update(void)
 {
 	GameNode::update();
 
-	_rc = makeRectCenter(_mousePoint, 100, 100);
+	if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+	{
+		_rc.left++;
+	}
 }
 
 //화면출력
