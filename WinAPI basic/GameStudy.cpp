@@ -31,6 +31,8 @@ void GameStudy::release(void)
 void GameStudy::update(void)
 {
 	GameNode::update();
+
+	_rc = makeRectCenter(_mousePoint, 100, 100);
 }
 
 //화면출력
