@@ -19,6 +19,9 @@
     <Filter Include="Game2DFramework\manager">
       <UniqueIdentifier>{73ecb33e-8339-4a0e-be24-841cff24b2c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameStudy">
+      <UniqueIdentifier>{b1ce6c48-2543-4250-b41a-24e4b1b098fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -36,6 +39,12 @@
     <ClInclude Include="RandomFunction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="GameNode.h">
+      <Filter>Game2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStudy.h">
+      <Filter>GameStudy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -43,6 +52,12 @@
     </ClCompile>
     <ClCompile Include="win32main.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNode.cpp">
+      <Filter>Game2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStudy.cpp">
+      <Filter>GameStudy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

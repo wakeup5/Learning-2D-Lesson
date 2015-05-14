@@ -254,6 +254,22 @@ inline void drawEllipseCenter(HDC hdc, POINT p, int width, int height)
 */
 inline bool checkInRect(POINT point, RECT rect)
 {
+	int temp;
+
+	if (rect.left > rect.right)
+	{
+		temp = rect.left;
+		rect.left = rect.right;
+		rect.right = temp;
+	}
+
+	if (rect.top > rect.bottom)
+	{
+		temp = rect.top;
+		rect.top = rect.bottom;
+		rect.bottom = temp;
+	}
+
 	if (point.x >= rect.left &&
 		point.x <= rect.right &&
 		point.y >= rect.top &&

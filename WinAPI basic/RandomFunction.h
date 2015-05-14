@@ -36,13 +36,18 @@ public:
 	}
 
 	//¼÷Á¦1
+	float getFloat()
+	{
+		return static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));// 0 ~ 1.0
+	}
+
 	float getFloat(float num)
 	{
-		return static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / num));
+		return static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / num)); // 0 ~ num
 	}
 
 	float getFloatTo(float from, float to)
 	{
-		return from + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (to - from)));
+		return from + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (to - from))); // to ~ from
 	}
 };

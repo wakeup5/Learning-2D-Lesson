@@ -28,6 +28,7 @@
 
 //사용자 정의 헤더
 #include "RandomFunction.h"
+#include "GameStudy.h"
 
 /* ========================================
 *  ## 정의문 ##
@@ -58,5 +59,7 @@
 * ======================================== */
 extern HINSTANCE _hInstance; // 프로그램 인스턴스
 extern HWND _hWnd; // 윈도우 핸들
+
+extern POINT _mousePoint;
 
 using namespace std;
