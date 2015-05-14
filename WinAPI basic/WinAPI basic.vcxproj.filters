@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Game2DFramework">
+      <UniqueIdentifier>{a8ee482c-ef4e-4f66-90ce-51116db1e875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game2DFramework\manager">
+      <UniqueIdentifier>{e9c9dcf6-8266-471b-ba61-6de485994997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStudy">
+      <UniqueIdentifier>{eebdd4b8-9453-4bf5-bc67-f61c83e0a6a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -24,6 +33,21 @@
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="commonMacroFunction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomFunction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>Game2DFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameNode.h">
+      <Filter>Game2DFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStudy.h">
+      <Filter>GameStudy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -31,6 +55,12 @@
     </ClCompile>
     <ClCompile Include="WinAPI basic.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNode.cpp">
+      <Filter>Game2DFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStudy.cpp">
+      <Filter>GameStudy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
