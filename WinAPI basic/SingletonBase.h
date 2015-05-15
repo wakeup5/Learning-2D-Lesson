@@ -10,7 +10,7 @@
 @class	SingletonBase < T >
 @date	2015/05/13
 */
-template < typename T >
+template < class T >
 class SingletonBase
 {
 protected:
@@ -24,14 +24,14 @@ public:
 	void releaseSingleton(void);	///< 인스턴스 해제
 };
 
-template < typename T >
+template < class T >
 T* SingletonBase < T >::singleton = NULL;
 
 /** getSingleton
 인스턴스 반환. 미 생성시 생성후 반환
 @return	typename T* 인스턴스 반환.
 */
-template < typename T>
+template < class T>
 T* SingletonBase < T >::getSingleton(void)
 {
 	if (singleton == NULL) singleton = new T;
@@ -41,7 +41,7 @@ T* SingletonBase < T >::getSingleton(void)
 /** releaseSingleton
 인스턴스 메모리 해제. 해제되어 있지 않으면 해제.
 */
-template < typename T >
+template < class T >
 void SingletonBase < T >::releaseSingleton(void)
 {
 	if (singleton != NULL)
