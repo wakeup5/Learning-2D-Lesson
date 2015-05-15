@@ -7,6 +7,7 @@ class GameStudy :
 	public GameNode
 {
 private:
+	RECT _ellipse;
 
 public:
 	virtual HRESULT initialize(void);

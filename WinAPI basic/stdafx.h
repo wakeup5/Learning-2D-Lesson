@@ -10,6 +10,9 @@
 //MFC가 아닌 응용프로그램의 경우에는 WIN32_LEAN_AND_MEAN를 정의해 빌드 시간을 단축시킨다.
 #define WIN32_LEAN_AND_MEAN
 
+//use math define
+#define _USE_MATH_DEFINES
+
 /* ========================================
 *  ## 헤더파일 ##
 * ======================================== */
@@ -18,7 +21,7 @@
 #include <tchar.h>
 
 //필요에 따라 기본 라이브러리 헤더 추가
-#include <math.h>
+#include <cmath>
 #include <string>
 #include <vector>
 #include <time.h>
