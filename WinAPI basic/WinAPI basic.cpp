@@ -1,5 +1,3 @@
-//#if REARLY_IS_THIS_DEFINED_VARIABLE_I_THINK_THIS_IS_NOT_DEFINED_LAUGH
-
 /**
 Win API
 @author	박진한(wakeup5, wlsgks5@naver.com)
@@ -25,16 +23,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 	_hInstance = hInstance;
 
-	wndClass.cbClsExtra		= 0;									// 클래스 여분 메모리
-	wndClass.cbWndExtra		= 0;									// 윈도우 여분 메모리
-	wndClass.hbrBackground	= (HBRUSH)GetStockObject(WHITE_BRUSH);	// 백그라운드
-	wndClass.hCursor		= LoadCursor(NULL, IDC_ARROW);			// 커서 모양
-	wndClass.hIcon			= LoadIcon(NULL, IDI_APPLICATION);		// 상위 창 아이콘 모양
-	wndClass.hInstance		= hInstance;							// 윈도우 인스턴스
-	wndClass.lpfnWndProc	= (WNDPROC)WndProc;						// (*중요)프로시저 함수(메세지 처리함수) - 키보드 입력등에 호출되는 함수
-	wndClass.lpszClassName	= WIN_NAME;					// 클래스 명(화면 창 이름)
-	wndClass.lpszMenuName	= NULL;									// 메뉴명
-	wndClass.style			= CS_HREDRAW | CS_VREDRAW;				// 윈도우 창 상단오른쪽 버튼 스타일
+	wndClass.cbClsExtra = 0;									// 클래스 여분 메모리
+	wndClass.cbWndExtra = 0;									// 윈도우 여분 메모리
+	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);	// 백그라운드
+	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);			// 커서 모양
+	wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);		// 상위 창 아이콘 모양
+	wndClass.hInstance = hInstance;							// 윈도우 인스턴스
+	wndClass.lpfnWndProc = (WNDPROC)WndProc;						// (*중요)프로시저 함수(메세지 처리함수) - 키보드 입력등에 호출되는 함수
+	wndClass.lpszClassName = WIN_NAME;					// 클래스 명(화면 창 이름)
+	wndClass.lpszMenuName = NULL;									// 메뉴명
+	wndClass.style = CS_HREDRAW | CS_VREDRAW;				// 윈도우 창 상단오른쪽 버튼 스타일
 
 	RegisterClass(&wndClass);
 
@@ -55,7 +53,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	setWindowPositionAndSize(WIN_START_X, WIN_START_Y, WIN_SIZE_X, WIN_SIZE_Y);
 
 	ShowWindow(_hWnd, cmdShow);
-	
+
 	if (FAILED(_gameStudy.initialize()))
 	{
 		//초기화 실패시 종료
@@ -108,5 +106,3 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	return _gameStudy.mainProc(hWnd, iMessage, wParam, lParam);
 }
-
-//#endif

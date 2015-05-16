@@ -56,9 +56,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="WinAPI basic.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GameNode.cpp">
       <Filter>Game2DFramework</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="KeyManager.cpp">
       <Filter>Game2DFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="WinAPI basic.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
