@@ -1,16 +1,16 @@
-/** commonMacroFunction
+ï»¿/** commonMacroFunction
 @file	commonMacroFunction.h
-@author	¹ÚÁøÇÑ(wlsgks5@naver.com)
+@author	ë°•ì§„í•œ(wlsgks5@naver.com)
 @date	2015/05/12
-@brief	°£ÆíÇÏ°Ô »ç¿ëÇÒ ÀÎ¶óÀÎ ¸ÅÅ©·Î ÇÔ¼öµé ¼±¾ğ.
+@brief	ê°„í¸í•˜ê²Œ ì‚¬ìš©í•  ì¸ë¼ì¸ ë§¤í¬ë¡œ í•¨ìˆ˜ë“¤ ì„ ì–¸.
 */
 #include "stdafx.h"
 
 /* ================================================================================
- * ===========================  ## ±¸Á¶Ã¼ ##  ======================================
+ * ===========================  ## êµ¬ì¡°ì²´ ##  ======================================
  * ================================================================================*/
 
-/** POINTRECT POINT¿Í RECT¸¦ Æ÷ÇÔ
+/** POINTRECT POINTì™€ RECTë¥¼ í¬í•¨
 @date	2015/05/13
 */
 typedef struct tagPOINTRECT
@@ -20,13 +20,13 @@ typedef struct tagPOINTRECT
 } POINTRECT;
 
 /* ================================================================================
- * ===========================  ## ÁÂÇ¥ »ı¼º ÇÔ¼ö ##  ===============================
+ * ===========================  ## ì¢Œí‘œ ìƒì„± í•¨ìˆ˜ ##  ===============================
  * ================================================================================ */
 
-/** makePoint ÁÂÇ¥¸¦ ÀÔ·ÂÇÏ¸é Æ÷ÀÎÆ® º¯¼ö¸¦ ¸¸µé¾î ¸®ÅÏ
+/** makePoint ì¢Œí‘œë¥¼ ì…ë ¥í•˜ë©´ í¬ì¸íŠ¸ ë³€ìˆ˜ë¥¼ ë§Œë“¤ì–´ ë¦¬í„´
 @date	2015/05/12
-@param	x xÁÂÇ¥
-@param	y yÁÂÇ¥
+@param	x xì¢Œí‘œ
+@param	y yì¢Œí‘œ
 @return	POINT
 */
 inline POINT makePoint(int x, int y)
@@ -34,12 +34,12 @@ inline POINT makePoint(int x, int y)
 	return POINT{ x, y };
 }
 
-/** makeRect ÁÂÇ¥¿Í ÆøÀ» ÀÔ·ÂÇÏ¸é Rect¸¦ ¸¸µé¾î ¸®ÅÏ
+/** makeRect ì¢Œí‘œì™€ í­ì„ ì…ë ¥í•˜ë©´ Rectë¥¼ ë§Œë“¤ì–´ ë¦¬í„´
 @date	2015/05/12
 @param	int x left
 @param	int y top
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	int width í­
+@param	int height ë†’ì´
 @return	RECT
 */
 inline RECT makeRect(int x, int y, int width, int height)
@@ -47,12 +47,12 @@ inline RECT makeRect(int x, int y, int width, int height)
 	return RECT{ x, y, x + width, y + height };
 }
 
-/** makeRectCenter Áß½É ÁÂÇ¥¸¦ Áß½ÉÀ¸·Î Rect¸¦ ¸¸µé¾î ¸®ÅÏ
+/** makeRectCenter ì¤‘ì‹¬ ì¢Œí‘œë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ Rectë¥¼ ë§Œë“¤ì–´ ë¦¬í„´
 @date	2015/05/12
-@param	int centerX Áß½É xÁÂÇ¥
-@param	int centerY Áß½É yÁÂÇ¥
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	int centerX ì¤‘ì‹¬ xì¢Œí‘œ
+@param	int centerY ì¤‘ì‹¬ yì¢Œí‘œ
+@param	int width í­
+@param	int height ë†’ì´
 @return	RECT
 */
 inline RECT makeRectCenter(int centerX, int centerY, int width, int height)
@@ -60,11 +60,11 @@ inline RECT makeRectCenter(int centerX, int centerY, int width, int height)
 	return RECT{ centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2) };
 }
 
-/** makeRectCenter Áß½É ÁÂÇ¥POINT¸¦ Áß½ÉÀ¸·Î Rect¸¦ ¸¸µé¾î ¸®ÅÏ
+/** makeRectCenter ì¤‘ì‹¬ ì¢Œí‘œPOINTë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ Rectë¥¼ ë§Œë“¤ì–´ ë¦¬í„´
 @date	2015/05/13
-@param	POINT x, y Áß½É ÁÂÇ¥ POINT
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	POINT x, y ì¤‘ì‹¬ ì¢Œí‘œ POINT
+@param	int width í­
+@param	int height ë†’ì´
 @return	RECT
 */
 inline RECT makeRectCenter(POINT p, int width, int height)
@@ -72,7 +72,7 @@ inline RECT makeRectCenter(POINT p, int width, int height)
 	return makeRectCenter(p.x, p.y, width, height);//RECT{ p.x - (width / 2), p.y - (height / 2), p.x + (width / 2), p.y + (height / 2) };
 }
 
-/** makeRectCenter ¸¶¿ì½º ÁÂÇ¥¸¦ ÀÔ·Â ¹Ş¾Æ Æ÷ÀÎÆ®¸¦ ¸®ÅÏ
+/** makeRectCenter ë§ˆìš°ìŠ¤ ì¢Œí‘œë¥¼ ì…ë ¥ ë°›ì•„ í¬ì¸íŠ¸ë¥¼ ë¦¬í„´
 @date	2015/05/13
 @param	LPARAM
 @return	POINT
@@ -82,12 +82,12 @@ inline POINT makeMousePoint(LPARAM lParam)
 	return POINT{ static_cast<int>(LOWORD(lParam)), static_cast<int>(HIWORD(lParam)) };
 }
 
-/** makePointRectCenter Áß½ÉÁÂÇ¥¿Í Å©±â¸¦ ÀÔ·Â¹Ş¾Æ POINT¿Í RECT°¡ Æ÷ÇÔµÈ ±¸Á¶Ã¼¸¦ ¸®ÅÏ
+/** makePointRectCenter ì¤‘ì‹¬ì¢Œí‘œì™€ í¬ê¸°ë¥¼ ì…ë ¥ë°›ì•„ POINTì™€ RECTê°€ í¬í•¨ëœ êµ¬ì¡°ì²´ë¥¼ ë¦¬í„´
 @date	2015/05/13
-@param	int centerX Áß½É xÁÂÇ¥
-@param	int centerY Áß½É yÁÂÇ¥
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	int centerX ì¤‘ì‹¬ xì¢Œí‘œ
+@param	int centerY ì¤‘ì‹¬ yì¢Œí‘œ
+@param	int width í­
+@param	int height ë†’ì´
 @return	POINTRECT
 */
 inline POINTRECT makePointRectCenter(int centerX, int centerY, int width, int height)
@@ -95,11 +95,11 @@ inline POINTRECT makePointRectCenter(int centerX, int centerY, int width, int he
 	return POINTRECT{ makePoint(centerX, centerY), makeRectCenter(centerX, centerY, width, height) };
 }
 
-/** makePointRectCenter Áß½ÉÁÂÇ¥¿Í Å©±â¸¦ ÀÔ·Â¹Ş¾Æ POINT¿Í RECT°¡ Æ÷ÇÔµÈ ±¸Á¶Ã¼¸¦ ¸®ÅÏ
+/** makePointRectCenter ì¤‘ì‹¬ì¢Œí‘œì™€ í¬ê¸°ë¥¼ ì…ë ¥ë°›ì•„ POINTì™€ RECTê°€ í¬í•¨ëœ êµ¬ì¡°ì²´ë¥¼ ë¦¬í„´
 @date	2015/05/13
-@param	POINT Áß½ÉÁÂÇ¥ POINT
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	POINT ì¤‘ì‹¬ì¢Œí‘œ POINT
+@param	int width í­
+@param	int height ë†’ì´
 @return	POINTRECT
 */
 inline POINTRECT makePointRectCenter(POINT p, int width, int height)
@@ -107,7 +107,7 @@ inline POINTRECT makePointRectCenter(POINT p, int width, int height)
 	return POINTRECT{ p, makeRectCenter(p.x, p.y, width, height) };
 }
 
-/** reverseRect RECTÀÇ left, right¿Í top, bottomÀÌ ¼­·Î ÀÚ¸®°¡ ¹Ù²ï °æ¿ì ¼­·Î °ªÀ» ¹Ù²ãÁØ´Ù.
+/** reverseRect RECTì˜ left, rightì™€ top, bottomì´ ì„œë¡œ ìë¦¬ê°€ ë°”ë€ ê²½ìš° ì„œë¡œ ê°’ì„ ë°”ê¿”ì¤€ë‹¤.
 @date	2015/05/16
 @param	RECT
 @return	RECT
@@ -133,7 +133,7 @@ inline RECT reverseRect(RECT &rect)
 	return rect;
 }
 
-/** makePointByRect RECTÀÇ Áß½É ÁÂÇ¥ ¸®ÅÏ
+/** makePointByRect RECTì˜ ì¤‘ì‹¬ ì¢Œí‘œ ë¦¬í„´
 @date	2015/05/16
 @param	RECT
 @return	POINT
@@ -145,16 +145,16 @@ inline POINT makePointByRect(RECT r)
 }
 
 /* ================================================================================
-* ===========================  ## µµÇü ±×¸®±â ÇÔ¼ö ##  =============================
+* ===========================  ## ë„í˜• ê·¸ë¦¬ê¸° í•¨ìˆ˜ ##  =============================
 * ================================================================================ */
 
-/** drawLine ÁÂÇ¥¸¦ ÀÔ·Â¹Ş¾Æ ¼±À» ±×¸°´Ù.
+/** drawLine ì¢Œí‘œë¥¼ ì…ë ¥ë°›ì•„ ì„ ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/12
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
-@param	int x1 ½ÃÀÛ xÁÂÇ¥
-@param	int y1 ½ÃÀÛ yÁÂÇ¥
-@param	int x2 ³¡ xÁÂÇ¥
-@param	int y2 ³¡ yÁÂÇ¥
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
+@param	int x1 ì‹œì‘ xì¢Œí‘œ
+@param	int y1 ì‹œì‘ yì¢Œí‘œ
+@param	int x2 ë xì¢Œí‘œ
+@param	int y2 ë yì¢Œí‘œ
 */
 inline void drawLine(HDC hdc, int x1, int y1, int x2, int y2)
 {
@@ -162,10 +162,10 @@ inline void drawLine(HDC hdc, int x1, int y1, int x2, int y2)
 	LineTo(hdc, x2, y2);
 }
 
-/** drawLines ¿©·¯ ÁÂÇ¥µéÀ» ¹Ş¾Æ ¿©·¯°³ÀÇ ¼±À» ±×¸°´Ù.
+/** drawLines ì—¬ëŸ¬ ì¢Œí‘œë“¤ì„ ë°›ì•„ ì—¬ëŸ¬ê°œì˜ ì„ ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/12
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
-@param	vector<POINT> ¿©·¯°³ÀÇ Æ÷ÀÎÆ®µé
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
+@param	vector<POINT> ì—¬ëŸ¬ê°œì˜ í¬ì¸íŠ¸ë“¤
 */
 inline void drawLines(HDC hdc, std::vector<POINT> pointVector)
 {
@@ -178,23 +178,23 @@ inline void drawLines(HDC hdc, std::vector<POINT> pointVector)
 	}
 }
 
-/** drawRectangle ÁÂÇ¥¿Í Å©±â¸¦ ÀÔ·Â¹Ş¾Æ »ç°¢ÇüÀ» ±×¸°´Ù.
+/** drawRectangle ì¢Œí‘œì™€ í¬ê¸°ë¥¼ ì…ë ¥ë°›ì•„ ì‚¬ê°í˜•ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/12
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
 @param	int x left
 @param	int y top
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	int width í­
+@param	int height ë†’ì´
 */
 inline void drawRectangle(HDC hdc, int x, int y, int width, int height)
 {
 	Rectangle(hdc, x, y, x + width, y + height);
 }
 
-/** drawRectangle RECT¸¦ ÀÔ·Â¹Ş¾Æ »ç°¢ÇüÀ» ±×¸°´Ù.
+/** drawRectangle RECTë¥¼ ì…ë ¥ë°›ì•„ ì‚¬ê°í˜•ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/12
-@brief	RECT¸¦ ¹Ş±â ¶§¹®¿¡ left, top, right, bottom ±âÁØÀ¸·Î ÀÔ·Â ¹Ş´Â´Ù.
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
+@brief	RECTë¥¼ ë°›ê¸° ë•Œë¬¸ì— left, top, right, bottom ê¸°ì¤€ìœ¼ë¡œ ì…ë ¥ ë°›ëŠ”ë‹¤.
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
 @param	RECT
 */
 inline void drawRectangle(HDC hdc, RECT r)
@@ -202,25 +202,25 @@ inline void drawRectangle(HDC hdc, RECT r)
 	Rectangle(hdc, r.left, r.top, r.right, r.bottom);
 }
 
-/** drawRectangleCenter ÁÂÇ¥¸¦ Áß½ÉÀ¸·Î »ç°¢ÇüÀ» ±×¸°´Ù.
+/** drawRectangleCenter ì¢Œí‘œë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ ì‚¬ê°í˜•ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/12
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
-@param	int centerX Áß½É ÁÂÇ¥ x
-@param	int centerY Áß½É ÁÂÇ¥ y
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
+@param	int centerX ì¤‘ì‹¬ ì¢Œí‘œ x
+@param	int centerY ì¤‘ì‹¬ ì¢Œí‘œ y
+@param	int width í­
+@param	int height ë†’ì´
 */
 inline void drawRectangleCenter(HDC hdc, int centerX, int centerY, int width, int height)
 {
 	Rectangle(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 }
 
-/** drawRectangleCenter ÁÂÇ¥¸¦ Áß½ÉÀ¸·Î »ç°¢ÇüÀ» ±×¸°´Ù.
+/** drawRectangleCenter ì¢Œí‘œë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ ì‚¬ê°í˜•ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/13
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
-@param	POINT x, y Áß½É ÁÂÇ¥ POINT
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
+@param	POINT x, y ì¤‘ì‹¬ ì¢Œí‘œ POINT
+@param	int width í­
+@param	int height ë†’ì´
 */
 inline void drawRectangleCenter(HDC hdc, POINT p, int width, int height)
 {
@@ -228,23 +228,23 @@ inline void drawRectangleCenter(HDC hdc, POINT p, int width, int height)
 	drawRectangleCenter(hdc, p.x, p.y, width, height);
 }
 
-/** drawEllipse ÁÂÇ¥¿Í Å©±â¸¦ ¹Ş¾Æ Áß½ÉÀ¸·Î ¿øÀ» ±×¸°´Ù.
+/** drawEllipse ì¢Œí‘œì™€ í¬ê¸°ë¥¼ ë°›ì•„ ì¤‘ì‹¬ìœ¼ë¡œ ì›ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/12
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
 @param	int x left
 @param	int y top
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	int width í­
+@param	int height ë†’ì´
 */
 inline void drawEllipse(HDC hdc, int x, int y, int width, int height)
 {
 	Ellipse(hdc, x, y, x + width, y + height);
 }
 
-/** drawEllipse RECT¸¦ ¹Ş¾Æ Áß½ÉÀ¸·Î ¿øÀ» ±×¸°´Ù.
+/** drawEllipse RECTë¥¼ ë°›ì•„ ì¤‘ì‹¬ìœ¼ë¡œ ì›ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/12
-@brief	RECT¸¦ ¹Ş±â ¶§¹®¿¡ left, top, right, bottom ±âÁØÀ¸·Î ÀÔ·Â ¹Ş´Â´Ù.
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
+@brief	RECTë¥¼ ë°›ê¸° ë•Œë¬¸ì— left, top, right, bottom ê¸°ì¤€ìœ¼ë¡œ ì…ë ¥ ë°›ëŠ”ë‹¤.
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
 @param	RECT
 */
 inline void drawEllipse(HDC hdc, RECT r)
@@ -252,25 +252,25 @@ inline void drawEllipse(HDC hdc, RECT r)
 	Ellipse(hdc, r.left, r.top, r.right, r.bottom);
 }
 
-/** drawEllipseCenter ÁÂÇ¥¸¦ Áß½ÉÀ¸·Î ¿øÀ» ±×¸°´Ù.
+/** drawEllipseCenter ì¢Œí‘œë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ ì›ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/12
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
-@param	int centerX Áß½É ÁÂÇ¥ x
-@param	int centerY Áß½É ÁÂÇ¥ y
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
+@param	int centerX ì¤‘ì‹¬ ì¢Œí‘œ x
+@param	int centerY ì¤‘ì‹¬ ì¢Œí‘œ y
+@param	int width í­
+@param	int height ë†’ì´
 */
 inline void drawEllipseCenter(HDC hdc, int centerX, int centerY, int width, int height)
 {
 	Ellipse(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 }
 
-/** drawEllipseCenter ÁÂÇ¥¸¦ Áß½ÉÀ¸·Î ¿øÀ» ±×¸°´Ù.
+/** drawEllipseCenter ì¢Œí‘œë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ ì›ì„ ê·¸ë¦°ë‹¤.
 @date	2015/05/13
-@param	HDC À©µµ¿ì dcÀÇ ÇÚµé
-@param	POINT x, y Áß½É ÁÂÇ¥ POINT
-@param	int width Æø
-@param	int height ³ôÀÌ
+@param	HDC ìœˆë„ìš° dcì˜ í•¸ë“¤
+@param	POINT x, y ì¤‘ì‹¬ ì¢Œí‘œ POINT
+@param	int width í­
+@param	int height ë†’ì´
 */
 inline void drawEllipseCenter(HDC hdc, POINT p, int width, int height)
 {
@@ -279,14 +279,14 @@ inline void drawEllipseCenter(HDC hdc, POINT p, int width, int height)
 }
 
 /* ================================================================================
-* ===========================  ## Ãæµ¹ Ã¼Å© ÇÔ¼ö ##  ===============================
+* ===========================  ## ì¶©ëŒ ì²´í¬ í•¨ìˆ˜ ##  ===============================
 * ================================================================================ */
 
-/** checkInRectangle POINT°¡ RECT ³»¿¡ ÀÖ´ÂÁö Ã¼Å©. Ãæµ¹ Ã¼Å©
+/** checkInRectangle POINTê°€ RECT ë‚´ì— ìˆëŠ”ì§€ ì²´í¬. ì¶©ëŒ ì²´í¬
 @date	2015/05/12
 @param	POINT
 @param	RECT
-@return	bool ¾È¿¡ Á¸ÀçÇÏ´ÂÁöÀÇ ¿©ºÎ
+@return	bool ì•ˆì— ì¡´ì¬í•˜ëŠ”ì§€ì˜ ì—¬ë¶€
 */
 inline bool checkInRectangle(POINT point, RECT rect)
 {
@@ -305,11 +305,11 @@ inline bool isCollisionRectangle(POINT p, RECT r)
 	return checkInRectangle(p, r);
 }
 
-/** checkInRectangle RECT°¡ RECT ³»¿¡ ÀÖ´ÂÁö Ã¼Å©.Ãæµ¹ Ã¼Å©
+/** checkInRectangle RECTê°€ RECT ë‚´ì— ìˆëŠ”ì§€ ì²´í¬.ì¶©ëŒ ì²´í¬
 @date	2015/05/12
 @param	RECT
 @param	RECT
-@return	bool ¾È¿¡ Á¸ÀçÇÏ´ÂÁöÀÇ ¿©ºÎ
+@return	bool ì•ˆì— ì¡´ì¬í•˜ëŠ”ì§€ì˜ ì—¬ë¶€
 */
 inline bool checkInRectangle(RECT rect1, RECT rect2)
 {
@@ -337,11 +337,11 @@ inline bool isCollisionRectangle(RECT r1, RECT r2)
 	return checkInRectangle(r1, r2);
 }
 
-/** checkInEllipse POINT°¡ RECT(¿ø) ³»¿¡ ÀÖ´ÂÁö Ã¼Å©.Ãæµ¹ Ã¼Å©
+/** checkInEllipse POINTê°€ RECT(ì›) ë‚´ì— ìˆëŠ”ì§€ ì²´í¬.ì¶©ëŒ ì²´í¬
 @date	2015/05/12
 @param	POINT
 @param	RECT
-@return	bool ¾È¿¡ Á¸ÀçÇÏ´ÂÁöÀÇ ¿©ºÎ
+@return	bool ì•ˆì— ì¡´ì¬í•˜ëŠ”ì§€ì˜ ì—¬ë¶€
 */
 inline bool checkInEllipse(POINT p, RECT r)
 {
@@ -365,11 +365,11 @@ inline bool isCollisionEllipse(POINT p, RECT r)
 	return checkInEllipse(p, r);
 }
 
-/** checkInEllipse »ç°¢Çü°ú ¿øÀÇ Ãæµ¹ Ã³¸®
+/** checkInEllipse ì‚¬ê°í˜•ê³¼ ì›ì˜ ì¶©ëŒ ì²˜ë¦¬
 @date	2015/05/16
-@param	RECT »ç°¢Çü
-@param	RECT ¿ø
-@return	bool ¾È¿¡ Á¸ÀçÇÏ´ÂÁöÀÇ ¿©ºÎ
+@param	RECT ì‚¬ê°í˜•
+@param	RECT ì›
+@return	bool ì•ˆì— ì¡´ì¬í•˜ëŠ”ì§€ì˜ ì—¬ë¶€
 */
 inline bool checkInEllipse(RECT rectangle, RECT ellipse)
 {
@@ -378,15 +378,15 @@ inline bool checkInEllipse(RECT rectangle, RECT ellipse)
 	rectangle = reverseRect(rectangle);
 	ellipse = reverseRect(ellipse);
 
-	//°³¼±ÀÇ °¡´É¼ºÀÌ ÀÖÀ¸¸é °³¼± ÇØ¾ßÁö..
-	if (checkInEllipse(makePoint(rectangle.left + 1, rectangle.top + 1), ellipse) || //°¢ »ç°¢ÇüÀÇ ¸ğ¼­¸®°¡ ¿ø ¾È¿¡ ÀÖÀ»¶§
+	//ê°œì„ ì˜ ê°€ëŠ¥ì„±ì´ ìˆìœ¼ë©´ ê°œì„  í•´ì•¼ì§€..
+	if (checkInEllipse(makePoint(rectangle.left + 1, rectangle.top + 1), ellipse) || //ê° ì‚¬ê°í˜•ì˜ ëª¨ì„œë¦¬ê°€ ì› ì•ˆì— ìˆì„ë•Œ
 		checkInEllipse(makePoint(rectangle.right - 1, rectangle.top + 1), ellipse) ||
 		checkInEllipse(makePoint(rectangle.left + 1, rectangle.bottom - 1), ellipse) ||
 		checkInEllipse(makePoint(rectangle.right - 1, rectangle.bottom - 1), ellipse) ||
-		checkInRectangle(ellipseCenter, rectangle) || //¿ø Áß½ÉÀÌ »ç°¢Çü ¾È¿¡ ÀÖÀ»¶§
-		(ellipseCenter.x >= rectangle.left && ellipseCenter.x <= rectangle.right && //¿ø Áß½ÉÀÇ x°ªÀÌ »ç°¢Çü Æø ¾È¿¡ ÀÖÀ¸¸é¼­ »ç°¢Çü ¾Æ·¡°¡ ¿ø À§, »ç°¢Çü À§°¡ ¿ø ¾Æ·¡ ¾È¿¡ ÀÖÀ¸¸é
+		checkInRectangle(ellipseCenter, rectangle) || //ì› ì¤‘ì‹¬ì´ ì‚¬ê°í˜• ì•ˆì— ìˆì„ë•Œ
+		(ellipseCenter.x >= rectangle.left && ellipseCenter.x <= rectangle.right && //ì› ì¤‘ì‹¬ì˜ xê°’ì´ ì‚¬ê°í˜• í­ ì•ˆì— ìˆìœ¼ë©´ì„œ ì‚¬ê°í˜• ì•„ë˜ê°€ ì› ìœ„, ì‚¬ê°í˜• ìœ„ê°€ ì› ì•„ë˜ ì•ˆì— ìˆìœ¼ë©´
 		ellipse.top < rectangle.bottom && ellipse.bottom > rectangle.top) ||
-		(ellipseCenter.y >= rectangle.top && ellipseCenter.y <= rectangle.bottom && //y °ª
+		(ellipseCenter.y >= rectangle.top && ellipseCenter.y <= rectangle.bottom && //y ê°’
 		ellipse.left < rectangle.right && ellipse.right > rectangle.left))
 	{
 		return true;

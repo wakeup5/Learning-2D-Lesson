@@ -1,53 +1,55 @@
-/**
+ï»¿/**
 @file	stdafx.h
-@author	¹ÚÁøÇÑ(wakeup5, wlsgks5@naver.com)
+@author	ë°•ì§„í•œ(wakeup5, wlsgks5@naver.com)
 @date	2015/05/08
-@brief	Çì´õ Æ÷ÇÔ ¸®½ºÆ®
+@brief	í—¤ë” í¬í•¨ ë¦¬ìŠ¤íŠ¸
 */
 #pragma once
 #include "targetver.h"
 
-//MFC°¡ ¾Æ´Ñ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ °æ¿ì¿¡´Â WIN32_LEAN_AND_MEAN¸¦ Á¤ÀÇÇØ ºôµå ½Ã°£À» ´ÜÃà½ÃÅ²´Ù.
+//MFCê°€ ì•„ë‹Œ ì‘ìš©í”„ë¡œê·¸ë¨ì˜ ê²½ìš°ì—ëŠ” WIN32_LEAN_AND_MEANë¥¼ ì •ì˜í•´ ë¹Œë“œ ì‹œê°„ì„ ë‹¨ì¶•ì‹œí‚¨ë‹¤.
 #define WIN32_LEAN_AND_MEAN
 
+#define _USE_MATH_DEFINES
+
 /* ========================================
-*  ## Çì´õÆÄÀÏ ##
+*  ## í—¤ë”íŒŒì¼ ##
 * ======================================== */
 #include <Windows.h>
 #include <stdio.h>
 #include <tchar.h>
 
-//ÇÊ¿ä¿¡ µû¶ó ±âº» ¶óÀÌºê·¯¸® Çì´õ Ãß°¡
-#include <math.h>
+//í•„ìš”ì— ë”°ë¼ ê¸°ë³¸ ë¼ì´ë¸ŒëŸ¬ë¦¬ í—¤ë” ì¶”ê°€
+#include <cmath>
 #include <string>
 #include <vector>
 #include <time.h>
 
-//¸ÅÅ©·Î Çì´õ
+//ë§¤í¬ë¡œ í—¤ë”
 #include "commonMacroFunction.h"
 
-//»ç¿ëÀÚ Á¤ÀÇ Çì´õ
+//ì‚¬ìš©ì ì •ì˜ í—¤ë”
 #include "RandomFunction.h"
 #include "GameStudy.h"
 #include "KeyManager.h"
 
 /* ========================================
-*  ## Á¤ÀÇ¹® ##
+*  ## ì •ì˜ë¬¸ ##
 * ======================================== */
 
-//À©µµ¿ì ÀÌ¸§
+//ìœˆë„ìš° ì´ë¦„
 #define WIN_NAME		(LPTSTR)(TEXT("API Window"))
 
-//À©µµ¿ì À§Ä¡ »çÀÌÁî
-#define WIN_START_X		100		//xÀ§Ä¡
-#define WIN_START_Y		100		//yÀ§Ä¡
-#define WIN_SIZE_X		500		//Æø
-#define WIN_SIZE_Y		500		//³ôÀÌ
+//ìœˆë„ìš° ìœ„ì¹˜ ì‚¬ì´ì¦ˆ
+#define WIN_START_X		100		//xìœ„ì¹˜
+#define WIN_START_Y		100		//yìœ„ì¹˜
+#define WIN_SIZE_X		500		//í­
+#define WIN_SIZE_Y		500		//ë†’ì´
 
-//À©µµ¿ì ½ºÅ¸ÀÏ
+//ìœˆë„ìš° ìŠ¤íƒ€ì¼
 #define WIN_STYLE		WS_CAPTION | WS_SYSMENU
 
-//¾ÈÀü µ¿ÀûÇÒ´ç ÇØÁ¦ ¸ÅÅ©·Î
+//ì•ˆì „ ë™ì í• ë‹¹ í•´ì œ ë§¤í¬ë¡œ
 #define SAFE_DELETE(p)			{if (p) {delete(p); (p)=NULL;}}
 #define SAFE_DELETE_ARRAY(p)	{if (p) {delete[](p); (p)=NULL;}}
 #define SAFE_RELEASE(p)			{if (p) {(p)->release(); (p) = NULL;}}
@@ -58,10 +60,13 @@
 //class KeyManager
 #define KEYMANAGER KeyManager::getSingleton()
 
+//round number
+#define ROUNDING(x, dig)    ( floor((x) * pow(float(10), dig) + 0.5f) / pow(float(10), dig) )
+
 /* ========================================
-*  ## Àü¿ªº¯¼ö ##
+*  ## ì „ì—­ë³€ìˆ˜ ##
 * ======================================== */
-extern HINSTANCE _hInstance; // ÇÁ·Î±×·¥ ÀÎ½ºÅÏ½º
-extern HWND _hWnd; // À©µµ¿ì ÇÚµé
+extern HINSTANCE _hInstance; // í”„ë¡œê·¸ë¨ ì¸ìŠ¤í„´ìŠ¤
+extern HWND _hWnd; // ìœˆë„ìš° í•¸ë“¤
 
 extern POINT _mousePoint;

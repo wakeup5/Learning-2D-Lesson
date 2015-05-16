@@ -1,5 +1,6 @@
 #pragma once
 #include "GameNode.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -9,6 +10,8 @@ class GameStudy :
 private:
 	POINTRECT _ellipse;
 	POINTRECT _rectangle;
+
+	Player _player;
 
 public:
 	virtual HRESULT initialize(void);
