@@ -7,7 +7,8 @@ class GameStudy :
 	public GameNode
 {
 private:
-	RECT _ellipse;
+	POINTRECT _ellipse;
+	POINTRECT _rectangle;
 
 public:
 	virtual HRESULT initialize(void);
