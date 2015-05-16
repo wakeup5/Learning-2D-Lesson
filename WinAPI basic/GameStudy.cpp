@@ -25,6 +25,7 @@ void GameStudy::update(void)
 	GameNode::update();
 
 	_rectangle.point = _mousePoint;
+	_rectangle.rect = makeRectCenter(_mousePoint, 200, 200);
 
 }
 
@@ -32,12 +33,14 @@ void GameStudy::update(void)
 void GameStudy::render(HDC hdc)
 {
 	drawEllipse(hdc, _ellipse.rect);
-	if (checkInEllipse(_mousePoint, _ellipse.rect))
+	drawRectangle(hdc, _rectangle.rect);
+
+	if (isCollisionEllipse(_rectangle.rect, _ellipse.rect))
+	{
+		drawRectangleCenter(hdc, WIN_SIZE_X / 2, WIN_SIZE_Y / 2, 30, 30);
+	}
+	if (isCollisionEllipse(_mousePoint, _ellipse.rect))
 	{
 		drawRectangleCenter(hdc, WIN_SIZE_X / 2, WIN_SIZE_Y / 2, 10, 10);
-	}
-	else
-	{
-		//drawRectangleCenter(hdc, WIN_SIZE_X / 2, WIN_SIZE_Y / 2, 10, 10);
 	}
 }
