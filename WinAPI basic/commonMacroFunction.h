@@ -107,6 +107,31 @@ inline POINTRECT makePointRectCenter(POINT p, int width, int height)
 	return POINTRECT{ p, makeRectCenter(p.x, p.y, width, height) };
 }
 
+/** reverseRect RECT의 left, right와 top, bottom이 서로 자리가 바뀐 경우 서로 값을 바꿔준다.
+@date	2015/05/16
+@param	RECT
+@return	RECT
+*/
+inline RECT reverseRect(RECT &rect)
+{
+	int temp;
+
+	if (rect.left > rect.right)
+	{
+		temp = rect.left;
+		rect.left = rect.right;
+		rect.right = temp;
+	}
+
+	if (rect.top > rect.bottom)
+	{
+		temp = rect.top;
+		rect.top = rect.bottom;
+		rect.bottom = temp;
+	}
+
+	return rect;
+}
 
 /* ================================================================================
 * ===========================  ## 도형 그리기 함수 ##  =============================
@@ -254,21 +279,7 @@ inline void drawEllipseCenter(HDC hdc, POINT p, int width, int height)
 */
 inline bool checkInRectangle(POINT point, RECT rect)
 {
-	int temp;
-
-	if (rect.left > rect.right)
-	{
-		temp = rect.left;
-		rect.left = rect.right;
-		rect.right = temp;
-	}
-
-	if (rect.top > rect.bottom)
-	{
-		temp = rect.top;
-		rect.top = rect.bottom;
-		rect.bottom = temp;
-	}
+	rect = reverseRect(rect);
 
 	if (point.x >= rect.left &&
 		point.x <= rect.right &&
@@ -278,7 +289,7 @@ inline bool checkInRectangle(POINT point, RECT rect)
 	else
 		return false;
 }
-inline bool checkCollisionRectangle(POINT p, RECT r)
+inline bool isCollisionRectangle(POINT p, RECT r)
 {
 	return checkInRectangle(p, r);
 }
@@ -291,35 +302,8 @@ inline bool checkCollisionRectangle(POINT p, RECT r)
 */
 inline bool checkInRectangle(RECT rect1, RECT rect2)
 {
-	int temp;
-
-	if (rect1.left > rect1.right)
-	{
-		temp = rect1.left;
-		rect1.left = rect1.right;
-		rect1.right = temp;
-	}
-
-	if (rect1.top > rect1.bottom)
-	{
-		temp = rect1.top;
-		rect1.top = rect1.bottom;
-		rect1.bottom = temp;
-	}
-
-	if (rect2.left > rect2.right)
-	{
-		temp = rect2.left;
-		rect2.left = rect2.right;
-		rect2.right = temp;
-	}
-
-	if (rect2.top > rect2.bottom)
-	{
-		temp = rect2.top;
-		rect2.top = rect2.bottom;
-		rect2.bottom = temp;
-	}
+	rect1 = reverseRect(rect1);
+	rect2 = reverseRect(rect2);
 
 	if (checkInRectangle(makePoint(rect1.left + 1, rect1.top + 1), rect2) ||
 		checkInRectangle(makePoint(rect1.right - 1, rect1.top + 1), rect2) ||
@@ -333,22 +317,63 @@ inline bool checkInRectangle(RECT rect1, RECT rect2)
 		return false;
 	}
 }
-inline bool checkCollisionRectangle(RECT r1, RECT r2)
+inline bool isCollisionRectangle(RECT r1, RECT r2)
 {
 	return checkInRectangle(r1, r2);
 }
 
+/** checkInEllipse POINT가 RECT(원) 내에 있는지 체크.충돌 체크
+@date	2015/05/12
+@param	POINT
+@param	RECT
+@return	bool 안에 존재하는지의 여부
+*/
 inline bool checkInEllipse(POINT p, RECT r)
 {
-	POINT center{ (r.left + (r.right - r.left) / 2), (r.top + (r.bottom - r.top) / 2) };
+	r = reverseRect(r);
+
+	POINT center = POINT{ (r.left + (r.right - r.left) / 2), (r.top + (r.bottom - r.top) / 2) };
 	int x = p.x - center.x;
 	int y = p.y - center.y;
 	int width = (r.right - r.left) / 2;
 	int height = (r.bottom - r.top) / 2;
+
 	if (pow(x, 2) / pow(width, 2) + pow(y, 2) / pow(height, 2) <= 1)
 	{
 		return true;
 	}
 
 	return false;
+}
+inline bool isCollisionEllipse(POINT p, RECT r)
+{
+	return checkInEllipse(p, r);
+}
+
+/** checkInEllipse 사각형과 원의 충돌 처리
+@date	2015/05/16
+@param	RECT 사각형
+@param	RECT 원
+@return	bool 안에 존재하는지의 여부
+*/
+inline bool checkInEllipse(RECT rect1, RECT rect2)
+{
+	rect1 = reverseRect(rect1);
+	rect2 = reverseRect(rect2);
+
+	if (checkInEllipse(makePoint(rect1.left + 1, rect1.top + 1), rect2) ||
+		checkInEllipse(makePoint(rect1.right - 1, rect1.top + 1), rect2) ||
+		checkInEllipse(makePoint(rect1.left + 1, rect1.bottom - 1), rect2) ||
+		checkInEllipse(makePoint(rect1.right - 1, rect1.bottom - 1), rect2))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+inline bool isCollisionEllipse(RECT r1, RECT r2)
+{
+	return checkInEllipse(r1, r2);
 }
