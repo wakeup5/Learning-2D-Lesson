@@ -292,9 +292,21 @@ void Player::printBullet(HDC hdc)
 		drawEllipse(hdc, _special3Bullets[i].getSize());
 	}
 
-	TCHAR shieldStr[128];
-	sprintf_s(shieldStr, "4(SD) %d", _shieldCooltime);
-	TextOut(hdc, 10, WIN_SIZE_Y - 60, shieldStr, _tcslen(shieldStr));
+	TCHAR weaponStr[128];
+	sprintf_s(weaponStr, "1(basic)");
+	TextOut(hdc, 10, WIN_SIZE_Y - 140, weaponStr, _tcslen(weaponStr));
+
+	sprintf_s(weaponStr, "2(S1)");
+	TextOut(hdc, 10, WIN_SIZE_Y - 120, weaponStr, _tcslen(weaponStr));
+
+	sprintf_s(weaponStr, "3(S2)");
+	TextOut(hdc, 10, WIN_SIZE_Y - 100, weaponStr, _tcslen(weaponStr));
+
+	sprintf_s(weaponStr, "4(S3)");
+	TextOut(hdc, 10, WIN_SIZE_Y - 80, weaponStr, _tcslen(weaponStr));
+
+	sprintf_s(weaponStr, "5(SD) %d", _shieldCooltime);
+	TextOut(hdc, 10, WIN_SIZE_Y - 60, weaponStr, _tcslen(weaponStr));
 
 	TCHAR modeStr[128];
 	if (_weaponMode == 0)
