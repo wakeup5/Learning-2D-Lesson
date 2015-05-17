@@ -3,7 +3,7 @@
 class Missile :
 	public GameObject
 {
-private:
+protected:
 	int _degree = 0;
 	int _speed = 10;
 

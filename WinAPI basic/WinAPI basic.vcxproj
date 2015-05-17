@@ -84,9 +84,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStudy.h" />
+    <ClInclude Include="GuideMissile.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Player.h" />
@@ -96,9 +98,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStudy.cpp" />
+    <ClCompile Include="GuideMissile.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Player.cpp" />
