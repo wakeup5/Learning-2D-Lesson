@@ -67,7 +67,7 @@ inline RECT makeRectCenter(int centerX, int centerY, int width, int height)
 @param	int height 높이
 @return	RECT
 */
-inline RECT makeRectCenter(POINT p, int width, int height)
+inline RECT makeRectCenter(POINT &p, int width, int height)
 {
 	return makeRectCenter(p.x, p.y, width, height);//RECT{ p.x - (width / 2), p.y - (height / 2), p.x + (width / 2), p.y + (height / 2) };
 }
@@ -138,7 +138,7 @@ inline RECT reverseRect(RECT &rect)
 @param	RECT
 @return	POINT
 */
-inline POINT makePointByRect(RECT r)
+inline POINT makePointByRect(RECT &r)
 {
 	r = reverseRect(r);
 	return POINT{ r.left + (r.right - r.left) / 2, r.top + (r.bottom - r.top) / 2 };
@@ -167,7 +167,7 @@ inline void drawLine(HDC hdc, int x1, int y1, int x2, int y2)
 @param	HDC 윈도우 dc의 핸들
 @param	vector<POINT> 여러개의 포인트들
 */
-inline void drawLines(HDC hdc, std::vector<POINT> pointVector)
+inline void drawLines(HDC hdc, std::vector<POINT> &pointVector)
 {
 	std::vector<POINT>::iterator iter;
 
@@ -197,7 +197,7 @@ inline void drawRectangle(HDC hdc, int x, int y, int width, int height)
 @param	HDC 윈도우 dc의 핸들
 @param	RECT
 */
-inline void drawRectangle(HDC hdc, RECT r)
+inline void drawRectangle(HDC hdc, RECT &r)
 {
 	Rectangle(hdc, r.left, r.top, r.right, r.bottom);
 }
@@ -222,7 +222,7 @@ inline void drawRectangleCenter(HDC hdc, int centerX, int centerY, int width, in
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawRectangleCenter(HDC hdc, POINT p, int width, int height)
+inline void drawRectangleCenter(HDC hdc, POINT &p, int width, int height)
 {
 	//Rectangle(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 	drawRectangleCenter(hdc, p.x, p.y, width, height);
@@ -247,7 +247,7 @@ inline void drawEllipse(HDC hdc, int x, int y, int width, int height)
 @param	HDC 윈도우 dc의 핸들
 @param	RECT
 */
-inline void drawEllipse(HDC hdc, RECT r)
+inline void drawEllipse(HDC hdc, RECT &r)
 {
 	Ellipse(hdc, r.left, r.top, r.right, r.bottom);
 }
@@ -272,7 +272,7 @@ inline void drawEllipseCenter(HDC hdc, int centerX, int centerY, int width, int 
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawEllipseCenter(HDC hdc, POINT p, int width, int height)
+inline void drawEllipseCenter(HDC hdc, POINT &p, int width, int height)
 {
 	//Ellipse(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 	drawEllipseCenter(hdc, p.x, p.y, width, height);
@@ -288,7 +288,7 @@ inline void drawEllipseCenter(HDC hdc, POINT p, int width, int height)
 @param	RECT
 @return	bool 안에 존재하는지의 여부
 */
-inline bool checkInRectangle(POINT point, RECT rect)
+inline bool checkInRectangle(POINT &point, RECT &rect)
 {
 	rect = reverseRect(rect);
 
@@ -300,30 +300,27 @@ inline bool checkInRectangle(POINT point, RECT rect)
 	else
 		return false;
 }
-inline bool isCollisionRectangle(POINT p, RECT r)
+inline bool isCollisionRectangle(POINT &p, RECT &r)
 {
 	return checkInRectangle(p, r);
 }
 
 /** checkInRectangle RECT가 RECT 내에 있는지 체크.충돌 체크
 @date	2015/05/12
+@date	2015/05/17 조건 수정
 @param	RECT
 @param	RECT
 @return	bool 안에 존재하는지의 여부
 */
-inline bool checkInRectangle(RECT rect1, RECT rect2)
+inline bool checkInRectangle(RECT &rect1, RECT &rect2)
 {
 	rect1 = reverseRect(rect1);
 	rect2 = reverseRect(rect2);
 
-	if (checkInRectangle(makePoint(rect1.left + 1, rect1.top + 1), rect2) || //1 -> 2
-		checkInRectangle(makePoint(rect1.right - 1, rect1.top + 1), rect2) ||
-		checkInRectangle(makePoint(rect1.left + 1, rect1.bottom - 1), rect2) ||
-		checkInRectangle(makePoint(rect1.right - 1, rect1.bottom - 1), rect2) ||
-		checkInRectangle(makePoint(rect2.left + 1, rect2.top + 1), rect1) || // 2 -> 1
-		checkInRectangle(makePoint(rect2.right - 1, rect2.top + 1), rect1) ||
-		checkInRectangle(makePoint(rect2.left + 1, rect2.bottom - 1), rect1) ||
-		checkInRectangle(makePoint(rect2.right - 1, rect2.bottom - 1), rect1))
+	if (rect1.left < rect2.right &&
+		rect1.right > rect2.left &&
+		rect1.top < rect2.bottom &&
+		rect1.bottom > rect2.top)
 	{
 		return true;
 	}
@@ -332,7 +329,7 @@ inline bool checkInRectangle(RECT rect1, RECT rect2)
 		return false;
 	}
 }
-inline bool isCollisionRectangle(RECT r1, RECT r2)
+inline bool isCollisionRectangle(RECT &r1, RECT &r2)
 {
 	return checkInRectangle(r1, r2);
 }
@@ -343,13 +340,12 @@ inline bool isCollisionRectangle(RECT r1, RECT r2)
 @param	RECT
 @return	bool 안에 존재하는지의 여부
 */
-inline bool checkInEllipse(POINT p, RECT r)
+inline bool checkInEllipse(POINT &p, RECT &r)
 {
 	r = reverseRect(r);
 
-	POINT center = POINT{ (r.left + (r.right - r.left) / 2), (r.top + (r.bottom - r.top) / 2) };
-	int x = p.x - center.x;
-	int y = p.y - center.y;
+	int x = p.x - (r.left + (r.right - r.left) / 2);
+	int y = p.y - (r.top + (r.bottom - r.top) / 2);
 	int width = (r.right - r.left) / 2;
 	int height = (r.bottom - r.top) / 2;
 
@@ -360,7 +356,7 @@ inline bool checkInEllipse(POINT p, RECT r)
 
 	return false;
 }
-inline bool isCollisionEllipse(POINT p, RECT r)
+inline bool isCollisionEllipse(POINT &p, RECT &r)
 {
 	return checkInEllipse(p, r);
 }
@@ -371,7 +367,7 @@ inline bool isCollisionEllipse(POINT p, RECT r)
 @param	RECT 원
 @return	bool 안에 존재하는지의 여부
 */
-inline bool checkInEllipse(RECT rectangle, RECT ellipse)
+inline bool checkInEllipse(RECT &rectangle, RECT &ellipse)
 {
 	POINT ellipseCenter = makePointByRect(ellipse);
 
@@ -396,7 +392,7 @@ inline bool checkInEllipse(RECT rectangle, RECT ellipse)
 		return false;
 	}
 }
-inline bool isCollisionEllipse(RECT rectangle, RECT ellipse)
+inline bool isCollisionEllipse(RECT &rectangle, RECT &ellipse)
 {
 	return checkInEllipse(rectangle, ellipse);
 }
