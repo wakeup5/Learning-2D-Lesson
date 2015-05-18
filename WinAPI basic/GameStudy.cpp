@@ -32,68 +32,71 @@ void GameStudy::update(void)
 {
 	GameNode::update();
 
-	//키 입력
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && _player.getSize().bottom < WIN_SIZE_Y)
+	if (_player.getHp() > 0)
 	{
-		_player.moveY(_player.getSpeed());
-	}
-
-	if (KEYMANAGER->isStayKeyDown(VK_UP) && _player.getSize().top > 0)
-	{
-		_player.moveY(-_player.getSpeed());
-	}
-
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && _player.getSize().left > 0)
-	{
-		_player.moveX(-_player.getSpeed());
-	}
-
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && _player.getSize().right < WIN_SIZE_X)
-	{
-		_player.moveX(_player.getSpeed());
-	}
-
-	if (KEYMANAGER->isStayKeyDown(VK_SPACE))
-	{
-		Enemy* e = NULL;
-		for (int i = 0; i < MAX_ENEMY; i++)
+		//키 입력
+		if (KEYMANAGER->isStayKeyDown(VK_DOWN) && _player.getSize().bottom < WIN_SIZE_Y)
 		{
-			if (_enemys[i].getIsLive() && RANDOM->getInt(MAX_ENEMY) < 2)
-			{
-				e = &_enemys[i];
-			}
+			_player.moveY(_player.getSpeed());
 		}
 
-		//if (e != NULL)
-		//{
-			_player.fire(e);
-		//}
-	}
+		if (KEYMANAGER->isStayKeyDown(VK_UP) && _player.getSize().top > 0)
+		{
+			_player.moveY(-_player.getSpeed());
+		}
 
-	//무기 변경
-	if (KEYMANAGER->isOnceKeyDown('1'))
-	{
-		_player.setMode(0);
-	}
+		if (KEYMANAGER->isStayKeyDown(VK_LEFT) && _player.getSize().left > 0)
+		{
+			_player.moveX(-_player.getSpeed());
+		}
 
-	if (KEYMANAGER->isOnceKeyDown('2'))
-	{
-		_player.setMode(1);
-	}
+		if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && _player.getSize().right < WIN_SIZE_X)
+		{
+			_player.moveX(_player.getSpeed());
+		}
 
-	if (KEYMANAGER->isOnceKeyDown('3'))
-	{
-		_player.setMode(2);
-	}
+		if (KEYMANAGER->isStayKeyDown(VK_SPACE))
+		{
+			Enemy* e = NULL;
+			for (int i = 0; i < MAX_ENEMY; i++)
+			{
+				if (_enemys[i].getIsLive() && RANDOM->getInt(MAX_ENEMY) < 2)
+				{
+					e = &_enemys[i];
+				}
+			}
 
-	if (KEYMANAGER->isOnceKeyDown('4'))
-	{
-		_player.setMode(3);
-	}
+			//if (e != NULL)
+			//{
+				_player.fire(e);
+			//}
+		}
 
-	if (KEYMANAGER->isOnceKeyDown('5'))
-	{
-		_player.shield();
+		//무기 변경
+		if (KEYMANAGER->isOnceKeyDown('1'))
+		{
+			_player.setMode(0);
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('2'))
+		{
+			_player.setMode(1);
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('3'))
+		{
+			_player.setMode(2);
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('4'))
+		{
+			_player.setMode(3);
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('5'))
+		{
+			_player.shield();
+		}
 	}
 
 	_player.update();
@@ -140,7 +143,11 @@ void GameStudy::update(void)
 void GameStudy::render(HDC hdc)
 {
 	_player.printBullet(hdc);
-	drawEllipse(hdc, _player.getSize());
+
+	if (_player.getHp() > 0)
+	{
+		drawEllipse(hdc, _player.getSize());
+	}
 
 	for (int i = 0; i < MAX_ENEMY; i++)
 	{
@@ -162,4 +169,10 @@ void GameStudy::render(HDC hdc)
 	TCHAR scoreStr[128];
 	sprintf_s(scoreStr, "score : %10d", _score);
 	TextOut(hdc, 10, 10, scoreStr, _tcslen(scoreStr));
+
+	if (_player.getHp() <= 0)
+	{
+		TCHAR deadStr[128] = "게임 오버";
+		TextOut(hdc, WIN_SIZE_X / 2 - 42, WIN_SIZE_Y / 2 - 10, deadStr, _tcslen(deadStr));
+	}
 }

@@ -193,7 +193,11 @@ void Player::update()
 		if (_smallRight.getPosition().x < getPosition().x + 30) _smallRight.moveX(2);
 		_smallLeftHp -= 0.2;
 		_smallRightHp -= 0.2;
-		if (_smallLeftHp < 0 && _smallRightHp < 0) _weaponMode = 0;
+		if (_smallLeftHp < 0 && _smallRightHp < 0)
+		{
+			_weaponMode = 0;
+			_special2Cooltime = SPECIAL_2_COOLTIME;
+		}
 	}
 
 	for (int i = 0; i < _maxSpecial2; i++)
@@ -211,6 +215,11 @@ void Player::update()
 			_special2RBullets[i].move();
 			if (_special2RBullets[i].getPosition().y < 0) _special2RBullets[i].setIsFire(false);
 		}
+	}
+
+	if (_special2Cooltime > 0)
+	{
+		_special2Cooltime -= 10;
 	}
 
 	for (int i = 0; i < _maxSpecial3; i++)
@@ -299,7 +308,7 @@ void Player::printBullet(HDC hdc)
 	sprintf_s(weaponStr, "2(S1)");
 	TextOut(hdc, 10, WIN_SIZE_Y - 120, weaponStr, _tcslen(weaponStr));
 
-	sprintf_s(weaponStr, "3(S2)");
+	sprintf_s(weaponStr, "3(S2) %d", _special2Cooltime);
 	TextOut(hdc, 10, WIN_SIZE_Y - 100, weaponStr, _tcslen(weaponStr));
 
 	sprintf_s(weaponStr, "4(S3)");
@@ -346,7 +355,10 @@ void Player::setMode(int i)
 			_smallRight.setSize(10, 15);
 			_smallRightHp = 100;
 		}
-		_weaponMode = 2;
+		if (_special2Cooltime <= 0)
+		{
+			_weaponMode = 2;
+		}
 	}
 	else if (i == 3)
 	{
@@ -455,7 +467,7 @@ void Player::damageHp()
 }
 void Player::recoveryHp()
 {
-	if (_hp < 100)
+	if (_hp < 100 && _hp > 0)
 		_hp += 0.1;
 }
 

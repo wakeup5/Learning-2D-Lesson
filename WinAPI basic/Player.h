@@ -18,6 +18,8 @@
 #define COOLTIME_SPECIAL_2 70
 #define COOLTIME_SPECIAL_3 70
 
+#define SPECIAL_2_COOLTIME 3000
+
 #define SPEED_BASIC 10
 #define SPEED_SPECIAL_1 7
 #define SPEED_SPECIAL_2 8
@@ -57,6 +59,8 @@ private:
 	Missile _special2RBullets[MAX_SPECIAL_2];
 
 	GuideMissile _special3Bullets[MAX_SPECIAL_3];
+
+	int _special2Cooltime = 0;
 
 	int _shieldCooltime = 0;
 	int _shieldHp = 0;
