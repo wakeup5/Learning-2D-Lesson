@@ -14,7 +14,10 @@ HRESULT GameStudy::initialize(void)
 		y = 10 + ((i / GAME_WIDTH) * 48);
 
 		_rect[i] = RECT{ x, y, x + 40, y + 40 };
+		_isClicks[i] = false;
 	}
+
+	_selectNum = RANDOM->getInt(GAME_LENGTH);
 
 	return S_OK;
 }
@@ -30,28 +33,16 @@ void GameStudy::update(void)
 {
 	GameNode::update();
 
-	if (!_isOpen && RANDOM->getInt(100) < 2)
+	if (!_gameover && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		_select = RANDOM->getInt(GAME_LENGTH);
-		_isOpen = true;
-		_offTime = RANDOM->getIntTo(100, 300);
-	}
-
-	if (_isOpen && _offTime <= 0)
-	{
-		_isOpen = false;
-	}
-
-	if (_offTime > 0)
-	{
-		_offTime--;
-	}
-
-	if (_isOpen && KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_rect[_select], _mousePoint))
-	{
-		_score++;
-		_offTime = 0;
-		_isOpen = false;
+		for (int i = 0; i < GAME_LENGTH; i++)
+		{
+			if (!_isClicks[i] && PtInRect(&_rect[i], _mousePoint))
+			{
+				_isClicks[i] = true;
+				if (i == _selectNum) _gameover = true;
+			}
+		}
 	}
 
 }
@@ -60,14 +51,22 @@ void GameStudy::update(void)
 void GameStudy::render(HDC hdc)
 {
 	HBRUSH p = CreateSolidBrush(RGB(255, 255, 255));
-	HBRUSH s = CreateSolidBrush(RGB(100, 0, 100));
+	HBRUSH s = CreateSolidBrush(RGB(255, 0, 0));
+	HBRUSH o = CreateSolidBrush(RGB(100, 0, 100));
 
 	SelectObject(hdc, p);
 	for (int i = 0; i < GAME_LENGTH; i++)
 	{
-		if (_isOpen && i == _select)
+		if (_isClicks[i])
 		{
-			SelectObject(hdc, s);
+			if (_selectNum == i)
+			{
+				SelectObject(hdc, s);
+			}
+			else
+			{
+				SelectObject(hdc, o);
+			}
 		}
 		else
 		{
@@ -77,11 +76,8 @@ void GameStudy::render(HDC hdc)
 		Rectangle(hdc, _rect[i].left, _rect[i].top, _rect[i].right, _rect[i].bottom);
 	}
 
-	TCHAR cool[128];
-	sprintf_s(cool, "cooltime : %d", _offTime);
-	TextOut(hdc, 10, WIN_SIZE_Y - 60, cool, _tcslen(cool));
-
-	TCHAR score[128];
-	sprintf_s(score, "score : %d", _score);
-	TextOut(hdc, 10, WIN_SIZE_Y - 30, score, _tcslen(score));
+	if (_gameover)
+	{
+		TextOut(hdc, 10, 100, "À¸¾Ó °É¸²", 9);
+	}
 }

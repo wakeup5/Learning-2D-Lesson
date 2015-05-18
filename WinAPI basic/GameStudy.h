@@ -1,8 +1,9 @@
 #pragma once
 #include "GameNode.h"
 
-#define GAME_WIDTH 4
+#define GAME_WIDTH 10
 #define GAME_HEIGHT 2
+
 #define GAME_LENGTH GAME_WIDTH * GAME_HEIGHT
 
 using namespace std;
@@ -12,10 +13,11 @@ class GameStudy :
 {
 private:
 	RECT _rect[GAME_LENGTH];
-	int _select;
-	bool _isOpen = false;
-	int _offTime;
-	int _score;
+	bool _isClicks[GAME_LENGTH];
+
+	int _selectNum;
+	bool _gameover = false;
+
 public:
 	virtual HRESULT initialize(void);
 	virtual void release(void);
