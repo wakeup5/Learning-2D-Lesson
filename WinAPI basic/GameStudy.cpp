@@ -6,8 +6,15 @@ HRESULT GameStudy::initialize(void)
 {
 	GameNode::initialize();
 
-	_center.x = WIN_SIZE_X / 2;
-	_center.y = WIN_SIZE_Y / 2;
+	int x, y;
+
+	for (int i = 0; i < GAME_LENGTH; i++)
+	{
+		x = 10 + ((i % GAME_WIDTH) * 48);
+		y = 10 + ((i / GAME_WIDTH) * 48);
+
+		_rect[i] = RECT{ x, y, x + 40, y + 40 };
+	}
 
 	return S_OK;
 }
@@ -23,53 +30,58 @@ void GameStudy::update(void)
 {
 	GameNode::update();
 
-	timer = time(NULL);
-	localtime_s(&t, &timer);
+	if (!_isOpen && RANDOM->getInt(100) < 2)
+	{
+		_select = RANDOM->getInt(GAME_LENGTH);
+		_isOpen = true;
+		_offTime = RANDOM->getIntTo(100, 300);
+	}
 
-	_hour = t.tm_hour;
-	_minite = t.tm_min;
-	_second = t.tm_sec;
+	if (_isOpen && _offTime <= 0)
+	{
+		_isOpen = false;
+	}
 
-	//초침 끝자리 좌표
-	double secondRadian = ((_second / 60 * 360) - 90) * M_PI / 180;
-	_sp.x = _center.x + LENGTH_SECOND * cos(secondRadian);
-	_sp.y = _center.y + LENGTH_SECOND * sin(secondRadian);
+	if (_offTime > 0)
+	{
+		_offTime--;
+	}
 
-	//분침 끝자리 좌표
-	double miniteRadian = (((_minite / 60 * 360) - 90) * M_PI / 180) + secondRadian / 60;
-	_mp.x = _center.x + LENGTH_MINITE * cos(miniteRadian);
-	_mp.y = _center.y + LENGTH_MINITE * sin(miniteRadian);
-
-	//시침 끝자리 좌표
-	double hourRadian = (((_hour / 12 * 360) - 90) * M_PI / 180) + miniteRadian / 60;
-	_hp.x = _center.x + LENGTH_HOUR * cos(hourRadian);
-	_hp.y = _center.y + LENGTH_HOUR * sin(hourRadian);
+	if (_isOpen && KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_rect[_select], _mousePoint))
+	{
+		_score++;
+		_offTime = 0;
+		_isOpen = false;
+	}
 
 }
 
 //화면출력
 void GameStudy::render(HDC hdc)
 {
-	//시계 가장자리 출력
-	drawEllipseCenter(hdc, _center, WATCH_SIZE, WATCH_SIZE);
-	drawEllipseCenter(hdc, _center, 5, 5);
+	HBRUSH p = CreateSolidBrush(RGB(255, 255, 255));
+	HBRUSH s = CreateSolidBrush(RGB(100, 0, 100));
 
-	HPEN p;
+	SelectObject(hdc, p);
+	for (int i = 0; i < GAME_LENGTH; i++)
+	{
+		if (_isOpen && i == _select)
+		{
+			SelectObject(hdc, s);
+		}
+		else
+		{
+			SelectObject(hdc, p);
+		}
 
-	//시침
-	p = (HPEN)SelectObject(hdc, CreatePen(PS_SOLID, 5, RGB(0, 0, 0)));
-	drawLine(hdc, _center.x, _center.y, _hp.x, _hp.y);
-	//분침
-	p = (HPEN)SelectObject(hdc, CreatePen(PS_SOLID, 3, RGB(0, 0, 0)));
-	drawLine(hdc, _center.x, _center.y, _mp.x, _mp.y);
-	//초침
-	p = (HPEN)SelectObject(hdc, CreatePen(PS_SOLID, 1, RGB(255, 0, 0)));
-	drawLine(hdc, _center.x, _center.y, _sp.x, _sp.y);
-	//SelectObject(hdc, p);
-	//DeleteObject(p);
+		Rectangle(hdc, _rect[i].left, _rect[i].top, _rect[i].right, _rect[i].bottom);
+	}
 
+	TCHAR cool[128];
+	sprintf_s(cool, "cooltime : %d", _offTime);
+	TextOut(hdc, 10, WIN_SIZE_Y - 60, cool, _tcslen(cool));
 
-	TCHAR time[128];
-	sprintf_s(time, "%0.0f : %0.0f : %0.0f", _hour, _minite, _second);
-	TextOut(hdc, 10, 10, time, _tcslen(time));
+	TCHAR score[128];
+	sprintf_s(score, "score : %d", _score);
+	TextOut(hdc, 10, WIN_SIZE_Y - 30, score, _tcslen(score));
 }
