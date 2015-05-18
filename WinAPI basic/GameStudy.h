@@ -9,12 +9,6 @@ class GameStudy :
 	public GameNode
 {
 private:
-	POINTRECT _ellipse;
-	POINTRECT _rectangle;
-	POINTRECT _rectangleS;
-
-	bool _isClick = false, _isClickS = false;
-	int dx, dy;
 
 public:
 	virtual HRESULT initialize(void);
