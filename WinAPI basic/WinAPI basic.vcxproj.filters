@@ -22,12 +22,6 @@
     <Filter Include="GameStudy">
       <UniqueIdentifier>{eebdd4b8-9453-4bf5-bc67-f61c83e0a6a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStudy\Game">
-      <UniqueIdentifier>{49a22489-8ee8-4834-a471-52a8b38621d4}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -54,21 +48,6 @@
     <ClInclude Include="KeyManager.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>GameStudy\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>GameStudy\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Missile.h">
-      <Filter>GameStudy\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>GameStudy\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="GuideMissile.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -84,21 +63,6 @@
       <Filter>Game2DFramework\manager</Filter>
     </ClCompile>
     <ClCompile Include="WinAPI basic.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>GameStudy\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>GameStudy\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Missile.cpp">
-      <Filter>GameStudy\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>GameStudy\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="GuideMissile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

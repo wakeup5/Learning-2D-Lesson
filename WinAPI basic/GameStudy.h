@@ -1,7 +1,5 @@
 #pragma once
 #include "GameNode.h"
-#include "Player.h"
-#include "Enemy.h"
 
 #define MAX_ENEMY 20
 
@@ -13,11 +11,10 @@ class GameStudy :
 private:
 	POINTRECT _ellipse;
 	POINTRECT _rectangle;
+	POINTRECT _rectangleS;
 
-	Player _player;
-	Enemy _enemys[MAX_ENEMY];
-
-	int _score = 0;
+	bool _isClick = false, _isClickS = false;
+	int dx, dy;
 
 public:
 	virtual HRESULT initialize(void);
