@@ -108,8 +108,8 @@ void GameStudy::update(void)
 		if (_missiles[i].isFire)
 		{
 			_missiles[i].angleRadian = _missiles[i].angle * M_PI / 180;
-			_missiles[i].position.x += _missiles[i].speed * cos(_missiles[i].angleRadian);
-			_missiles[i].position.y -= _missiles[i].speed * sin(_missiles[i].angleRadian);
+			_missiles[i].position.x += ROUNDING(_missiles[i].speed * cos(_missiles[i].angleRadian), 0);
+			_missiles[i].position.y -= ROUNDING(_missiles[i].speed * sin(_missiles[i].angleRadian), 0);
 		}
 	}
 
@@ -130,11 +130,9 @@ void GameStudy::render(HDC hdc)
 	}
 
 	TCHAR a[128];
-	sprintf_s(a, "degree %.1f, radian %.1f", _cannon.angle, _cannon.angleRadian);
+	sprintf_s(a, "degree %.1f, radian %.5f", _cannon.angle, _cannon.angleRadian);
 	TextOut(hdc, 10, 10, a, _tcslen(a));
 
-	sprintf_s(a, "m1 degree %.1f, radian %.1f", _missiles[0].angle, _missiles[0].angleRadian);
-	TextOut(hdc, 10, 40, a, _tcslen(a));
 }
 
 //05-19 ¼÷Á¦
