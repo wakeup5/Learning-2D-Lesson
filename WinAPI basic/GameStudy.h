@@ -1,11 +1,10 @@
 #pragma once
 #include "GameNode.h"
+#include "Cannon.h"
+#include "Bullet.h"
 
-#define MISSILE_SPEED 5
-#define MISSILE_SIZE 50
-#define MAX_MISSILE 200
-
-#define PLAYER_SPEED 2
+#define MAX_BULLET 100
+#define MAX_POWER 20
 
 using namespace std;
 
@@ -13,28 +12,10 @@ class GameStudy :
 	public GameNode
 {
 private:
-	typedef struct tagCannon
-	{
-		POINT center;
-		POINT cannonEnd;
-		int radius;
-		float angle;
-		float angleRadian;
-		int length;
-	} Cannon;
+    Cannon _cannon;
+    Bullet _bullet[MAX_BULLET];
 
-	typedef struct tagMissile
-	{
-		double px, py;
-		float angleRadian;
-		float angle;
-		int speed;
-		int radius;
-		bool isFire;
-	} Missile;
-
-	Cannon _cannon;
-	Missile _missiles[MAX_MISSILE];
+    float _power;
 
 public:
 	virtual HRESULT initialize(void);

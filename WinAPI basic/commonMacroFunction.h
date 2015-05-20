@@ -162,6 +162,18 @@ inline void drawLine(HDC hdc, int x1, int y1, int x2, int y2)
 	LineTo(hdc, x2, y2);
 }
 
+/** drawLine 좌표를 입력받아 선을 그린다.
+@date	2015/05/12
+@param	HDC 윈도우 dc의 핸들
+@param	POINT 시작 좌표
+@param	POINT 끝 좌표
+*/
+inline void drawLine(HDC hdc, POINT a, POINT b)
+{
+    MoveToEx(hdc, a.x, a.y, NULL);
+    LineTo(hdc, b.x, b.y);
+}
+
 /** drawLines 여러 좌표들을 받아 여러개의 선을 그린다.
 @date	2015/05/12
 @param	HDC 윈도우 dc의 핸들

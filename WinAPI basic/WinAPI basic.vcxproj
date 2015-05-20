@@ -80,6 +80,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Cannon.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameStudy.h" />
@@ -90,6 +92,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GameStudy.cpp" />
     <ClCompile Include="KeyManager.cpp" />
