@@ -2,7 +2,8 @@
 class Bullet
 {
 private:
-    POINT _position;
+    float _positionX;
+    float _positionY;
     
     float _speedX;
     float _speedY;
@@ -16,8 +17,8 @@ public:
     Bullet();
     ~Bullet();
 
-    void setPosition(POINT p) { _position = p; }
-    POINT getPosition(){ return _position; }
+    void setPosition(POINT p) { _positionX = p.x, _positionY = p.y; }
+    POINT getPosition(){ return POINT{ _positionX, _positionY }; }
 
     void setAngleD(float angleD);
     float getAngleD();

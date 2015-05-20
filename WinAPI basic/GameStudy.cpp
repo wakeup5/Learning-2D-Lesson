@@ -42,7 +42,7 @@ void GameStudy::update(void)
 
     if (_power < MAX_POWER && KEYMANAGER->isStayKeyDown(VK_SPACE))
     {
-        _power += 0.2;
+        _power += GRAVITY_ACCEL;
     }
 
     if (KEYMANAGER->isOnceKeyUp(VK_SPACE))
@@ -55,6 +55,8 @@ void GameStudy::update(void)
                 _bullet[i].setSpeed(_power);
                 _bullet[i].setAngleD(_cannon.getAngleD());
                 _bullet[i].setPosition(_cannon.getEndPoint());
+
+                _bulletEnd[i] = _bullet[i].getPosition().x + (_bullet[i].getPosition().y + (-_bullet[i].getSpeedY() / GRAVITY_ACCEL * 2)) * _bullet[i].getSpeedX();
                 break;
             }
         }
@@ -102,8 +104,18 @@ void GameStudy::render(HDC hdc)
 
     Rectangle(hdc, 10, 10, 10 + (_power / MAX_POWER) * (WIN_SIZE_X - 20), 20);
 
+    for (int i = 0; i < MAX_BULLET; i++)
+    {
+        if (_bullet[i].isFire)
+        {
+            drawLine(hdc, _bulletEnd[i], 0, _bulletEnd[i], WIN_SIZE_Y);
+        }
+    }
+
+    TCHAR a[128];
+    sprintf_s(a, "%f", _bulletEnd[0]);
+    TextOut(hdc, 10, 50, a, _tcslen(a));
     
 }
-
 
 

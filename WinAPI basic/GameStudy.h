@@ -5,6 +5,7 @@
 
 #define MAX_BULLET 100
 #define MAX_POWER 20
+#define GRAVITY_ACCEL 0.2
 
 using namespace std;
 
@@ -14,6 +15,7 @@ class GameStudy :
 private:
     Cannon _cannon;
     Bullet _bullet[MAX_BULLET];
+    float _bulletEnd[MAX_BULLET];
 
     float _power;
 

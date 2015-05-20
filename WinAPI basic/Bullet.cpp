@@ -76,8 +76,8 @@ float Bullet::getSpeed()
 
 void Bullet::move()
 {
-    _position.x += _speedX;
-    _position.y += _speedY;
+    _positionX += _speedX;
+    _positionY += _speedY;
 }
 
 void Bullet::moveGravity()
