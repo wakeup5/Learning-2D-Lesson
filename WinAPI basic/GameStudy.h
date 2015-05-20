@@ -1,9 +1,9 @@
 #pragma once
 #include "GameNode.h"
 
-#define MISSILE_SPEED 10
-#define MISSILE_SIZE 5
-#define MAX_MISSILE 10
+#define MISSILE_SPEED 5
+#define MISSILE_SIZE 50
+#define MAX_MISSILE 200
 
 using namespace std;
 
@@ -23,7 +23,7 @@ private:
 
 	typedef struct tagMissile
 	{
-		POINT position;
+		double px, py;
 		float angleRadian;
 		float angle;
 		int speed;
@@ -32,7 +32,7 @@ private:
 	} Missile;
 
 	Cannon _cannon;
-	Missile _missiles[10];
+	Missile _missiles[MAX_MISSILE];
 
 public:
 	virtual HRESULT initialize(void);

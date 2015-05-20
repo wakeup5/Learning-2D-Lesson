@@ -396,3 +396,30 @@ inline bool isCollisionEllipse(RECT &rectangle, RECT &ellipse)
 {
 	return checkInEllipse(rectangle, ellipse);
 }
+
+/** checkInCircleToCircle 원과 원 충돌.
+@date	2015/05/20
+@param	RECT 원1
+@param	RECT 원2
+@return	bool 안에 존재하는지의 여부
+*/
+inline bool checkInCircleToCircle(const RECT &c1, const RECT &c2)
+{
+    int circleRadius1 = (c1.right - c1.left) / 2;
+    int circleRadius2 = (c2.right - c2.left) / 2;
+
+    POINT circleCenter1 = POINT{ c1.left + circleRadius1, c1.top + circleRadius1 };
+    POINT circleCenter2 = POINT{ c2.left + circleRadius2, c2.top + circleRadius2 };
+    
+    if (pow(circleCenter1.x - circleCenter2.x, 2) + pow(circleCenter1.y - circleCenter2.y, 2)
+        <= pow(circleRadius1 + circleRadius2, 2))
+    {
+        return true;
+    }
+
+    return false;
+}
+inline bool isCollisionCircle(RECT &c1, RECT &c2)
+{
+    return checkInCircleToCircle(c1, c2);
+}

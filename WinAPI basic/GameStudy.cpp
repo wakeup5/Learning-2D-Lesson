@@ -56,60 +56,105 @@ void GameStudy::update(void)
 		{
 			if (!_missiles[i].isFire)
 			{
-				_missiles[i].position = _cannon.cannonEnd;
+				_missiles[i].px = _cannon.cannonEnd.x;
+				_missiles[i].py = _cannon.cannonEnd.y;
 				_missiles[i].angle = _cannon.angle;
 				_missiles[i].isFire = true;
 				break;
 			}
 		}
 	}
-
-	//미사일 충돌처리
-	for (int i = 0; i < MAX_MISSILE; i++)
-	{
-		if (_missiles[i].position.x < 0 && _missiles[i].angle > 90 && _missiles[i].angle < 270)
-		{
-			//_missiles[i].isFire = false; //1번숙제
-			_missiles[i].angle = -_missiles[i].angle + (_missiles[i].angle <= 180 ? -180 : 540);
-		}
-
-		if (_missiles[i].position.x > WIN_SIZE_X && !(_missiles[i].angle > 90 && _missiles[i].angle < 270))
-		{
-			//_missiles[i].isFire = false; //1번숙제
-			_missiles[i].angle = -_missiles[i].angle + (_missiles[i].angle <= 180 ? 180 : -540);
-		}
-
-		if (_missiles[i].position.y < 0)
-		{
-			//_missiles[i].isFire = false; //1번숙제
-			_missiles[i].angle = 360 - _missiles[i].angle;
-		}
-
-		if (_missiles[i].position.y > WIN_SIZE_Y)
-		{
-			//_missiles[i].isFire = false; //1번숙제
-			_missiles[i].angle = 360 - _missiles[i].angle;
-		}
-
-
-		while (_missiles[i].angle <= 0)
-		{
-			_missiles[i].angle += 360;
-		}
-		while (_missiles[i].angle >= 360)
-		{
-			_missiles[i].angle -= 360;
-		}
-	}
-
 	//미사일 움직임
 	for (int i = 0; i < MAX_MISSILE; i++)
 	{
 		if (_missiles[i].isFire)
 		{
 			_missiles[i].angleRadian = _missiles[i].angle * M_PI / 180;
-			_missiles[i].position.x += ROUNDING(_missiles[i].speed * cos(_missiles[i].angleRadian), 0);
-			_missiles[i].position.y -= ROUNDING(_missiles[i].speed * sin(_missiles[i].angleRadian), 0);
+			_missiles[i].px += _missiles[i].speed * cos(_missiles[i].angleRadian);
+			_missiles[i].py -= _missiles[i].speed * sin(_missiles[i].angleRadian);
+		}
+	}
+
+	//미사일 충돌처리
+	for (int i = 0; i < MAX_MISSILE; i++)
+	{
+		if (_missiles[i].px < 0)// && _missiles[i].angle > 90 && _missiles[i].angle < 270)
+		{
+			//_missiles[i].isFire = false; //1번숙제
+			_missiles[i].angle = 180 - _missiles[i].angle;//(_missiles[i].angle <= 180 ? -180 : 540);
+            _missiles[i].px = 0;
+		}
+
+		if (_missiles[i].px > WIN_SIZE_X)// && !(_missiles[i].angle > 90 && _missiles[i].angle < 270))
+		{
+			//_missiles[i].isFire = false; //1번숙제
+			_missiles[i].angle = 180 - _missiles[i].angle;//(_missiles[i].angle <= 180 ? 180 : -540);
+            _missiles[i].px = WIN_SIZE_X;
+		}
+
+		if (_missiles[i].py < 0)
+		{
+			//_missiles[i].isFire = false; //1번숙제
+			_missiles[i].angle = 360 - _missiles[i].angle;
+            _missiles[i].py = 0;
+		}
+
+		if (_missiles[i].py > WIN_SIZE_Y)
+		{
+			//_missiles[i].isFire = false; //1번숙제
+			_missiles[i].angle = 360 - _missiles[i].angle;
+            _missiles[i].py = WIN_SIZE_Y;
+		}
+
+		/*
+		while (_missiles[i].angle <= 0)
+		{
+		_missiles[i].angle += 360;
+		}
+		while (_missiles[i].angle >= 360)
+		{
+		_missiles[i].angle -= 360;
+		}
+		*/
+
+	}
+
+    
+    float temp;
+    float px1, px2, py1, py2;
+    //공끼리 충돌
+    for (int i = 0; i < MAX_MISSILE; i++)
+    {
+        if (!_missiles[i].isFire) continue;
+        px1 = _missiles[i].px + _missiles[i].speed * cos(_missiles[i].angleRadian);
+        py1 = _missiles[i].py - _missiles[i].speed * sin(_missiles[i].angleRadian);
+        for (int j = i; j < MAX_MISSILE; j++)
+        {
+            if (i == j) continue;
+            if (!_missiles[j].isFire) continue;
+
+            px2 = _missiles[j].px + _missiles[j].speed * cos(_missiles[j].angleRadian);
+            py2 = _missiles[j].py - _missiles[j].speed * sin(_missiles[j].angleRadian);
+
+            RECT c1 = makeRectCenter(px1, py1, MISSILE_SIZE, MISSILE_SIZE);
+            RECT c2 = makeRectCenter(px2, py2, MISSILE_SIZE, MISSILE_SIZE);
+
+            if (isCollisionCircle(c1, c2))
+            {
+                //원 충돌 처리
+                temp = _missiles[i].angle;
+                _missiles[i].angle = _missiles[j].angle;
+                _missiles[j].angle = temp;
+            }
+        }
+    }
+
+
+	if (KEYMANAGER->isStayKeyDown('1'))
+	{
+		for (int i = 0; i < MAX_MISSILE; i++)
+		{
+			_missiles[i].isFire = false;
 		}
 	}
 
@@ -125,7 +170,7 @@ void GameStudy::render(HDC hdc)
 	{
 		if (_missiles[i].isFire)
 		{
-			drawEllipseCenter(hdc, _missiles[i].position, _missiles[i].radius, _missiles[i].radius);
+			drawEllipseCenter(hdc, _missiles[i].px, _missiles[i].py, _missiles[i].radius, _missiles[i].radius);
 		}
 	}
 
@@ -142,4 +187,3 @@ void GameStudy::render(HDC hdc)
 
 //두번째 총알을 쓰면 벽을 튕겨 방향을 바꾼다.
 
-//세번째
