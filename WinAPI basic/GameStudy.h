@@ -5,6 +5,8 @@
 #define MISSILE_SIZE 50
 #define MAX_MISSILE 200
 
+#define PLAYER_SPEED 2
+
 using namespace std;
 
 class GameStudy :
