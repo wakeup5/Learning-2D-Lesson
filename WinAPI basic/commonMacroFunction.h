@@ -435,3 +435,25 @@ inline bool isCollisionCircle(RECT &c1, RECT &c2)
 {
     return checkInCircleToCircle(c1, c2);
 }
+
+/** getAngleToCollisionCircle 원과 원 충돌 후의 각도를 리턴.
+@date	2015/05/21
+@param	float 자신 원의 중심x
+@param	float 자신 원의 중심y
+@param	float 다른 원의 중심x
+@param	float 다른 원의 중심y
+@return	float 충돌 후의 각도
+*/
+inline float getAngleToCollisionCircle(float x1, float y1, float x2, float y2)
+{
+    float x = x2 - x1;
+    float y = y2 - y1;
+    float hypo = sqrt(x * x + y * y);
+    float angle = acosf(x / hypo);
+    if (y2 > y1)
+    {
+        angle = 2 * M_PI - angle;
+        if (angle >= 2 * M_PI) angle -= 2 * M_PI;
+    }
+    return angle;
+}
