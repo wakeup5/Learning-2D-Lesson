@@ -8,8 +8,8 @@ Cannon::Cannon()
 
     setAngleD(10);
 
-    _size = 100;
-    _length = 70;
+    _size = 70;
+    _length = 50;
 
     setCannonEndPosition();
 }

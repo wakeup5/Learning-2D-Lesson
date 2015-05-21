@@ -20,6 +20,9 @@ public:
     void setPosition(POINT p) { _positionX = p.x, _positionY = p.y; }
     POINT getPosition(){ return POINT{ _positionX, _positionY }; }
 
+    float getPositionY(){ return _positionY; }
+    float getPositionX(){ return _positionX; }
+
     void setAngleD(float angleD);
     float getAngleD();
 

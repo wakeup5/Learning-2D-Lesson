@@ -82,7 +82,7 @@ void Bullet::move()
 
 void Bullet::moveGravity()
 {
-    setSpeedY(getSpeedY()+0.2);
+    setSpeedY(getSpeedY() + GRAVITY_ACCEL);
 
     move();
 }
