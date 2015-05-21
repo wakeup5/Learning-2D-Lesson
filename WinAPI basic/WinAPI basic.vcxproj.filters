@@ -48,12 +48,6 @@
     <ClInclude Include="KeyManager.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
-    <ClInclude Include="Cannon.h">
-      <Filter>GameStudy</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>GameStudy</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -70,12 +64,6 @@
     </ClCompile>
     <ClCompile Include="WinAPI basic.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Cannon.cpp">
-      <Filter>GameStudy</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>GameStudy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
