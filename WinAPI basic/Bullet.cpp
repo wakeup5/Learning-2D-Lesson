@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Bullet.h"
 
+#define GRAVITY_ACCEL 0.2
 
 Bullet::Bullet()
 {
@@ -41,10 +42,10 @@ void Bullet::setSpeedX(float speedX)
 {
     _speedX = speedX;
 
-    _angleD = atan2(_speedY, _speedX);
-    _angleR = _angleD * M_PI / 180;
+    _angleR = atan2(-_speedY, _speedX);
+    _angleD = _angleR * 180 / M_PI;
 
-    setSpeed(sqrt(pow(_speedX, 2) + pow(_speedY, 2)));
+    _speed = (sqrt(pow(_speedX, 2) + pow(_speedY, 2)));
 }
 float Bullet::getSpeedX()
 {
@@ -55,10 +56,10 @@ void Bullet::setSpeedY(float speedY)
 {
     _speedY = speedY;
 
-    _angleD = atan2(_speedY, _speedX);
-    _angleR = _angleD * M_PI / 180;
+    _angleR = atan2(-_speedY, _speedX);
+    _angleD = _angleR * 180 / M_PI;
 
-    setSpeed(sqrt(pow(_speedX, 2) + pow(_speedY, 2)));
+    _speed = (sqrt(pow(_speedX, 2) + pow(_speedY, 2)));
 }
 float Bullet::getSpeedY()
 {
@@ -67,7 +68,14 @@ float Bullet::getSpeedY()
 
 void Bullet::setSpeed(float speed)
 {
+    if (speed < 0)
+    {
+        speed = speed * -1;
+        setAngleD(getAngleD() + 180);
+    }
+
     _speed = speed;
+
     _speedX = _speed * cos(_angleR);
     _speedY = -_speed * sin(_angleR);
 }
@@ -84,7 +92,7 @@ void Bullet::move()
 
 void Bullet::moveGravity()
 {
-    setSpeedY(getSpeedY() + 0.2);
+    setSpeedY(getSpeedY() + GRAVITY_ACCEL);
 
     move();
 }
