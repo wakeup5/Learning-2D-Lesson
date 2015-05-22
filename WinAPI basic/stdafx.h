@@ -10,6 +10,7 @@
 //MFC가 아닌 응용프로그램의 경우에는 WIN32_LEAN_AND_MEAN를 정의해 빌드 시간을 단축시킨다.
 #define WIN32_LEAN_AND_MEAN
 
+//math.h헤더의 define 상수 사용
 #define _USE_MATH_DEFINES
 
 /* ========================================
