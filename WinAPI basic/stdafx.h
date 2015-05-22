@@ -33,6 +33,9 @@
 #include "GameStudy.h"
 #include "KeyManager.h"
 
+//클래스
+#include "Bullet.h"
+
 
 /* ========================================
 *  ## 정의문 ##
