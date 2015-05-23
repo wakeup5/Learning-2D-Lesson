@@ -54,6 +54,34 @@ void GameStudy::update(void)
         _power = getDistance(_bullet[0].getPositionX(), _bullet[0].getPositionY(), _mousePoint.x, _mousePoint.y);
         if (_power > 200) _power = 200;
         _mouseR = getRadianByTwoPosition(_bullet[0].getPositionX(), _bullet[0].getPositionY(), _mousePoint.x, _mousePoint.y);
+
+        float radian = _mouseR;
+        _guideLine[0].x = _bullet[0].getPositionX();
+        _guideLine[0].y = _bullet[0].getPositionY();
+
+        for (int i = 1; i < GUIDELINE_MAX; i++)
+        {
+            if ((_power / 200) * GUIDELINE_MAX > i)
+            {
+                if (_guideLine[i - 1].x - cos(radian) * 5 < _table.left || _guideLine[i - 1].x - cos(radian) * 5 > _table.right)
+                {
+                    radian = M_PI - radian;
+                }
+
+                if (_guideLine[i - 1].y + sin(radian) * 5 < _table.top || _guideLine[i - 1].y + sin(radian) * 5 > _table.bottom)
+                {
+                    radian = 2 * M_PI - radian;
+                }
+
+                _guideLine[i].x = _guideLine[i - 1].x - cos(radian) * 5;
+                _guideLine[i].y = _guideLine[i - 1].y + sin(radian) * 5;
+                _guideLine[i].isView = true;
+            }
+            else
+            {
+                _guideLine[i].isView = false;
+            }
+        }
     }
 
 
@@ -289,6 +317,17 @@ void GameStudy::render(HDC hdc)
         float xx = _bullet[0].getPositionX() + cos(_mouseR) * _power;
         float yy = _bullet[0].getPositionY() - sin(_mouseR) * _power;
         drawLine(hdc, _bullet[0].getPositionX(), _bullet[0].getPositionY(), xx, yy);
+    }
+
+    //가이드 라인
+    if (_isClick)
+    {
+        for (int i = 1; i < GUIDELINE_MAX; i++)
+        {
+            if (_guideLine[i].isView)
+            //drawLine(hdc, _guideLine[i - 1], _guideLine[i]);
+            drawEllipseCenter(hdc, _guideLine[i].x, _guideLine[i].y, 5, 5);
+        }
     }
 
 }

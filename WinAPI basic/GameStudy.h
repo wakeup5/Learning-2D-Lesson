@@ -8,12 +8,20 @@
 
 #define HOLE_SIZE MISSILE_SIZE * 2
 
+#define GUIDELINE_MAX 200
+
 using namespace std;
 
 class GameStudy :
     public GameNode
 {
 private:
+    struct PointFloat
+    {
+        float x;
+        float y;
+        bool isView;
+    };
     Bullet _bullet[MAX_MISSILE];
     UINT _colors[8];
     RECT _table;
@@ -21,6 +29,9 @@ private:
 
     int _player[2][8];
     bool _isAttack;
+
+    //int _guideLineLength = GUIDELINE_LENGTH;
+    PointFloat _guideLine[GUIDELINE_MAX];
 
     int _turn;
 
