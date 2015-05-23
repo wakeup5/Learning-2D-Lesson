@@ -6,6 +6,8 @@
 #define MISSILE_SIZE 30
 #define MAX_MISSILE 16
 
+#define HOLE_SIZE MISSILE_SIZE * 2
+
 using namespace std;
 
 class GameStudy :
@@ -13,8 +15,14 @@ class GameStudy :
 {
 private:
     Bullet _bullet[MAX_MISSILE];
-    RECT _table;
     UINT _colors[8];
+    RECT _table;
+    POINT _hole[6];
+
+    int _player[2][8];
+    bool _isAttack;
+
+    int _turn;
 
     float _power;
     float _mouseR;

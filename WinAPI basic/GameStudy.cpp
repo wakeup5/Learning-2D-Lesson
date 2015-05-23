@@ -16,6 +16,13 @@ HRESULT GameStudy::initialize(void)
 
     gameInit();
 
+    _hole[0] = { _table.left + 5, _table.top + 5 };
+    _hole[1] = { _table.right - 5, _table.top + 5 };
+    _hole[2] = { _table.left + 5, _table.bottom - 5 };
+    _hole[3] = { _table.right - 5, _table.bottom - 5 };
+    _hole[4] = { _table.left, (_table.top + _table.bottom) / 2 };
+    _hole[5] = { _table.right, (_table.top + _table.bottom) / 2 };
+
     return S_OK;
 }
 
@@ -58,39 +65,82 @@ void GameStudy::update(void)
             _bullet[i].move();
             _bullet[i].setSpeed(_bullet[i].getSpeed() * 0.992);
 
-            if (_bullet[i].getSpeed() < 0.05) _bullet[i].setSpeed(0);
+            if (_bullet[i].getSpeed() < 0.1 && _bullet[i].getSpeed() != 0)
+            {
+                _bullet[i].setSpeed(0);
+                if (i == 0)
+                {
+                    if (_turn == 0)
+                    {
+                        _turn = 1;
+                    }
+                    else
+                    {
+                        _turn = 0;
+                    }
+                }
+            }
         }
     }
 
     //가장자리 충돌
     for (int i = 0; i < MAX_MISSILE; i++)
     {
-        if (_bullet[i].getPositionX() - MISSILE_SIZE / 2 < _table.left)
-        {
-            _bullet[i].setAngleD(180 - _bullet[i].getAngleD());
-            _bullet[i].setPosition(POINT{ _table.left + MISSILE_SIZE / 2, _bullet[i].getPositionY() });
-            _bullet[i].setSpeed(_bullet[i].getSpeed() * 0.98);
-        }
+        if (!_bullet[i].isFire) continue;
 
-        if (_bullet[i].getPositionX() + MISSILE_SIZE / 2 > _table.right)
+        if (isCollisionEllipse(_bullet[i].getPosition(), makeRectCenter(_hole[0], HOLE_SIZE, HOLE_SIZE)) ||
+            isCollisionEllipse(_bullet[i].getPosition(), makeRectCenter(_hole[1], HOLE_SIZE, HOLE_SIZE)) ||
+            isCollisionEllipse(_bullet[i].getPosition(), makeRectCenter(_hole[2], HOLE_SIZE, HOLE_SIZE)) ||
+            isCollisionEllipse(_bullet[i].getPosition(), makeRectCenter(_hole[3], HOLE_SIZE, HOLE_SIZE)) ||
+            isCollisionEllipse(_bullet[i].getPosition(), makeRectCenter(_hole[4], HOLE_SIZE, HOLE_SIZE)) ||
+            isCollisionEllipse(_bullet[i].getPosition(), makeRectCenter(_hole[5], HOLE_SIZE, HOLE_SIZE)))
         {
-            _bullet[i].setAngleD(180 - _bullet[i].getAngleD());
-            _bullet[i].setPosition(POINT{ _table.right - MISSILE_SIZE / 2, _bullet[i].getPositionY() });
-            _bullet[i].setSpeed(_bullet[i].getSpeed() * 0.98);
+            if (i != 0 && 
+                _bullet[i].getPositionX() - MISSILE_SIZE / 4 > _table.right ||
+                _bullet[i].getPositionX() + MISSILE_SIZE / 4 < _table.left ||
+                _bullet[i].getPositionY() - MISSILE_SIZE / 4 > _table.bottom ||
+                _bullet[i].getPositionY() + MISSILE_SIZE / 4 < _table.top)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (_player[_turn][j] == -1)
+                    {
+                        _player[_turn][j] = i;
+                        _bullet[i].isFire = false;
+                        break;
+                    }
+                }
+            }
         }
-
-        if (_bullet[i].getPositionY() - MISSILE_SIZE / 2 < _table.top)
+        else
         {
-            _bullet[i].setAngleD(360 - _bullet[i].getAngleD());
-            _bullet[i].setPosition(POINT{ _bullet[i].getPositionX(), _table.top + MISSILE_SIZE / 2 });
-            _bullet[i].setSpeed(_bullet[i].getSpeed() * 0.98);
-        }
+            if (_bullet[i].getPositionX() - MISSILE_SIZE / 2 < _table.left)
+            {
+                _bullet[i].setAngleD(180 - _bullet[i].getAngleD());
+                _bullet[i].setPosition(POINT{ _table.left + MISSILE_SIZE / 2, _bullet[i].getPositionY() });
+                _bullet[i].setSpeed(_bullet[i].getSpeed() * 0.98);
+            }
 
-        if (_bullet[i].getPositionY() + MISSILE_SIZE / 2 > _table.bottom)
-        {
-            _bullet[i].setAngleD(360 - _bullet[i].getAngleD());
-            _bullet[i].setPosition(POINT{ _bullet[i].getPositionX(), _table.bottom - MISSILE_SIZE / 2 });
-            _bullet[i].setSpeed(_bullet[i].getSpeed() * 0.98);
+            if (_bullet[i].getPositionX() + MISSILE_SIZE / 2 > _table.right)
+            {
+                _bullet[i].setAngleD(180 - _bullet[i].getAngleD());
+                _bullet[i].setPosition(POINT{ _table.right - MISSILE_SIZE / 2, _bullet[i].getPositionY() });
+                _bullet[i].setSpeed(_bullet[i].getSpeed() * 0.98);
+            }
+
+            if (_bullet[i].getPositionY() - MISSILE_SIZE / 2 < _table.top)
+            {
+                _bullet[i].setAngleD(360 - _bullet[i].getAngleD());
+                _bullet[i].setPosition(POINT{ _bullet[i].getPositionX(), _table.top + MISSILE_SIZE / 2 });
+                _bullet[i].setSpeed(_bullet[i].getSpeed() * 0.98);
+            }
+
+            if (_bullet[i].getPositionY() + MISSILE_SIZE / 2 > _table.bottom)
+            {
+                _bullet[i].setAngleD(360 - _bullet[i].getAngleD());
+                _bullet[i].setPosition(POINT{ _bullet[i].getPositionX(), _table.bottom - MISSILE_SIZE / 2 });
+                _bullet[i].setSpeed(_bullet[i].getSpeed() * 0.98);
+            }
         }
         
     }
@@ -148,7 +198,6 @@ void GameStudy::update(void)
     {
         gameInit();
     }
-
 }
 
 //화면출력
@@ -158,9 +207,22 @@ void GameStudy::render(HDC hdc)
     HBRUSH ob;
     TCHAR ballNumberStr[128];
 
+    //구멍
+    for (int i = 0; i < 6; i++)
+    {
+        hb = CreateSolidBrush(RGB(0, 0, 0));
+        ob = (HBRUSH)SelectObject(hdc, hb);
+        drawEllipseCenter(hdc, _hole[i], HOLE_SIZE, HOLE_SIZE);
+        SelectObject(hdc, ob);
+        DeleteObject(hb);
+        DeleteObject(ob);
+    }
+
     Rectangle(hdc, _table.left, _table.top, _table.right, _table.bottom);
     for (int i = 0; i < MAX_MISSILE; i++)
     {
+        if (!_bullet[i].isFire) continue;
+
         hb = CreateSolidBrush((i == 0) ? RGB(255, 255, 255) : _colors[(i - 1) % 8]);
         ob = (HBRUSH)SelectObject(hdc, hb);
         drawEllipseCenter(hdc, _bullet[i].getPosition(), MISSILE_SIZE, MISSILE_SIZE);
@@ -179,6 +241,42 @@ void GameStudy::render(HDC hdc)
             }
             TextOut(hdc, _bullet[i].getPositionX() - 8, _bullet[i].getPositionY() - 8, ballNumberStr, _tcslen(ballNumberStr));
         }
+    }
+
+    for (int j = 0; j < 2; j++)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            if (_player[j][i] == -1) continue;
+
+            hb = CreateSolidBrush((_player[j][i] == 0) ? RGB(255, 255, 255) : _colors[(_player[j][i] - 1) % 8]);
+            ob = (HBRUSH)SelectObject(hdc, hb);
+            drawEllipseCenter(hdc, (j == 0)? 50 : WIN_SIZE_X - 50, 100 + (i * 50), MISSILE_SIZE, MISSILE_SIZE);
+            SelectObject(hdc, ob);
+            DeleteObject(hb);
+            DeleteObject(ob);
+            if (_player[j][i] != 0 && _player[j][i] != -1)
+            {
+                if (_player[j][i] < 9)
+                {
+                    sprintf_s(ballNumberStr, "%-2d", -_player[j][i]);
+                }
+                else
+                {
+                    sprintf_s(ballNumberStr, "%2d", _player[j][i]);
+                }
+                TextOut(hdc, (j == 0) ? 48 : WIN_SIZE_X - 58, 92 + (i * 50), ballNumberStr, _tcslen(ballNumberStr));
+            }
+        }
+    }
+
+    if (_turn == 0)
+    {
+        drawEllipseCenter(hdc, 50, 50, 30, 30);
+    }
+    else
+    {
+        drawEllipseCenter(hdc, WIN_SIZE_X - 50, 50, 30, 30);
     }
 
     float xx = _bullet[0].getPositionX() + cos(_bullet[0].getAngleR()) * _bullet[0].getSpeed() * 10;
@@ -224,6 +322,15 @@ void GameStudy::gameInit()
     _bullet[0].isFire = true;
     _bullet[0].setSpeed(0);
 
+    _turn = 1;
+
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            _player[i][j] = -1;
+        }
+    }
 }
 
 
