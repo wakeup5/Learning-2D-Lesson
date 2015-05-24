@@ -51,6 +51,9 @@
     <ClInclude Include="Bullet.h">
       <Filter>GameStudy</Filter>
     </ClInclude>
+    <ClInclude Include="Tank.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -70,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>GameStudy</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

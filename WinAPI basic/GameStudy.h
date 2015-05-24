@@ -1,14 +1,7 @@
 #pragma once
 #include "GameNode.h"
 #include "Bullet.h"
-
-#define MISSILE_SPEED 10
-#define MISSILE_SIZE 30
-#define MAX_MISSILE 16
-
-#define HOLE_SIZE MISSILE_SIZE * 2
-
-#define GUIDELINE_MAX 200
+#include "Tank.h"
 
 using namespace std;
 
@@ -16,28 +9,10 @@ class GameStudy :
     public GameNode
 {
 private:
-    struct PointFloat
-    {
-        float x;
-        float y;
-        bool isView;
-    };
-    Bullet _bullet[MAX_MISSILE];
-    UINT _colors[8];
-    RECT _table;
-    POINT _hole[6];
+    const int MAX_BULLET = 100;
 
-    int _player[2][8];
-    bool _isAttack;
-
-    //int _guideLineLength = GUIDELINE_LENGTH;
-    PointFloat _guideLine[GUIDELINE_MAX];
-
-    int _turn;
-
-    float _power;
-    float _mouseR;
-    bool _isClick;
+    Tank _player;
+    Bullet _bullet[20];
 
 public:
     virtual HRESULT initialize(void);
