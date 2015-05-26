@@ -33,6 +33,7 @@
 #include "RandomFunction.h"
 #include "GameStudy.h"
 #include "KeyManager.h"
+#include "Image.h"
 
 //클래스
 #include "Bullet.h"
@@ -66,7 +67,7 @@
 #define KEYMANAGER KeyManager::getSingleton()
 
 //round number
-#define ROUNDING(x, dig)    ( floor((x) * pow(float(10), dig) + 0.5f) / pow(float(10), dig) )
+#define ROUNDING(x, dig)	( floor((x) * pow(float(10), dig) + 0.5f) / pow(float(10), dig) )
 
 /* ========================================
 *  ## 전역변수 ##

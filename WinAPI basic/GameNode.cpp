@@ -20,12 +20,17 @@ HRESULT GameNode::initialize(void)
 
 	KEYMANAGER->initialize();
 
+	setBackBuffer();
+
 	return S_OK;
 }
 
 //해제
 void GameNode::release(void)
 {
+	_backBuffer->release();
+	SAFE_DELETE(_backBuffer);
+
 	KillTimer(_hWnd, 0);
 
 	KEYMANAGER->release();
@@ -36,13 +41,13 @@ void GameNode::release(void)
 void GameNode::update(void)
 {
 	//화면 갱신
-	InvalidateRect(_hWnd, NULL, true);
+	InvalidateRect(_hWnd, NULL, false);
 }
 
 //화면출력
 void GameNode::render(HDC hdc)
 {
-
+	//_backBuffer->render(hdc, WIN_SIZE_X, WIN_SIZE_Y);
 }
 
 LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
@@ -80,4 +85,13 @@ LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	}
 
 	return DefWindowProc(hWnd, iMessage, wParam, lParam);
+}
+
+
+//백버퍼 셋팅
+void GameNode::setBackBuffer()
+{
+	_backBuffer = new Image();
+	_backBuffer->initialize(WIN_SIZE_X, WIN_SIZE_Y);
+
 }

@@ -2,45 +2,45 @@
 class Bullet
 {
 private:
-    float _positionX;
-    float _positionY;
-    
-    float _speedX;
-    float _speedY;
+	float _positionX;
+	float _positionY;
+	
+	float _speedX;
+	float _speedY;
 
-    float _angleD;
-    float _angleR;
+	float _angleD;
+	float _angleR;
 
-    float _speed;
+	float _speed;
 
 public:
-    Bullet();
-    ~Bullet();
+	Bullet();
+	~Bullet();
 
-    void setPosition(POINT p) { _positionX = p.x, _positionY = p.y; }
-    POINT getPosition(){ return POINT{ _positionX, _positionY }; }
+	void setPosition(POINT p) { _positionX = p.x, _positionY = p.y; }
+	POINT getPosition(){ return POINT{ _positionX, _positionY }; }
 
-    float getPositionY(){ return _positionY; }
-    float getPositionX(){ return _positionX; }
+	float getPositionY(){ return _positionY; }
+	float getPositionX(){ return _positionX; }
 
-    void setAngleD(float angleD);
-    float getAngleD();
+	void setAngleD(float angleD);
+	float getAngleD();
 
-    void setAngleR(float angleR);
-    float getAngleR();
+	void setAngleR(float angleR);
+	float getAngleR();
 
-    void setSpeedX(float speedX);
-    float getSpeedX();
+	void setSpeedX(float speedX);
+	float getSpeedX();
 
-    void setSpeedY(float speedY);   
-    float getSpeedY();
+	void setSpeedY(float speedY);   
+	float getSpeedY();
 
-    void setSpeed(float speed);
-    float getSpeed();
+	void setSpeed(float speed);
+	float getSpeed();
 
-    void move();
-    void moveGravity();
+	void move();
+	void moveGravity();
 
-    bool isFire = false;
+	bool isFire = false;
 };
 

@@ -170,8 +170,8 @@ inline void drawLine(HDC hdc, int x1, int y1, int x2, int y2)
 */
 inline void drawLine(HDC hdc, POINT a, POINT b)
 {
-    MoveToEx(hdc, a.x, a.y, NULL);
-    LineTo(hdc, b.x, b.y);
+	MoveToEx(hdc, a.x, a.y, NULL);
+	LineTo(hdc, b.x, b.y);
 }
 
 /** drawLines 여러 좌표들을 받아 여러개의 선을 그린다.
@@ -417,23 +417,23 @@ inline bool isCollisionEllipse(RECT &rectangle, RECT &ellipse)
 */
 inline bool checkInCircleToCircle(const RECT &c1, const RECT &c2)
 {
-    int circleRadius1 = (c1.right - c1.left) / 2;
-    int circleRadius2 = (c2.right - c2.left) / 2;
+	int circleRadius1 = (c1.right - c1.left) / 2;
+	int circleRadius2 = (c2.right - c2.left) / 2;
 
-    POINT circleCenter1 = POINT{ c1.left + circleRadius1, c1.top + circleRadius1 };
-    POINT circleCenter2 = POINT{ c2.left + circleRadius2, c2.top + circleRadius2 };
-    
-    if (pow(circleCenter1.x - circleCenter2.x, 2) + pow(circleCenter1.y - circleCenter2.y, 2)
-        <= pow(circleRadius1 + circleRadius2, 2))
-    {
-        return true;
-    }
+	POINT circleCenter1 = POINT{ c1.left + circleRadius1, c1.top + circleRadius1 };
+	POINT circleCenter2 = POINT{ c2.left + circleRadius2, c2.top + circleRadius2 };
+	
+	if (pow(circleCenter1.x - circleCenter2.x, 2) + pow(circleCenter1.y - circleCenter2.y, 2)
+		<= pow(circleRadius1 + circleRadius2, 2))
+	{
+		return true;
+	}
 
-    return false;
+	return false;
 }
 inline bool isCollisionCircle(RECT &c1, RECT &c2)
 {
-    return checkInCircleToCircle(c1, c2);
+	return checkInCircleToCircle(c1, c2);
 }
 
 /** getAngleToCollisionCircle 원과 원 충돌 후의 각도를 리턴.
@@ -446,16 +446,16 @@ inline bool isCollisionCircle(RECT &c1, RECT &c2)
 */
 inline float getAngleToCollisionCircle(float x1, float y1, float x2, float y2)
 {
-    float x = x2 - x1;
-    float y = y2 - y1;
-    float hypo = sqrt(x * x + y * y);
-    float angle = acosf(x / hypo);
-    if (y2 > y1)
-    {
-        angle = 2 * M_PI - angle;
-        if (angle >= 2 * M_PI) angle -= 2 * M_PI;
-    }
-    return angle;
+	float x = x2 - x1;
+	float y = y2 - y1;
+	float hypo = sqrt(x * x + y * y);
+	float angle = acosf(x / hypo);
+	if (y2 > y1)
+	{
+		angle = 2 * M_PI - angle;
+		if (angle >= 2 * M_PI) angle -= 2 * M_PI;
+	}
+	return angle;
 }
 
 /** getDistance 두 점 사이의 거리를 리턴
@@ -468,7 +468,7 @@ inline float getAngleToCollisionCircle(float x1, float y1, float x2, float y2)
 */
 inline float getDistance(float x1, float y1, float x2, float y2)
 {
-    return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+	return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
 /** getRadianByTwoPosition 두 점의 기울기로 라디안 각도를 구함
@@ -481,5 +481,5 @@ inline float getDistance(float x1, float y1, float x2, float y2)
 */
 inline float getRadianByTwoPosition(float x1, float y1, float x2, float y2)
 {
-    return atan2(y1 - y2, x2 - x1);
+	return atan2(y1 - y2, x2 - x1);
 }

@@ -1,7 +1,17 @@
 #pragma once
+
+#include "Image.h"
+
 class GameNode
 {
+private:
+	Image* _backBuffer;
+protected:
+	Image* _mapImage;
 public:
+	GameNode();
+	virtual ~GameNode();
+
 	virtual HRESULT initialize(void);
 	virtual void release(void);
 	virtual void update(void);
@@ -9,7 +19,7 @@ public:
 
 	virtual LRESULT mainProc(HWND, UINT, WPARAM, LPARAM);
 
-	GameNode();
-	virtual ~GameNode();
+	void setBackBuffer();
+	Image *getBackBuffer(){ return _backBuffer; }
 };
 

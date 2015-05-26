@@ -22,6 +22,9 @@
     <Filter Include="GameStudy">
       <UniqueIdentifier>{eebdd4b8-9453-4bf5-bc67-f61c83e0a6a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game2DFramework\image">
+      <UniqueIdentifier>{aa195cc9-ae78-4163-8851-a880de85b232}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -51,7 +54,10 @@
     <ClInclude Include="Bullet.h">
       <Filter>GameStudy</Filter>
     </ClInclude>
-    <ClInclude Include="Tank.h">
+    <ClInclude Include="Image.h">
+      <Filter>Game2DFramework\image</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,8 +80,13 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>GameStudy</Filter>
     </ClCompile>
-    <ClCompile Include="Tank.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Image.cpp">
+      <Filter>Game2DFramework\image</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="map.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

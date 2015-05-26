@@ -1,28 +1,31 @@
 #pragma once
 #include "GameNode.h"
-#include "Bullet.h"
-#include "Tank.h"
+#include "Image.h"
 
 using namespace std;
 
 class GameStudy :
-    public GameNode
+	public GameNode
 {
 private:
-    const int MAX_BULLET = 100;
+	Image *_image;
 
-    Tank _player;
-    Bullet _bullet[20];
+	Image *_character[10];
 
+	Image *_sprite;
+	int _timer, _spriteSpeed, _spriteView;
+	int _sx, _sy, _sWidth, _sHeight;
 public:
-    virtual HRESULT initialize(void);
-    virtual void release(void);
-    virtual void update(void);
-    virtual void render(HDC hdc);
+	GameStudy(){}
+	virtual ~GameStudy(){}
 
-    void gameInit();
+	virtual HRESULT initialize(void);
+	virtual void release(void);
+	virtual void update(void);
+	virtual void render(HDC hdc);
 
-    GameStudy(){}
-    virtual ~GameStudy(){}
+	void gameInit();
+
+	void setBackBuffer();
 };
 

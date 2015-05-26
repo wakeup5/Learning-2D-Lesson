@@ -14,85 +14,85 @@ Bullet::~Bullet()
 
 void Bullet::setAngleD(float angleD)
 {
-    _angleD = angleD;
-    _angleR = _angleD * M_PI / 180;
+	_angleD = angleD;
+	_angleR = _angleD * M_PI / 180;
 
-    _speedX = _speed * cos(_angleR);
-    _speedY = -_speed * sin(_angleR);
+	_speedX = _speed * cos(_angleR);
+	_speedY = -_speed * sin(_angleR);
 }
 float Bullet::getAngleD()
 {
-    return _angleD;
+	return _angleD;
 }
 
 void Bullet::setAngleR(float angleR)
 {
-    _angleR = angleR;
-    _angleD = _angleR * 180 / M_PI;
+	_angleR = angleR;
+	_angleD = _angleR * 180 / M_PI;
 
-    _speedX = _speed * cos(_angleR);
-    _speedY = -_speed * sin(_angleR);
+	_speedX = _speed * cos(_angleR);
+	_speedY = -_speed * sin(_angleR);
 }
 float Bullet::getAngleR()
 {
-    return _angleR;
+	return _angleR;
 }
 
 void Bullet::setSpeedX(float speedX)
 {
-    _speedX = speedX;
+	_speedX = speedX;
 
-    _angleR = atan2(-_speedY, _speedX);
-    _angleD = _angleR * 180 / M_PI;
+	_angleR = atan2(-_speedY, _speedX);
+	_angleD = _angleR * 180 / M_PI;
 
-    _speed = (sqrt(pow(_speedX, 2) + pow(_speedY, 2)));
+	_speed = (sqrt(pow(_speedX, 2) + pow(_speedY, 2)));
 }
 float Bullet::getSpeedX()
 {
-    return _speedX;
+	return _speedX;
 }
 
 void Bullet::setSpeedY(float speedY)
 {
-    _speedY = speedY;
+	_speedY = speedY;
 
-    _angleR = atan2(-_speedY, _speedX);
-    _angleD = _angleR * 180 / M_PI;
+	_angleR = atan2(-_speedY, _speedX);
+	_angleD = _angleR * 180 / M_PI;
 
-    _speed = (sqrt(pow(_speedX, 2) + pow(_speedY, 2)));
+	_speed = (sqrt(pow(_speedX, 2) + pow(_speedY, 2)));
 }
 float Bullet::getSpeedY()
 {
-    return _speedY;
+	return _speedY;
 }
 
 void Bullet::setSpeed(float speed)
 {
-    if (speed < 0)
-    {
-        speed = speed * -1;
-        setAngleD(getAngleD() + 180);
-    }
+	if (speed < 0)
+	{
+		speed = speed * -1;
+		setAngleD(getAngleD() + 180);
+	}
 
-    _speed = speed;
+	_speed = speed;
 
-    _speedX = _speed * cos(_angleR);
-    _speedY = -_speed * sin(_angleR);
+	_speedX = _speed * cos(_angleR);
+	_speedY = -_speed * sin(_angleR);
 }
 float Bullet::getSpeed()
 {
-    return _speed;
+	return _speed;
 }
 
 void Bullet::move()
 {
-    _positionX += _speedX;
-    _positionY += _speedY;
+	_positionX += _speedX;
+	_positionY += _speedY;
 }
 
 void Bullet::moveGravity()
 {
-    setSpeedY(getSpeedY() + GRAVITY_ACCEL);
+	setSpeedY(getSpeedY() + GRAVITY_ACCEL);
 
-    move();
+	move();
 }
