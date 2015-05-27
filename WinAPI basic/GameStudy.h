@@ -2,34 +2,24 @@
 #include "GameNode.h"
 #include "Image.h"
 
-using namespace std;
+#define GAME_WIDTH 4
+#define GAME_HEIGHT 2
+#define GAME_LENGTH GAME_WIDTH * GAME_HEIGHT
 
-enum VIEW_DIRECTION
-{
-	VIEW_LEFT = 1,
-	VIEW_RIGHT = 2,
-	VIEW_FRONT = 0,
-	VIEW_BACK = 3
-};
+using namespace std;
 
 class GameStudy :
 	public GameNode
 {
 private:
 	Image *_background;
-	Image *_sprite;
-	VIEW_DIRECTION _view;
-	RECT _spriteRect;
-	bool _isSpriteClick;
-	int cx, cy;
-
-	int _timer, _delay, _spriteNum;
-	bool _backCount = false;
-
-	Image *_button;
-	RECT _buttonRect;
-	bool _isButtonClick;
 	
+	RECT _rect[GAME_LENGTH];
+	int _select;
+	bool _isOpen = false;
+	int _offTime;
+	int _score;
+	bool _isClick = false;
 public:
 	GameStudy(){}
 	virtual ~GameStudy(){}

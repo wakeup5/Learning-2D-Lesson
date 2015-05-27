@@ -20,6 +20,7 @@ HRESULT GameStudy::initialize(void)
 void GameStudy::release(void)
 {
 	_mapImage->release();
+	_background->release();
 	GameNode::release();
 }
 
@@ -28,79 +29,30 @@ void GameStudy::update(void)
 {
 	GameNode::update();
 
-	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	if (!_isOpen && RANDOM->getInt(100) < 2)
 	{
-		_view = VIEW_BACK;
-		_sprite->setY(_sprite->getY() - 2);
-	}
-	else if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-	{
-		_view = VIEW_LEFT;
-		_sprite->setX(_sprite->getX() - 2);
-	}
-	else if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		_view = VIEW_RIGHT;
-		_sprite->setX(_sprite->getX() + 2);
-	}
-	else if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-	{
-		_view = VIEW_FRONT;
-		_sprite->setY(_sprite->getY() + 2);
+		_select = RANDOM->getInt(GAME_LENGTH);
+		_isOpen = true;
+		_offTime = RANDOM->getIntTo(20, 100);
 	}
 
-	_spriteRect = makeRectCenter(_sprite->getX(), _sprite->getY(), 66, 64);
-
-	_timer++;
-
-	if (_timer > 100 * _delay)
+	if (_isOpen && _offTime <= 0)
 	{
-		_timer = 0;
+		_isOpen = false;
+		_isClick = false;
 	}
 
-	if (_timer % _delay == 0)
+	if (_offTime > 0)
 	{
-		if (_backCount)
-		{
-			_spriteNum--;
-		}
-		else
-		{
-			_spriteNum++;
-		}
-
-		if (_spriteNum >= 2)
-		{
-			_backCount = true;
-		}
-		if (_spriteNum <= 0)
-		{
-			_backCount = false;
-		}
+		_offTime--;
 	}
 
-	if (isCollisionEllipse(_mousePoint, _buttonRect) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	if (!_isClick && _isOpen && KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && PtInRect(&_rect[_select], _mousePoint))
 	{
-		_isButtonClick = true;
-	}
-
-	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
-	{
-		_isButtonClick = false;
-		_isSpriteClick = false;
-	}
-
-	if (isCollisionRectangle(_mousePoint, _spriteRect) && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		_isSpriteClick = true;
-		cx = _sprite->getX() - _mousePoint.x;
-		cy = _sprite->getY() - _mousePoint.y;
-	}
-
-	if (_isSpriteClick && KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-	{
-		_sprite->setX(_mousePoint.x + cx);
-		_sprite->setY(_mousePoint.y + cy);
+		_score++;
+		//_offTime = 0;
+		//_isOpen = false;
+		_isClick = true;
 	}
 
 }
@@ -112,17 +64,31 @@ void GameStudy::render(HDC hdc)
 	_mapImage->render(backDC, 0, 0);
 	_background->render(backDC);
 
-	//_sprite->setCenter(_mousePoint.x, _mousePoint.y);
-	_sprite->render(backDC, 66 * _spriteNum, 64 * _view, 66, 64);
+	HBRUSH p = CreateSolidBrush(RGB(255, 255, 255));
+	HBRUSH s = CreateSolidBrush(RGB(100, 0, 100));
 
-	if (_isButtonClick)
+	SelectObject(backDC, p);
+	for (int i = 0; i < GAME_LENGTH; i++)
 	{
-		_button->render(backDC, 0, 0, 265, 265);
+		if (_isOpen && i == _select)
+		{
+			SelectObject(backDC, s);
+		}
+		else
+		{
+			SelectObject(backDC, p);
+		}
+
+		Rectangle(backDC, _rect[i].left, _rect[i].top, _rect[i].right, _rect[i].bottom);
 	}
-	else
-	{
-		_button->render(backDC, 265, 0, 265, 265);
-	}
+
+	TCHAR cool[128];
+	sprintf_s(cool, "cooltime : %d", _offTime);
+	TextOut(backDC, 10, WIN_SIZE_Y - 60, cool, _tcslen(cool));
+
+	TCHAR score[128];
+	sprintf_s(score, "score : %d", _score);
+	TextOut(backDC, 10, WIN_SIZE_Y - 30, score, _tcslen(score));
 
 	this->getBackBuffer()->render(hdc, 0, 0);
 }
@@ -130,15 +96,15 @@ void GameStudy::render(HDC hdc)
 //게임 초기화
 void GameStudy::gameInit()
 {
-	_sprite = new Image;
-	_sprite->initialize("resource/c1.bmp", float(WIN_SIZE_X / 2), float(WIN_SIZE_Y / 2), 198, 256, TRUE, RGB(255, 0, 255));
+	int x, y;
 
-	_timer = 0, _delay = 15, _spriteNum = 0;
+	for (int i = 0; i < GAME_LENGTH; i++)
+	{
+		x = 10 + ((i % GAME_WIDTH) * 48);
+		y = 10 + ((i / GAME_WIDTH) * 48);
 
-	_button = new Image;
-	_button->initialize("resource/button1.bmp", 265.0f, WIN_SIZE_Y / 2.0f, 530, 265, TRUE, RGB(255, 0, 255));
-	_isButtonClick = false;
-	_buttonRect = makeRectCenter(265, WIN_SIZE_Y / 2, 265, 265);
+		_rect[i] = RECT{ x, y, x + 40, y + 40 };
+	}
 }
 
 //숙제

@@ -302,7 +302,7 @@ inline void drawEllipseCenter(HDC hdc, POINT &p, int width, int height)
 */
 inline bool checkInRectangle(POINT &point, RECT &rect)
 {
-	//rect = reverseRect(rect);
+	rect = reverseRect(rect);
 
 	if (point.x >= rect.left &&
 		point.x <= rect.right &&
