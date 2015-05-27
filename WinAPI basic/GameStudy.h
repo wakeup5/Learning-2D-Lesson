@@ -20,6 +20,8 @@ private:
 	int _offTime;
 	int _score;
 	bool _isClick = false;
+
+	Image *_cc;
 public:
 	GameStudy(){}
 	virtual ~GameStudy(){}

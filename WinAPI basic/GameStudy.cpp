@@ -72,23 +72,25 @@ void GameStudy::render(HDC hdc)
 	{
 		if (_isOpen && i == _select)
 		{
-			SelectObject(backDC, s);
+			//SelectObject(backDC, s);
+			_cc->render(backDC, _rect[i].left, _rect[i].top, 0, 0, 40, 40);
 		}
 		else
 		{
-			SelectObject(backDC, p);
+			//SelectObject(backDC, p);
+			_cc->render(backDC, _rect[i].left, _rect[i].top, 40, 0, 40, 40);
 		}
 
-		Rectangle(backDC, _rect[i].left, _rect[i].top, _rect[i].right, _rect[i].bottom);
+		//Rectangle(backDC, _rect[i].left, _rect[i].top, _rect[i].right, _rect[i].bottom);
 	}
 
 	TCHAR cool[128];
 	sprintf_s(cool, "cooltime : %d", _offTime);
-	TextOut(backDC, 10, WIN_SIZE_Y - 60, cool, _tcslen(cool));
+	TextOut(backDC, 10, 160, cool, _tcslen(cool));
 
 	TCHAR score[128];
 	sprintf_s(score, "score : %d", _score);
-	TextOut(backDC, 10, WIN_SIZE_Y - 30, score, _tcslen(score));
+	TextOut(backDC, 10, 120, score, _tcslen(score));
 
 	this->getBackBuffer()->render(hdc, 0, 0);
 }
@@ -105,6 +107,9 @@ void GameStudy::gameInit()
 
 		_rect[i] = RECT{ x, y, x + 40, y + 40 };
 	}
+
+	_cc = new Image;
+	_cc->initialize("resource/cc.bmp", 80, 40, TRUE, RGB(255, 0, 255));
 }
 
 //숙제
