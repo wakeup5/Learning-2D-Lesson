@@ -10,6 +10,8 @@ class GameStudy :
 private:
 	Image *_background;
 
+	Image *_image1;
+
 public:
 	GameStudy(){}
 	virtual ~GameStudy(){}

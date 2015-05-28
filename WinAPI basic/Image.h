@@ -31,6 +31,12 @@ private:
 		float centerY;
 		int width;
 		int height;
+		int currentFrameX;
+		int currentFrameY;
+		int maxFrameX;
+		int maxFrameY;
+		int frameWidth;
+		int frameHeight;
 		BYTE loadType;
 		RECT boundingBox;
 		
@@ -45,6 +51,12 @@ private:
 			centerY = 0;
 			width = 0;
 			height = 0;
+			currentFrameX = 0;
+			currentFrameY = 0;
+			maxFrameX = 0;
+			maxFrameY = 0;
+			frameWidth = 0;
+			frameHeight = 0;
 			loadType = LOAD_RESOURCES;
 			boundingBox = makeRect(0, 0, 0, 0);
 		};
@@ -68,8 +80,16 @@ public:
 	HRESULT initialize(int width, int height);
 
 	//이미지 설정(파일로 읽어옴)
+	//폭과 높이를 가진 이미지
 	HRESULT initialize(const char* fileName, int width, int height, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
+	//중심좌표와 폭 높이
 	HRESULT initialize(const char* fileName, float centerX, float centerY, int width, int height, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
+
+	//프레임 관련
+	//폭 높이와 행열 갯수
+	HRESULT initialize(const char* fileName, int width, int height, int frameColumn, int frameRow, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
+	//폭 높이, 중심 좌표, 행열 갯수
+	HRESULT initialize(const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
 
 	void release(void);
 
@@ -83,6 +103,10 @@ public:
 	//이미지 객체의 중심 좌표를 무시하고 원하는 좌표에 그릴 수 있다.
 	void render(HDC hdc, int destX, int destY);
 	void render(HDC hdc, int destX, int destY, int sourX, int sourY, int width, int height);
+
+	//프레임 렌더
+	void frameRender(HDC hdc);
+	void frameRender(HDC hdc, int destX, int destY);
 
 	//DC얻기
 	inline HDC getMemDC(){ return _imageInfo->hMemDC; }
@@ -106,6 +130,38 @@ public:
 
 	//바운딩 박스
 	inline RECT boundingBox(){ return _imageInfo->boundingBox; }
+
+	inline void setFrameX(int frameX)
+	{
+		if (frameX > _imageInfo->maxFrameX)
+		{
+			_imageInfo->currentFrameX = _imageInfo->maxFrameX;
+		}
+		else
+		{
+			_imageInfo->currentFrameX = frameX; 
+		}
+	}
+	inline void setFrameY(int frameY)
+	{
+		if (frameY > _imageInfo->maxFrameY)
+		{
+			_imageInfo->currentFrameY = _imageInfo->maxFrameY;
+		}
+		else
+		{
+			_imageInfo->currentFrameY = frameY;
+		}
+	}
+
+	inline int getMaxFrameX(){ return _imageInfo->maxFrameX; }
+	inline int getMaxFrameY(){ return _imageInfo->maxFrameY; }
+
+	inline int getFrameX(){ return _imageInfo->currentFrameX; }
+	inline int getFrameY(){ return _imageInfo->currentFrameY; }
+
+	inline int getFrameWidth(){ return _imageInfo->frameWidth; }
+	inline int getFrameHeight(){ return _imageInfo->frameHeight; }
 	
 };
 
