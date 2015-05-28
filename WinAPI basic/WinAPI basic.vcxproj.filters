@@ -42,9 +42,6 @@
     <ClInclude Include="SingletonBase.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
-    <ClInclude Include="GameNode.h">
-      <Filter>Game2DFramework</Filter>
-    </ClInclude>
     <ClInclude Include="GameStudy.h">
       <Filter>GameStudy</Filter>
     </ClInclude>
@@ -59,6 +56,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameNode.h">
+      <Filter>Game2DFramework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

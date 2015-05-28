@@ -35,10 +35,23 @@ HRESULT Image::initialize(int width, int height)
 
 	_fileName = NULL;
 
-	ReleaseDC(_hWnd, hdc);
-
 	_trans = FALSE;
 	_transColor = RGB(0, 0, 0);
+
+	_blendFunc.BlendFlags = 0;
+	_blendFunc.AlphaFormat = 0;
+	_blendFunc.BlendOp = AC_SRC_OVER;
+	
+	_blendImage = new IMAGE_INFO;
+	_blendImage->loadType = LOAD_EMPTY;
+	_blendImage->resID = 0;
+	_blendImage->hMemDC = CreateCompatibleDC(hdc);
+	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
+	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
+	_blendImage->width = WIN_SIZE_X;
+	_blendImage->height = WIN_SIZE_Y;
+
+	ReleaseDC(_hWnd, hdc);
 
 	//이미지 리소스를 얻는데 실패하면
 	if (_imageInfo->hBit == 0)
@@ -74,10 +87,23 @@ HRESULT Image::initialize(const char* fileName, int width, int height, BOOL tran
 	_fileName = new CHAR[fileNameLength + 1];
 	strcpy_s(_fileName, fileNameLength + 1, fileName);
 
-	ReleaseDC(_hWnd, hdc);
-
 	_trans = trans;
 	_transColor = transColor;
+
+	_blendFunc.BlendFlags = 0;
+	_blendFunc.AlphaFormat = 0;
+	_blendFunc.BlendOp = AC_SRC_OVER;
+
+	_blendImage = new IMAGE_INFO;
+	_blendImage->loadType = LOAD_FILE;
+	_blendImage->resID = 0;
+	_blendImage->hMemDC = CreateCompatibleDC(hdc);
+	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
+	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
+	_blendImage->width = WIN_SIZE_X;
+	_blendImage->height = WIN_SIZE_Y;
+
+	ReleaseDC(_hWnd, hdc);
 
 	//이미지 리소스를 얻는데 실패하면
 	if (_imageInfo->hBit == 0)
@@ -113,10 +139,23 @@ HRESULT Image::initialize(const char* fileName, float centerX, float centerY, in
 	_fileName = new CHAR[fileNameLength + 1];
 	strcpy_s(_fileName, fileNameLength + 1, fileName);
 
-	ReleaseDC(_hWnd, hdc);
-
 	_trans = trans;
 	_transColor = transColor;
+
+	_blendFunc.BlendFlags = 0;
+	_blendFunc.AlphaFormat = 0;
+	_blendFunc.BlendOp = AC_SRC_OVER;
+
+	_blendImage = new IMAGE_INFO;
+	_blendImage->loadType = LOAD_FILE;
+	_blendImage->resID = 0;
+	_blendImage->hMemDC = CreateCompatibleDC(hdc);
+	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
+	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
+	_blendImage->width = WIN_SIZE_X;
+	_blendImage->height = WIN_SIZE_Y;
+
+	ReleaseDC(_hWnd, hdc);
 
 	//이미지 리소스를 얻는데 실패하면
 	if (_imageInfo->hBit == 0)
@@ -156,10 +195,23 @@ HRESULT Image::initialize(const char* fileName, int width, int height, int frame
 	_fileName = new CHAR[fileNameLength + 1];
 	strcpy_s(_fileName, fileNameLength + 1, fileName);
 
-	ReleaseDC(_hWnd, hdc);
-
 	_trans = trans;
 	_transColor = transColor;
+
+	_blendFunc.BlendFlags = 0;
+	_blendFunc.AlphaFormat = 0;
+	_blendFunc.BlendOp = AC_SRC_OVER;
+
+	_blendImage = new IMAGE_INFO;
+	_blendImage->loadType = LOAD_FILE;
+	_blendImage->resID = 0;
+	_blendImage->hMemDC = CreateCompatibleDC(hdc);
+	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
+	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
+	_blendImage->width = WIN_SIZE_X;
+	_blendImage->height = WIN_SIZE_Y;
+
+	ReleaseDC(_hWnd, hdc);
 
 	//이미지 리소스를 얻는데 실패하면
 	if (_imageInfo->hBit == 0)
@@ -198,10 +250,23 @@ HRESULT Image::initialize(const char* fileName, float centerX, float centerY, in
 	_fileName = new CHAR[fileNameLength + 1];
 	strcpy_s(_fileName, fileNameLength + 1, fileName);
 
-	ReleaseDC(_hWnd, hdc);
-
 	_trans = trans;
 	_transColor = transColor;
+
+	_blendFunc.BlendFlags = 0;
+	_blendFunc.AlphaFormat = 0;
+	_blendFunc.BlendOp = AC_SRC_OVER;
+
+	_blendImage = new IMAGE_INFO;
+	_blendImage->loadType = LOAD_FILE;
+	_blendImage->resID = 0;
+	_blendImage->hMemDC = CreateCompatibleDC(hdc);
+	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
+	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
+	_blendImage->width = WIN_SIZE_X;
+	_blendImage->height = WIN_SIZE_Y;
+
+	ReleaseDC(_hWnd, hdc);
 
 	//이미지 리소스를 얻는데 실패하면
 	if (_imageInfo->hBit == 0)
@@ -221,7 +286,12 @@ void Image::release(void)
 		DeleteObject(_imageInfo->hBit);
 		DeleteDC(_imageInfo->hMemDC);
 
+		SelectObject(_blendImage->hMemDC, _blendImage->hOBit);
+		DeleteObject(_blendImage->hBit);
+		DeleteDC(_blendImage->hMemDC);
+
 		SAFE_DELETE(_imageInfo);
+		SAFE_DELETE(_blendImage);
 		SAFE_DELETE(_fileName);
 
 		_trans = FALSE;
@@ -425,4 +495,42 @@ void Image::frameRender(HDC hdc, int destX, int destY)
 			SRCCOPY);
 	}
 
+}
+
+void Image::alphaRender(HDC hdc, BYTE alpha)
+{
+	_blendFunc.SourceConstantAlpha = alpha;
+
+	//투명처리를 할 경우
+	if (_trans)
+	{
+		BitBlt(_blendImage->hMemDC, 0, 0, WIN_SIZE_X, WIN_SIZE_Y, hdc, 0, 0, SRCCOPY);
+		//gdi를 뺀 함수도 있다. 
+		
+		
+		GdiTransparentBlt(
+			_blendImage->hMemDC,		//복사할 곳 DC
+			_imageInfo->centerX - _imageInfo->width / 2,		//대상 좌표 X시작점
+			_imageInfo->centerY - _imageInfo->height / 2,		//대상 좌표 Y시작점
+			_imageInfo->width, //이미지 폭
+			_imageInfo->height, //이미지 높이
+			_imageInfo->hMemDC,
+			0, //복사 좌표 시작
+			0, //복사 좌표 시작
+			_imageInfo->width, //복사 폭
+			_imageInfo->height, //폭사 높이
+			_transColor	//복사에서 제외할 색상
+			);
+		
+		
+		//return;
+		AlphaBlend(hdc, _imageInfo->centerX - _imageInfo->width / 2, _imageInfo->centerY - _imageInfo->height / 2, _imageInfo->width, _imageInfo->height, _blendImage->hMemDC,
+			_imageInfo->centerX - _imageInfo->width / 2, _imageInfo->centerY - _imageInfo->height / 2, _imageInfo->width, _imageInfo->height, _blendFunc);
+	}
+	//하지 않을 경우
+	else
+	{
+		AlphaBlend(hdc, _imageInfo->centerX - _imageInfo->width / 2, _imageInfo->centerY - _imageInfo->height / 2, _imageInfo->width, _imageInfo->height, _blendImage->hMemDC,
+			_imageInfo->centerX - _imageInfo->width / 2, _imageInfo->centerY - _imageInfo->height / 2, _imageInfo->width, _imageInfo->height, _blendFunc);
+	}
 }

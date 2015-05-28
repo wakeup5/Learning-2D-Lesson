@@ -2,6 +2,10 @@
 #include "GameNode.h"
 #include "Image.h"
 
+#define PUZZLE_COL 3
+#define PUZZLE_ROW 3
+#define PUZZLE_LENGTH PUZZLE_COL * PUZZLE_ROW
+
 using namespace std;
 
 class GameStudy :
@@ -10,7 +14,17 @@ class GameStudy :
 private:
 	Image *_background;
 
-	Image *_image1;
+	Image *_puzzleImage;
+
+	int _puzzleNum[PUZZLE_LENGTH];
+	RECT _puzzleRect[PUZZLE_LENGTH];
+	int _voidNum;
+
+	int _pieceWidth, _pieceHeight;
+
+	bool _isGameStart = false;
+
+	void puzzleSwap(int clickNum);
 
 public:
 	GameStudy(){}

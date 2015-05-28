@@ -66,7 +66,10 @@ private:
 	LPIMAGE_INFO _imageInfo;	//이미지 경로
 	CHAR *_fileName;			//이미지 경로명
 	BOOL _trans;				//투명도
-	COLORREF _transColor;		//투명 컬러키	
+	COLORREF _transColor;		//투명 컬러키
+
+	BLENDFUNCTION _blendFunc;	//알파블렌드
+	LPIMAGE_INFO _blendImage;	//
 
 	inline void setBoundingBox()
 	{
@@ -107,6 +110,8 @@ public:
 	//프레임 렌더
 	void frameRender(HDC hdc);
 	void frameRender(HDC hdc, int destX, int destY);
+
+	void alphaRender(HDC hdc, BYTE alpha);
 
 	//DC얻기
 	inline HDC getMemDC(){ return _imageInfo->hMemDC; }
