@@ -3,35 +3,34 @@
 
 #pragma comment (lib, "msimg32.lib")
 
-Image::Image()
+Image::Image() 
 	:_imageInfo(NULL),
 	_fileName(NULL),
 	_trans(NULL),
-	_transColor(RGB(0, 0, 0))
+	_transColor(RGB(0, 0, 0)),
+	_blendImage(NULL)
 {
+
 }
 
 
 Image::~Image()
 {
+
 }
 
+/// 빈 비트맵 생성
 HRESULT Image::initialize(int width, int height)
 {
 	if (_imageInfo != NULL) release();
 
 	HDC hdc = GetDC(_hWnd);
 
-	_imageInfo = new IMAGE_INFO;
-	_imageInfo->loadType = LOAD_EMPTY;
+	_imageInfo = new ImageInfo;
 	_imageInfo->resID = 0;
 	_imageInfo->hMemDC = CreateCompatibleDC(hdc);
 	_imageInfo->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, width, height);
 	_imageInfo->hOBit = (HBITMAP)SelectObject(_imageInfo->hMemDC, _imageInfo->hBit);
-	_imageInfo->centerX = width / 2;
-	_imageInfo->centerY = height / 2;
-	_imageInfo->width = width;
-	_imageInfo->height = height;
 
 	_fileName = NULL;
 
@@ -41,17 +40,21 @@ HRESULT Image::initialize(int width, int height)
 	_blendFunc.BlendFlags = 0;
 	_blendFunc.AlphaFormat = 0;
 	_blendFunc.BlendOp = AC_SRC_OVER;
-	
-	_blendImage = new IMAGE_INFO;
-	_blendImage->loadType = LOAD_EMPTY;
+
+	_blendImage = new ImageInfo;
 	_blendImage->resID = 0;
 	_blendImage->hMemDC = CreateCompatibleDC(hdc);
 	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
 	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
-	_blendImage->width = WIN_SIZE_X;
-	_blendImage->height = WIN_SIZE_Y;
 
 	ReleaseDC(_hWnd, hdc);
+
+	_width = width;
+	_height = height;
+	_centerX = width / 2;
+	_centerY = height / 2;
+
+	setBoundingBox();
 
 	//이미지 리소스를 얻는데 실패하면
 	if (_imageInfo->hBit == 0)
@@ -62,82 +65,25 @@ HRESULT Image::initialize(int width, int height)
 
 	return S_OK;
 }
-
+/// 이미지 로드 : 파일 명, 이미지 폭, 이미지 높이, 제외여부, 제외할 색
 HRESULT Image::initialize(const char* fileName, int width, int height, BOOL trans, COLORREF transColor)
 {
-	if (fileName == NULL) return E_FAIL;
-
-	if (_imageInfo != NULL) release();
-
-	HDC hdc = GetDC(_hWnd);
-
-	_imageInfo = new IMAGE_INFO;
-	_imageInfo->loadType = LOAD_FILE;
-	_imageInfo->resID = 0;
-	_imageInfo->hMemDC = CreateCompatibleDC(hdc);
-	_imageInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
-	_imageInfo->hOBit = (HBITMAP)SelectObject(_imageInfo->hMemDC, _imageInfo->hBit);
-	_imageInfo->centerX = width / 2;
-	_imageInfo->centerY = height / 2;
-	_imageInfo->width = width;
-	_imageInfo->height = height;
-
-	//파일경로이름 복사
-	int fileNameLength = strlen(fileName);
-	_fileName = new CHAR[fileNameLength + 1];
-	strcpy_s(_fileName, fileNameLength + 1, fileName);
-
-	_trans = trans;
-	_transColor = transColor;
-
-	_blendFunc.BlendFlags = 0;
-	_blendFunc.AlphaFormat = 0;
-	_blendFunc.BlendOp = AC_SRC_OVER;
-
-	_blendImage = new IMAGE_INFO;
-	_blendImage->loadType = LOAD_FILE;
-	_blendImage->resID = 0;
-	_blendImage->hMemDC = CreateCompatibleDC(hdc);
-	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
-	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
-	_blendImage->width = WIN_SIZE_X;
-	_blendImage->height = WIN_SIZE_Y;
-
-	ReleaseDC(_hWnd, hdc);
-
-	//이미지 리소스를 얻는데 실패하면
-	if (_imageInfo->hBit == 0)
-	{
-		release();
-		return E_FAIL;
-	}
-
-	return S_OK;
+	return initialize(fileName, width / 2, height / 2, width, height, trans, transColor);
 }
-
+/// 이미지 로드 : 파일 명, 중심 좌표 x, 중심 좌표 y, 이미지 폭, 이미지 높이, 제외여부, 제외할 색
 HRESULT Image::initialize(const char* fileName, float centerX, float centerY, int width, int height, BOOL trans, COLORREF transColor)
 {
-	if (fileName == NULL) return E_FAIL;
-
 	if (_imageInfo != NULL) release();
 
 	HDC hdc = GetDC(_hWnd);
 
-	_imageInfo = new IMAGE_INFO;
-	_imageInfo->loadType = LOAD_FILE;
+	_imageInfo = new ImageInfo;
 	_imageInfo->resID = 0;
 	_imageInfo->hMemDC = CreateCompatibleDC(hdc);
 	_imageInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
 	_imageInfo->hOBit = (HBITMAP)SelectObject(_imageInfo->hMemDC, _imageInfo->hBit);
-	_imageInfo->centerX = centerX;
-	_imageInfo->centerY = centerY;
-	_imageInfo->width = width;
-	_imageInfo->height = height;
 
-	//파일경로이름 복사
-	int fileNameLength = strlen(fileName);
-	_fileName = new CHAR[fileNameLength + 1];
-	strcpy_s(_fileName, fileNameLength + 1, fileName);
+	_fileName = NULL;
 
 	_trans = trans;
 	_transColor = transColor;
@@ -146,16 +92,20 @@ HRESULT Image::initialize(const char* fileName, float centerX, float centerY, in
 	_blendFunc.AlphaFormat = 0;
 	_blendFunc.BlendOp = AC_SRC_OVER;
 
-	_blendImage = new IMAGE_INFO;
-	_blendImage->loadType = LOAD_FILE;
+	_blendImage = new ImageInfo;
 	_blendImage->resID = 0;
 	_blendImage->hMemDC = CreateCompatibleDC(hdc);
 	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
 	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
-	_blendImage->width = WIN_SIZE_X;
-	_blendImage->height = WIN_SIZE_Y;
 
 	ReleaseDC(_hWnd, hdc);
+
+	_width = width;
+	_height = height;
+	_centerX = centerX;
+	_centerY = centerY;
+
+	setBoundingBox();
 
 	//이미지 리소스를 얻는데 실패하면
 	if (_imageInfo->hBit == 0)
@@ -167,117 +117,7 @@ HRESULT Image::initialize(const char* fileName, float centerX, float centerY, in
 	return S_OK;
 }
 
-HRESULT Image::initialize(const char* fileName, int width, int height, int frameColumn, int frameRow, BOOL trans, COLORREF transColor)
-{
-	if (fileName == NULL) return E_FAIL;
-
-	if (_imageInfo != NULL) release();
-
-	HDC hdc = GetDC(_hWnd);
-
-	_imageInfo = new IMAGE_INFO;
-	_imageInfo->loadType = LOAD_FILE;
-	_imageInfo->resID = 0;
-	_imageInfo->hMemDC = CreateCompatibleDC(hdc);
-	_imageInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
-	_imageInfo->hOBit = (HBITMAP)SelectObject(_imageInfo->hMemDC, _imageInfo->hBit);
-	_imageInfo->centerX = width / 2;
-	_imageInfo->centerY = height / 2;
-	_imageInfo->width = width;
-	_imageInfo->height = height;
-	_imageInfo->maxFrameX = frameColumn - 1;
-	_imageInfo->maxFrameY = frameRow - 1;
-	_imageInfo->frameWidth = _imageInfo->width / frameColumn;
-	_imageInfo->frameHeight = _imageInfo->height / frameRow;
-
-	//파일경로이름 복사
-	int fileNameLength = strlen(fileName);
-	_fileName = new CHAR[fileNameLength + 1];
-	strcpy_s(_fileName, fileNameLength + 1, fileName);
-
-	_trans = trans;
-	_transColor = transColor;
-
-	_blendFunc.BlendFlags = 0;
-	_blendFunc.AlphaFormat = 0;
-	_blendFunc.BlendOp = AC_SRC_OVER;
-
-	_blendImage = new IMAGE_INFO;
-	_blendImage->loadType = LOAD_FILE;
-	_blendImage->resID = 0;
-	_blendImage->hMemDC = CreateCompatibleDC(hdc);
-	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
-	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
-	_blendImage->width = WIN_SIZE_X;
-	_blendImage->height = WIN_SIZE_Y;
-
-	ReleaseDC(_hWnd, hdc);
-
-	//이미지 리소스를 얻는데 실패하면
-	if (_imageInfo->hBit == 0)
-	{
-		release();
-		return E_FAIL;
-	}
-
-	return S_OK;
-}
-HRESULT Image::initialize(const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans, COLORREF transColor)
-{
-	if (fileName == NULL) return E_FAIL;
-
-	if (_imageInfo != NULL) release();
-
-	HDC hdc = GetDC(_hWnd);
-
-	_imageInfo = new IMAGE_INFO;
-	_imageInfo->loadType = LOAD_FILE;
-	_imageInfo->resID = 0;
-	_imageInfo->hMemDC = CreateCompatibleDC(hdc);
-	_imageInfo->hBit = (HBITMAP)LoadImage(_hInstance, fileName, IMAGE_BITMAP, width, height, LR_LOADFROMFILE);
-	_imageInfo->hOBit = (HBITMAP)SelectObject(_imageInfo->hMemDC, _imageInfo->hBit);
-	_imageInfo->centerX = centerX;
-	_imageInfo->centerY = centerY;
-	_imageInfo->width = width;
-	_imageInfo->height = height;
-	_imageInfo->maxFrameX = frameColumn - 1;
-	_imageInfo->maxFrameY = frameRow - 1;
-	_imageInfo->frameWidth = _imageInfo->width / frameColumn;
-	_imageInfo->frameHeight = _imageInfo->height / frameRow;
-
-	//파일경로이름 복사
-	int fileNameLength = strlen(fileName);
-	_fileName = new CHAR[fileNameLength + 1];
-	strcpy_s(_fileName, fileNameLength + 1, fileName);
-
-	_trans = trans;
-	_transColor = transColor;
-
-	_blendFunc.BlendFlags = 0;
-	_blendFunc.AlphaFormat = 0;
-	_blendFunc.BlendOp = AC_SRC_OVER;
-
-	_blendImage = new IMAGE_INFO;
-	_blendImage->loadType = LOAD_FILE;
-	_blendImage->resID = 0;
-	_blendImage->hMemDC = CreateCompatibleDC(hdc);
-	_blendImage->hBit = (HBITMAP)CreateCompatibleBitmap(hdc, WIN_SIZE_X, WIN_SIZE_Y);
-	_blendImage->hOBit = (HBITMAP)SelectObject(_blendImage->hMemDC, _blendImage->hBit);
-	_blendImage->width = WIN_SIZE_X;
-	_blendImage->height = WIN_SIZE_Y;
-
-	ReleaseDC(_hWnd, hdc);
-
-	//이미지 리소스를 얻는데 실패하면
-	if (_imageInfo->hBit == 0)
-	{
-		release();
-		return E_FAIL;
-	}
-
-	return S_OK;
-}
-
+/// 이미지 자원 반환
 void Image::release(void)
 {
 	if (_imageInfo)
@@ -299,238 +139,72 @@ void Image::release(void)
 	}
 }
 
+//투명키 값 설정
 void Image::setTransColor(BOOL trans, COLORREF transColor)
 {
 	_trans = trans;
 	_transColor = transColor;
 }
 
-void Image::render(HDC hdc)
+/// 일반 렌더링
+void Image::render(HDC hdc, BYTE alpha)
 {
-	//투명처리를 할 경우
-	if (_trans)
-	{
-		//gdi를 뺀 함수도 있다. 
-		GdiTransparentBlt(
-			hdc,		//복사할 곳 DC
-			_imageInfo->centerX - _imageInfo->width / 2,		//대상 좌표 X시작점
-			_imageInfo->centerY - _imageInfo->height / 2,		//대상 좌표 Y시작점
-			_imageInfo->width, //이미지 폭
-			_imageInfo->height, //이미지 높이
-			_imageInfo->hMemDC,
-			0, //복사 좌표 시작
-			0, //복사 좌표 시작
-			_imageInfo->width, //복사 폭
-			_imageInfo->height, //폭사 높이
-			_transColor	//복사에서 제외할 색상
-			);
-	}
-	//하지 않을 경우
-	else
-	{
-		//StrechBlt는 확대축소하여 복사 가능
-		BitBlt(hdc, _imageInfo->centerX - _imageInfo->width / 2, _imageInfo->centerY - _imageInfo->height / 2, _imageInfo->width, _imageInfo->height, _imageInfo->hMemDC, 0, 0, SRCCOPY);
-	}
-
+	render(hdc, _centerX - _width / 2, _centerY - _height / 2, 0, 0, _width, _height, alpha);
+}
+/// 일반 렌더링 : 원본이미지의 상단 좌측 좌표 x, y, 잘라낼 폭, 잘라낼 높이
+void Image::render(HDC hdc, int sourX, int sourY, int width, int height, BYTE alpha)
+{
+	render(hdc, _centerX - width / 2, _centerY - height / 2, sourX, sourY, width, height, alpha);
 }
 
-void Image::render(HDC hdc, int destX, int destY)
+/// 이미지 객체의 중심 좌표를 무시하고 원하는 좌표에 그릴 수 있다.
+/// 위치 렌더링 : 화면에 그릴 위치 x, y
+void Image::render(HDC hdc, float destX, float destY, BYTE alpha)
 {
-	//투명처리를 할 경우
-	if (_trans)
-	{
-		//gdi를 뺀 함수도 있다. 
-		GdiTransparentBlt(
-			hdc,		//복사할 곳 DC
-			destX,		//대상 좌표 X시작점
-			destY,		//대상 좌표 Y시작점
-			_imageInfo->width, //이미지 폭
-			_imageInfo->height, //이미지 높이
-			_imageInfo->hMemDC, 
-			0, //복사 좌표 시작
-			0, //복사 좌표 시작
-			_imageInfo->width, //복사 폭
-			_imageInfo->height, //폭사 높이
-			_transColor	//복사에서 제외할 색상
-			);
-	}
-	//하지 않을 경우
-	else
-	{
-		//StrechBlt는 확대축소하여 복사 가능
-		BitBlt(hdc, destX, destY, _imageInfo->width, _imageInfo->height, _imageInfo->hMemDC, 0, 0, SRCCOPY);
-	}
-
+	render(hdc, destX, destY, 0, 0, _width, _height, alpha);
 }
-
-void Image::render(HDC hdc, int sourX, int sourY, int width, int height)
+/// 위치 렌더링 : 화면에 그릴 위치 x, y, 원본이미지의 상단 좌측 좌표 x, y, 잘라낼 폭, 잘라낼 높이
+void Image::render(HDC hdc, float destX, float destY, int sourX, int sourY, int width, int height, BYTE alpha)
 {
-	//투명처리를 할 경우
+	//투명도가 있으면
+	if (alpha != 255)
+	{
+		alphaRender(hdc, destX, destY, sourX, sourY, width, height, alpha);
+		return;
+	}
+
+	//투명도가 없으면
 	if (_trans)
 	{
-		int widthSour, heightSour;
-		//gdi를 뺀 함수도 있다. 
-		GdiTransparentBlt(
-			hdc,		//복사할 곳 DC
-			_imageInfo->centerX - width / 2,
-			_imageInfo->centerY - height / 2,
-			width,
-			height,
-			_imageInfo->hMemDC,
-			sourX,
-			sourY,
-			width,
-			height,
-			_transColor	//복사에서 제외할 색상
-			);
+		GdiTransparentBlt(hdc, destX, destY, width, height, _imageInfo->hMemDC, sourX, sourY, width, height, _transColor);
 	}
-	//하지 않을 경우
 	else
 	{
-		//StrechBlt는 확대축소하여 복사 가능
-		BitBlt(hdc, _imageInfo->centerX - width / 2, _imageInfo->centerY - height / 2, width, height, _imageInfo->hMemDC, sourX, sourY, SRCCOPY);
-	}
-
-}
-
-void Image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int width, int height)
-{
-	//투명처리를 할 경우
-	if (_trans)
-	{
-		int widthSour, heightSour;
-		//gdi를 뺀 함수도 있다. 
-		GdiTransparentBlt(
-			hdc,		//복사할 곳 DC
-			destX,		//대상 좌표 X시작점
-			destY,		//대상 좌표 Y시작점
-			width,
-			height,
-			_imageInfo->hMemDC,
-			sourX,
-			sourY,
-			width,
-			height,
-			_transColor	//복사에서 제외할 색상
-			);
-	}
-	//하지 않을 경우
-	else
-	{
-		//StrechBlt는 확대축소하여 복사 가능
 		BitBlt(hdc, destX, destY, width, height, _imageInfo->hMemDC, sourX, sourY, SRCCOPY);
 	}
 
 }
 
-void Image::frameRender(HDC hdc)
-{
-	//투명처리를 할 경우
-	if (_trans)
-	{
-		int widthSour, heightSour;
-		//gdi를 뺀 함수도 있다. 
-		GdiTransparentBlt(
-			hdc,		//복사할 곳 DC
-			_imageInfo->centerX - _imageInfo->frameWidth / 2,
-			_imageInfo->centerY - _imageInfo->frameHeight / 2,		//대상 좌표 Y시작점
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_imageInfo->hMemDC,
-			_imageInfo->currentFrameX * _imageInfo->frameWidth,//
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,//
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_transColor	//복사에서 제외할 색상
-			);
-	}
-	//하지 않을 경우
-	else
-	{
-		//StrechBlt는 확대축소하여 복사 가능
-		BitBlt(hdc,
-			_imageInfo->centerX - _imageInfo->frameWidth / 2,
-			_imageInfo->centerY - _imageInfo->frameHeight / 2,
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_imageInfo->hMemDC,
-			_imageInfo->currentFrameX * _imageInfo->frameWidth,
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,
-			SRCCOPY);
-	}
-
-}
-void Image::frameRender(HDC hdc, int destX, int destY)
-{
-	//투명처리를 할 경우
-	if (_trans)
-	{
-		int widthSour, heightSour;
-		//gdi를 뺀 함수도 있다. 
-		GdiTransparentBlt(
-			hdc,		//복사할 곳 DC
-			destX - _imageInfo->frameWidth / 2,
-			destY - _imageInfo->frameHeight / 2,		//대상 좌표 Y시작점
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_imageInfo->hMemDC,
-			_imageInfo->currentFrameX * _imageInfo->frameWidth,//
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,//
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_transColor	//복사에서 제외할 색상
-			);
-	}
-	//하지 않을 경우
-	else
-	{
-		BitBlt(hdc,
-			destX - _imageInfo->frameWidth / 2,
-			destY - _imageInfo->frameHeight / 2,
-			_imageInfo->frameWidth,
-			_imageInfo->frameHeight,
-			_imageInfo->hMemDC,
-			_imageInfo->currentFrameX * _imageInfo->frameWidth,
-			_imageInfo->currentFrameY * _imageInfo->frameHeight,
-			SRCCOPY);
-	}
-
-}
-
-void Image::alphaRender(HDC hdc, BYTE alpha)
+void Image::alphaRender(HDC hdc, float destX, float destY, int sourX, int sourY, int width, int height, BYTE alpha)
 {
 	_blendFunc.SourceConstantAlpha = alpha;
 
 	//투명처리를 할 경우
 	if (_trans)
 	{
-		BitBlt(_blendImage->hMemDC, 0, 0, WIN_SIZE_X, WIN_SIZE_Y, hdc, 0, 0, SRCCOPY);
-		//gdi를 뺀 함수도 있다. 
+		//이미지 위치와 크기만큼 배경 DC의 그림을 가져와 blendImage에 복사.
+		BitBlt(_blendImage->hMemDC, destX, destY, width, height, hdc, destX, destY, SRCCOPY);
 		
-		
-		GdiTransparentBlt(
-			_blendImage->hMemDC,		//복사할 곳 DC
-			_imageInfo->centerX - _imageInfo->width / 2,		//대상 좌표 X시작점
-			_imageInfo->centerY - _imageInfo->height / 2,		//대상 좌표 Y시작점
-			_imageInfo->width, //이미지 폭
-			_imageInfo->height, //이미지 높이
-			_imageInfo->hMemDC,
-			0, //복사 좌표 시작
-			0, //복사 좌표 시작
-			_imageInfo->width, //복사 폭
-			_imageInfo->height, //폭사 높이
-			_transColor	//복사에서 제외할 색상
-			);
-		
-		
-		//return;
-		AlphaBlend(hdc, _imageInfo->centerX - _imageInfo->width / 2, _imageInfo->centerY - _imageInfo->height / 2, _imageInfo->width, _imageInfo->height, _blendImage->hMemDC,
-			_imageInfo->centerX - _imageInfo->width / 2, _imageInfo->centerY - _imageInfo->height / 2, _imageInfo->width, _imageInfo->height, _blendFunc);
+		//blendImage에 이미지를 복사
+		GdiTransparentBlt(_blendImage->hMemDC, destX, destY, width, height, _imageInfo->hMemDC, sourX, sourY, width, height, _transColor);
+
+		//투명도를 지정하여 배경DC에 이미지를 범위만큼 복사.
+		AlphaBlend(hdc, destX, destY, width, height, _blendImage->hMemDC, destX, destY, width, height, _blendFunc);
+
 	}
 	//하지 않을 경우
 	else
 	{
-		AlphaBlend(hdc, _imageInfo->centerX - _imageInfo->width / 2, _imageInfo->centerY - _imageInfo->height / 2, _imageInfo->width, _imageInfo->height, _blendImage->hMemDC,
-			_imageInfo->centerX - _imageInfo->width / 2, _imageInfo->centerY - _imageInfo->height / 2, _imageInfo->width, _imageInfo->height, _blendFunc);
+		//AlphaBlend(hdc, destX, destY, width, height, _blendImage->hMemDC, sourX, sourY, width, height, _blendFunc);
 	}
 }

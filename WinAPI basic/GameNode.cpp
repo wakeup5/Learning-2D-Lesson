@@ -19,6 +19,7 @@ HRESULT GameNode::initialize(void)
 	SetTimer(_hWnd, 0, 10, NULL);
 
 	KEYMANAGER->initialize();
+	IMAGEMANAGER->initialize();
 
 	setBackBuffer();
 
@@ -28,13 +29,16 @@ HRESULT GameNode::initialize(void)
 //해제
 void GameNode::release(void)
 {
-	_backBuffer->release();
-	SAFE_DELETE(_backBuffer);
+	//_backBuffer->release();
+	//SAFE_DELETE(_backBuffer);
 
 	KillTimer(_hWnd, 0);
 
 	KEYMANAGER->release();
 	KEYMANAGER->releaseSingleton();
+
+	IMAGEMANAGER->release();
+	IMAGEMANAGER->releaseSingleton();
 }
 
 //화면갱신
@@ -91,7 +95,7 @@ LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 //백버퍼 셋팅
 void GameNode::setBackBuffer()
 {
-	_backBuffer = new Image();
-	_backBuffer->initialize(WIN_SIZE_X, WIN_SIZE_Y);
-
+	_backBuffer = IMAGEMANAGER->addImage("backBuffer", WIN_SIZE_X, WIN_SIZE_Y);
+	//_backBuffer = new Image();
+	//_backBuffer->initialize(WIN_SIZE_X, WIN_SIZE_Y);
 }

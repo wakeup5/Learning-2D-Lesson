@@ -9,10 +9,11 @@
 @class	Image
 @author	박진한(wlsgks5@naver.com)
 @date	2015/05/26
+@brief	이미지와 이미지의 위치, 크기, 투명도값을 가진 클래스
 */
 class Image
 {
-private:
+protected:
 	enum IMAGE_LOAD_KIND
 	{
 		LOAD_RESOURCES = 0, //리소스 로드
@@ -27,146 +28,91 @@ private:
 		HDC hMemDC;
 		HBITMAP hBit;
 		HBITMAP hOBit;
-		float centerX;
-		float centerY;
-		int width;
-		int height;
-		int currentFrameX;
-		int currentFrameY;
-		int maxFrameX;
-		int maxFrameY;
-		int frameWidth;
-		int frameHeight;
-		BYTE loadType;
-		RECT boundingBox;
-		
-		//구조체 초기화
+
 		tagImageInfo()
 		{
 			resID = 0;
 			hMemDC = NULL;
 			hBit = NULL;
 			hOBit = NULL;
-			centerX = 0;
-			centerY = 0;
-			width = 0;
-			height = 0;
-			currentFrameX = 0;
-			currentFrameY = 0;
-			maxFrameX = 0;
-			maxFrameY = 0;
-			frameWidth = 0;
-			frameHeight = 0;
-			loadType = LOAD_RESOURCES;
-			boundingBox = makeRect(0, 0, 0, 0);
 		};
 
-	}IMAGE_INFO, *LPIMAGE_INFO;
+	}ImageInfo;
 
-	LPIMAGE_INFO _imageInfo;	//이미지 경로
-	CHAR *_fileName;			//이미지 경로명
-	BOOL _trans;				//투명도
-	COLORREF _transColor;		//투명 컬러키
+	int _width;
+	int _height;
+	
+	float _centerX;
+	float _centerY;
 
-	BLENDFUNCTION _blendFunc;	//알파블렌드
-	LPIMAGE_INFO _blendImage;	//
+	RECT _imageScale;
 
-	inline void setBoundingBox()
+	ImageInfo *_imageInfo;
+	CHAR* _fileName;
+	bool _trans;
+	COLORREF _transColor;
+
+	BLENDFUNCTION _blendFunc;
+	ImageInfo *_blendImage;
+
+	virtual void setBoundingBox()
 	{
-		_imageInfo->boundingBox = makeRectCenter(_imageInfo->centerX, _imageInfo->centerY, _imageInfo->width, _imageInfo->height);
+		_imageScale = makeRectCenter(_centerX, _centerY, _width, _height);
 	}
+
+	/// 투명 조절 출력
+	void alphaRender(HDC hdc, float destX, float destY, int sourX, int sourY, int width, int height, BYTE alpha);
 public:
 	Image();
 	~Image();
-
-	//빈 비트맵 하나 생성
+	/// 빈 비트맵 생성
 	HRESULT initialize(int width, int height);
-
-	//이미지 설정(파일로 읽어옴)
-	//폭과 높이를 가진 이미지
+	/// 이미지 로드 : 파일 명, 이미지 폭, 이미지 높이, 제외여부, 제외할 색
 	HRESULT initialize(const char* fileName, int width, int height, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
-	//중심좌표와 폭 높이
+	/// 이미지 로드 : 파일 명, 중심 좌표 x, 중심 좌표 y, 이미지 폭, 이미지 높이, 제외여부, 제외할 색
 	HRESULT initialize(const char* fileName, float centerX, float centerY, int width, int height, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
 
-	//프레임 관련
-	//폭 높이와 행열 갯수
-	HRESULT initialize(const char* fileName, int width, int height, int frameColumn, int frameRow, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
-	//폭 높이, 중심 좌표, 행열 갯수
-	HRESULT initialize(const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
-
+	/// 이미지 자원 반환
 	void release(void);
 
 	//투명키 값 설정
 	void setTransColor(BOOL trans, COLORREF transColor);
 
-	//일반 렌더링
-	void render(HDC hdc);
-	void render(HDC hdc, int sourX, int sourY, int width, int height);
+	/// 일반 렌더링
+	void render(HDC hdc, BYTE alpha = 255);
+	/// 일반 렌더링 : 원본이미지의 상단 좌측 좌표 x, y, 잘라낼 폭, 잘라낼 높이
+	void render(HDC hdc, int sourX, int sourY, int width, int height, BYTE alpha = 255);
 
-	//이미지 객체의 중심 좌표를 무시하고 원하는 좌표에 그릴 수 있다.
-	void render(HDC hdc, int destX, int destY);
-	void render(HDC hdc, int destX, int destY, int sourX, int sourY, int width, int height);
+	/// 이미지 객체의 중심 좌표를 무시하고 원하는 좌표에 그릴 수 있다.
+	/// 위치 렌더링 : 화면에 그릴 위치 x, y
+	void render(HDC hdc, float destX, float destY, BYTE alpha = 255);
+	/// 위치 렌더링 : 화면에 그릴 위치 x, y, 원본이미지의 상단 좌측 좌표 x, y, 잘라낼 폭, 잘라낼 높이
+	void render(HDC hdc, float destX, float destY, int sourX, int sourY, int width, int height, BYTE alpha = 255);
 
-	//프레임 렌더
-	void frameRender(HDC hdc);
-	void frameRender(HDC hdc, int destX, int destY);
-
-	void alphaRender(HDC hdc, BYTE alpha);
-
-	//DC얻기
+	/// DC얻기
 	inline HDC getMemDC(){ return _imageInfo->hMemDC; }
 
-	//좌표 x
-	inline void setX(float x){ _imageInfo->centerX = x; setBoundingBox(); }
-	inline float getX(){ return _imageInfo->centerX; }
+	/// 중심 좌표 x 설정
+	inline void setX(float x){ _centerX = x; setBoundingBox(); }
+	/// 중심 좌표 x 반환
+	inline float getX(){ return _centerX; }
 
-	//좌표 y
-	inline void setY(float y){ _imageInfo->centerY = y; setBoundingBox(); }
-	inline float getY(){ return _imageInfo->centerY; }
+	/// 중심 좌표 y 설정
+	inline void setY(float y){ _centerY = y; setBoundingBox(); }
+	/// 중심 좌표 y 반환
+	inline float getY(){ return _centerY; }
 
-	//좌표 x, y
-	inline void setCenter(float x, float y){ _imageInfo->centerX = x; _imageInfo->centerY = y; setBoundingBox(); }
+	/// 중심 좌표 x, y 설정
+	inline void setCenter(float x, float y){ _centerX = x; _centerY = y; setBoundingBox(); }
 
-	//가로 해상도
-	inline int getWidth(){ return _imageInfo->width; }
+	/// 가로 해상도 반환
+	inline int getWidth(){ return _width; }
 
-	//세로 해상도
-	inline int getHeight(){ return _imageInfo->height; }
+	/// 세로 해상도 반환
+	inline int getHeight(){ return _height; }
 
-	//바운딩 박스
-	inline RECT boundingBox(){ return _imageInfo->boundingBox; }
+	/// 바운딩 박스 반환
+	inline RECT boundingBox(){ return _imageScale; }
 
-	inline void setFrameX(int frameX)
-	{
-		if (frameX > _imageInfo->maxFrameX)
-		{
-			_imageInfo->currentFrameX = _imageInfo->maxFrameX;
-		}
-		else
-		{
-			_imageInfo->currentFrameX = frameX; 
-		}
-	}
-	inline void setFrameY(int frameY)
-	{
-		if (frameY > _imageInfo->maxFrameY)
-		{
-			_imageInfo->currentFrameY = _imageInfo->maxFrameY;
-		}
-		else
-		{
-			_imageInfo->currentFrameY = frameY;
-		}
-	}
-
-	inline int getMaxFrameX(){ return _imageInfo->maxFrameX; }
-	inline int getMaxFrameY(){ return _imageInfo->maxFrameY; }
-
-	inline int getFrameX(){ return _imageInfo->currentFrameX; }
-	inline int getFrameY(){ return _imageInfo->currentFrameY; }
-
-	inline int getFrameWidth(){ return _imageInfo->frameWidth; }
-	inline int getFrameHeight(){ return _imageInfo->frameHeight; }
-	
 };
 

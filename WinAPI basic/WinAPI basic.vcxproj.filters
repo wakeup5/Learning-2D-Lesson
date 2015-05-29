@@ -60,6 +60,12 @@
     <ClInclude Include="GameNode.h">
       <Filter>Game2DFramework</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteImage.h">
+      <Filter>Game2DFramework\image</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>Game2DFramework\image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,6 +87,12 @@
       <Filter>GameStudy</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
+      <Filter>Game2DFramework\image</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteImage.cpp">
+      <Filter>Game2DFramework\image</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
       <Filter>Game2DFramework\image</Filter>
     </ClCompile>
   </ItemGroup>

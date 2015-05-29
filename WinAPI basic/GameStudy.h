@@ -1,6 +1,7 @@
 #pragma once
 #include "GameNode.h"
 #include "Image.h"
+#include "SpriteImage.h"
 
 using namespace std;
 
@@ -10,6 +11,8 @@ class GameStudy :
 private:
 	Image *_background;
 
+	Image *_image;
+	SpriteImage *_s;
 public:
 	GameStudy(){}
 	virtual ~GameStudy(){}
