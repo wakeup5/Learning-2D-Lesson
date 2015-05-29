@@ -11,8 +11,6 @@ class GameStudy :
 private:
 	Image *_background;
 
-	Image *_image;
-	SpriteImage *_s;
 public:
 	GameStudy(){}
 	virtual ~GameStudy(){}

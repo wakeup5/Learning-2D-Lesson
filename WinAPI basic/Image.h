@@ -14,6 +14,7 @@
 class Image
 {
 protected:
+	/// 이미지 로드 타입
 	enum IMAGE_LOAD_KIND
 	{
 		LOAD_RESOURCES = 0, //리소스 로드
@@ -22,6 +23,7 @@ protected:
 		LOAD_END			//이넘문의 끝 혹은 길이
 	};
 
+	/// 이미지를 저장 할 메모리 DC 구조체
 	typedef struct tagImageInfo
 	{
 		DWORD resID;
@@ -39,20 +41,31 @@ protected:
 
 	}ImageInfo;
 
+	/// 이미지 폭
 	int _width;
+	/// 이미지 높이
 	int _height;
 	
+	/// 이미지 중심 좌표 x
 	float _centerX;
+	/// 이미지 중심 좌표 y
 	float _centerY;
 
+	/// 이미지가 위치한 크기
 	RECT _imageScale;
 
+	/// 이미지를 저장할 DC
 	ImageInfo *_imageInfo;
+	/// 이미지 파일 경로, 파일명
 	CHAR* _fileName;
+	/// 제외할 색상이 있는지의 여부
 	bool _trans;
+	/// 제외할 색상
 	COLORREF _transColor;
 
+	/// 투명도 설정 값
 	BLENDFUNCTION _blendFunc;
+	/// 투명 이미지를 적용할 메모리DC
 	ImageInfo *_blendImage;
 
 	virtual void setBoundingBox()

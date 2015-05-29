@@ -8,8 +8,6 @@ HRESULT GameStudy::initialize(void)
 	_mapImage = IMAGEMANAGER->addImage("mapImage", "map.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 	_background = IMAGEMANAGER->addImage("background", "resource/11.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 
-	_s = IMAGEMANAGER->addSpriteImage("s", "resource/c1.bmp", WIN_SIZE_X / 2.0f, WIN_SIZE_Y / 2.0f, 198, 256, 3, 4, TRUE, RGB(255, 0, 255));
-
 	gameInit();
 
 	return S_OK;
@@ -26,32 +24,14 @@ void GameStudy::update(void)
 {
 	GameNode::update();
 
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
-	{
-		_s->setFrameX(_s->getFrameX() - 1);
-	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
-	{
-		_s->setFrameX(_s->getFrameX() + 1);
-	}
-
-	if (PtInRect(&_s->boundingBox(), _mousePoint))
-	{
-		_s->setFrameX(2);
-	}
-
 }
 
 //화면출력
 void GameStudy::render(HDC hdc)
 {
 	HDC backDC = getBackBuffer()->getMemDC();
-
 	_mapImage->render(backDC);
 	_background->render(backDC);
-
-	_s->frameRender(backDC, 100);
 
 	getBackBuffer()->render(hdc);
 }
@@ -82,5 +62,3 @@ void GameStudy::gameInit()
 //스테이지 하나만 구현
 //압정있으면 점프해서 넘어감
 //이미지는 자유롭게하나 가능하면 똑같이
-
-//4. 
