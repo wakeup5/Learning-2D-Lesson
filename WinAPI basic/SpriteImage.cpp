@@ -27,8 +27,12 @@ HRESULT SpriteImage::initialize(const char* fileName, int width, int height, int
 //폭 높이, 중심 좌표, 행열 갯수
 HRESULT SpriteImage::initialize(const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans, COLORREF transColor)
 {
-	Image::initialize(fileName, centerX, centerY, width, height);
-	Image::setTransColor(trans, transColor);
+	if (FAILED(Image::initialize(fileName, centerX, centerY, width, height, trans, transColor)) || _imageInfo == NULL)
+	{
+		release();
+		return E_FAIL;
+	}
+	//Image::setTransColor(trans, transColor);
 	_maxFrameCol = frameColumn - 1;
 	_maxFrameRow = frameRow - 1;
 
@@ -38,7 +42,7 @@ HRESULT SpriteImage::initialize(const char* fileName, float centerX, float cente
 	setBoundingBox();
 
 	//이미지 리소스를 얻는데 실패하면
-	if (_imageInfo->hBit == 0)
+	if (Image::_imageInfo->hBit == 0)
 	{
 		release();
 		return E_FAIL;
@@ -48,12 +52,12 @@ HRESULT SpriteImage::initialize(const char* fileName, float centerX, float cente
 }
 
 //프레임 렌더
-void SpriteImage::frameRender(HDC hdc, BYTE alpha)
+void SpriteImage::render(HDC hdc, BYTE alpha)
 {
-	frameRender(hdc, _centerX - _frameWidth / 2, _centerY - _frameHeight / 2, alpha);
+	SpriteImage::render(hdc, _centerX - _frameWidth / 2, _centerY - _frameHeight / 2, alpha);
 }
 
-void SpriteImage::frameRender(HDC hdc, float destX, float destY, BYTE alpha)
+void SpriteImage::render(HDC hdc, float destX, float destY, BYTE alpha)
 {
 	Image::render(hdc, destX, destY, _currentFrameCol * _frameWidth, _currentFrameRow * _frameHeight, _frameWidth, _frameHeight, alpha);
 }

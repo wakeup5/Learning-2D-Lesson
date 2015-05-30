@@ -92,13 +92,13 @@ public:
 	void setTransColor(BOOL trans, COLORREF transColor);
 
 	/// 일반 렌더링
-	void render(HDC hdc, BYTE alpha = 255);
+	virtual void render(HDC hdc, BYTE alpha = 255);
 	/// 일반 렌더링 : 원본이미지의 상단 좌측 좌표 x, y, 잘라낼 폭, 잘라낼 높이
 	void render(HDC hdc, int sourX, int sourY, int width, int height, BYTE alpha = 255);
 
 	/// 이미지 객체의 중심 좌표를 무시하고 원하는 좌표에 그릴 수 있다.
 	/// 위치 렌더링 : 화면에 그릴 위치 x, y
-	void render(HDC hdc, float destX, float destY, BYTE alpha = 255);
+	virtual void render(HDC hdc, float destX, float destY, BYTE alpha = 255);
 	/// 위치 렌더링 : 화면에 그릴 위치 x, y, 원본이미지의 상단 좌측 좌표 x, y, 잘라낼 폭, 잘라낼 높이
 	void render(HDC hdc, float destX, float destY, int sourX, int sourY, int width, int height, BYTE alpha = 255);
 

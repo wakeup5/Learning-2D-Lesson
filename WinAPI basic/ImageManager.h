@@ -43,8 +43,15 @@ public:
 	SpriteImage* addSpriteImage(std::string key, const char* fileName, int width, int height, int frameColumn, int frameRow, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
 	SpriteImage* addSpriteImage(std::string key, const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
 
+	void render(std::string key, HDC hdc, BYTE alpha = 255);
+	void render(std::string key, HDC hdc, float destX, float destY, BYTE alpha = 255);
+
+	void render(std::string key, HDC hdc, int sourX, int sourY, int width, int height, BYTE alpha = 255);
+	void render(std::string key, HDC hdc, float destX, float destY, int sourX, int sourY, int width, int height, BYTE alpha = 255);
+
 	Image* findImage(std::string key);
 
 	bool removeImage(std::string key);
 	bool removeAll();
+
 };

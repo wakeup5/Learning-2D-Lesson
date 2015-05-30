@@ -27,8 +27,8 @@ public:
 	HRESULT initialize(const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
 
 	//«¡∑π¿” ∑ª¥ı
-	void frameRender(HDC hdc, BYTE alpha = 255);
-	void frameRender(HDC hdc, float destX, float destY, BYTE alpha = 255);
+	virtual void render(HDC hdc, BYTE alpha = 255);
+	virtual void render(HDC hdc, float destX, float destY, BYTE alpha = 255);
 
 	inline void setFrameX(int frameX)
 	{

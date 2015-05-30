@@ -15,6 +15,15 @@ Bullet::~Bullet()
 void Bullet::setAngleD(float angleD)
 {
 	_angleD = angleD;
+	while (_angleD < 0)
+	{
+		_angleD += 360;
+	}
+	while (_angleD > 360)
+	{
+		_angleD -= 360;
+	}
+
 	_angleR = _angleD * M_PI / 180;
 
 	_speedX = _speed * cos(_angleR);
@@ -28,6 +37,15 @@ float Bullet::getAngleD()
 void Bullet::setAngleR(float angleR)
 {
 	_angleR = angleR;
+	while (_angleR < 0)
+	{
+		_angleR += 2 * M_PI;
+	}
+	while (_angleR > 2 * M_PI)
+	{
+		_angleR -= 2 * M_PI;
+	}
+
 	_angleD = _angleR * 180 / M_PI;
 
 	_speedX = _speed * cos(_angleR);

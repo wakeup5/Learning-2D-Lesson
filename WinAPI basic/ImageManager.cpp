@@ -181,3 +181,41 @@ bool ImageManager::removeAll()
 
 	return false;
 }
+
+void ImageManager::render(std::string key, HDC hdc, BYTE alpha)
+{
+	Image *image = findImage(key);
+
+	if (image)
+	{
+		image->render(hdc, alpha);
+	}
+}
+void ImageManager::render(std::string key, HDC hdc, float destX, float destY, BYTE alpha)
+{
+	Image *image = findImage(key);
+
+	if (image)
+	{
+		image->render(hdc, destX, destY, alpha);
+	}
+}
+
+void ImageManager::render(std::string key, HDC hdc, int sourX, int sourY, int width, int height, BYTE alpha)
+{
+	Image *image = findImage(key);
+
+	if (image)
+	{
+		image->render(hdc, sourX, sourY, width, height, alpha);
+	}
+}
+void ImageManager::render(std::string key, HDC hdc, float destX, float destY, int sourX, int sourY, int width, int height, BYTE alpha)
+{
+	Image *image = findImage(key);
+
+	if (image)
+	{
+		image->render(hdc, destX, destY, sourX, sourY, width, height, alpha);
+	}
+}
