@@ -483,3 +483,13 @@ inline float getRadianByTwoPosition(float x1, float y1, float x2, float y2)
 {
 	return atan2(y1 - y2, x2 - x1);
 }
+
+/**
+숫자 디버깅용 함수
+*/
+inline void debugPrintNum(HDC hdc, int x, int y, float num)
+{
+	TCHAR s[128];
+	sprintf_s(s, "%.5f", num);
+	TextOut(hdc, x, y, s, _tcslen(s));
+}

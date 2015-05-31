@@ -1,16 +1,22 @@
 #pragma once
 #include "GameNode.h"
-#include "Bullet.h"
-#include "Image.h"
-#include "SpriteImage.h"
-
-using namespace std;
+#include "Player.h"
+#include "Block.h"
 
 class GameStudy :
 	public GameNode
 {
 private:
-	Image *_background;
+	Player _player;
+	GameObject _queen;
+
+	std::vector<Block*> _block;
+
+	bool _isLeft;
+	bool _isRight;
+
+	bool _isGameWin;
+	bool _isGameLose;
 
 public:
 	GameStudy(){}
@@ -23,4 +29,11 @@ public:
 
 	void gameInit();
 
+	void stage1();
+	void stage2();
+	void stage3();
+
+	void releaseBlock();
+
+	void playerCollition();
 };

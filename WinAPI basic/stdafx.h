@@ -31,12 +31,16 @@
 
 //사용자 정의 헤더
 #include "RandomFunction.h"
-#include "GameStudy.h"
 #include "KeyManager.h"
 #include "ImageManager.h"
 
 //클래스
-#include "Bullet.h"
+#include "GameObject.h"
+#include "Player.h"
+#include "Block.h"
+
+//게임 스터디
+#include "GameStudy.h"
 
 
 /* ========================================
@@ -49,8 +53,8 @@
 //윈도우 위치 사이즈
 #define WIN_START_X		100		//x위치
 #define WIN_START_Y		100		//y위치
-#define WIN_SIZE_X		500		//폭
-#define WIN_SIZE_Y		600		//높이
+#define WIN_SIZE_X		1000		//폭
+#define WIN_SIZE_Y		800		//높이
 
 //윈도우 스타일
 #define WIN_STYLE		WS_CAPTION | WS_SYSMENU
@@ -62,10 +66,8 @@
 
 //class RandomFunction
 #define RANDOM RandomFunction::getSingleton()
-
 //class KeyManager
 #define KEYMANAGER KeyManager::getSingleton()
-
 //class ImageManager
 #define IMAGEMANAGER ImageManager::getSingleton()
 

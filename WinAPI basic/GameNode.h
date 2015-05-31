@@ -6,8 +6,6 @@ class GameNode
 {
 private:
 	Image* _backBuffer;
-protected:
-	Image* _mapImage;
 public:
 	GameNode();
 	virtual ~GameNode();

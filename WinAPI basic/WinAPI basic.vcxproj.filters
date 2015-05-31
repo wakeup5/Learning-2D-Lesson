@@ -25,6 +25,9 @@
     <Filter Include="Game2DFramework\image">
       <UniqueIdentifier>{aa195cc9-ae78-4163-8851-a880de85b232}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameClass">
+      <UniqueIdentifier>{b59db531-7e85-4f56-9554-35581988b27b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -48,9 +51,6 @@
     <ClInclude Include="KeyManager.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>GameStudy</Filter>
-    </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>Game2DFramework\image</Filter>
     </ClInclude>
@@ -65,6 +65,15 @@
     </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>Game2DFramework\image</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>GameClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +92,6 @@
     <ClCompile Include="WinAPI basic.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>GameStudy</Filter>
-    </ClCompile>
     <ClCompile Include="Image.cpp">
       <Filter>Game2DFramework\image</Filter>
     </ClCompile>
@@ -94,6 +100,15 @@
     </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>Game2DFramework\image</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>GameClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
