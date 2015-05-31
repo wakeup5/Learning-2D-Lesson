@@ -1,23 +1,34 @@
 #pragma once
 #include "GameNode.h"
-#include "Player.h"
-#include "Block.h"
 
 class GameStudy :
 	public GameNode
 {
 private:
-	Player _player;
-	GameObject _queen;
+	enum OBJECT_TYPE
+	{
+		TYPE_NONE,
+		TYPE_FLOOR,
+		TYPE_FLOOR_LADDER,
+		TYPE_LADDER,
+		TYPE_FRUIT,
+		TYPE_THORN,
+		TYPE_MONSTER
+	};
+	struct Block
+	{
+		GameObject object;
+		OBJECT_TYPE type;
+	};
+	GameObject _player;
 
-	std::vector<Block*> _block;
+	Block _block[28 * 20];
+
+	bool _isDead;
+	bool _isJump;
+	bool _isBigJump;
 
 	bool _isLeft;
-	bool _isRight;
-
-	bool _isGameWin;
-	bool _isGameLose;
-
 public:
 	GameStudy(){}
 	virtual ~GameStudy(){}
@@ -29,11 +40,5 @@ public:
 
 	void gameInit();
 
-	void stage1();
-	void stage2();
-	void stage3();
-
-	void releaseBlock();
-
-	void playerCollition();
+	void playerMove();
 };

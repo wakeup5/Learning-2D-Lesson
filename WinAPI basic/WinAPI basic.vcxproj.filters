@@ -69,12 +69,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>GameClass</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>GameClass</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>GameClass</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -102,12 +96,6 @@
       <Filter>Game2DFramework\image</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>GameClass</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>GameClass</Filter>
-    </ClCompile>
-    <ClCompile Include="Block.cpp">
       <Filter>GameClass</Filter>
     </ClCompile>
   </ItemGroup>

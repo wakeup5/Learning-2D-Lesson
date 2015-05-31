@@ -7,17 +7,14 @@ using namespace std;
 HRESULT GameStudy::initialize(void)
 {
 	GameNode::initialize();
-	IMAGEMANAGER->addImage("mapImage", "map.bmp", WIN_SIZE_X, WIN_SIZE_Y);
-	IMAGEMANAGER->addImage("background", "resource/11.bmp", WIN_SIZE_X, WIN_SIZE_Y);
+	IMAGEMANAGER->addImage("mapImage", "resource/mapBlack.bmp", WIN_SIZE_X, WIN_SIZE_Y);
+	//->addImage("background", "resource/11.bmp", WIN_SIZE_X, WIN_SIZE_Y);
+	//IMAGEMANAGER->addImage("ponpoko bg", "resource/ponpokoBg.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 
-	//게임 이미지 로드
-	IMAGEMANAGER->addImage("king gold", "resource/king.bmp", 50, 50, TRUE, RGB(255, 255, 255));
-	IMAGEMANAGER->addImage("king normal", "resource/king2.bmp", 50, 50, TRUE, RGB(255, 255, 255));
-	IMAGEMANAGER->addImage("queen gold", "resource/q2.bmp", 50, 50, TRUE, RGB(255, 255, 255));
-	IMAGEMANAGER->addImage("queen normal", "resource/q1.bmp", 50, 50, TRUE, RGB(255, 255, 255));
+	IMAGEMANAGER->addSpriteImage("image", "resource/ponpoko1.bmp", 200, 360, 5, 9, TRUE, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("objectImage", "resource/ponpoko1.bmp", 200, 360, TRUE, RGB(255, 0, 255));
 
 	gameInit();
-	stage1();
 
 	return S_OK;
 }
@@ -33,74 +30,124 @@ void GameStudy::update(void)
 {
 	GameNode::update();
 	
-	_isLeft = true;
-	_isRight = true;
+	static SpriteImage* playerImage = static_cast<SpriteImage*>(_player.getImage());
+	static int time = 0;
 
-	if (_player.getRect().bottom >= WIN_SIZE_Y)
+	if (!_isDead)
 	{
-		_player.setSpeedY(0);
-		_player.setY(WIN_SIZE_Y - 25);
-	}
-	else
-	{
-		_player.gravity();
-	}
-	
-	playerCollition();
+		//플레이어 움직이고 충돌처리등등
+		if (!(_isJump || _isBigJump)) playerMove();
 
-	for (auto iter = _block.begin(); iter != _block.end(); iter++)
-	{
-		//블록 업데이트
-		(*iter)->update();
-
-		//다른 블럭이랑 충돌
-		for (auto iter2 = iter; iter2 != _block.end(); iter2++)
+		//플레이어 점프
+		static int spaceDownTime;
+		static int jumpTime;
+		static float y;
+		
+		if (KEYMANAGER->isStayKeyDown(VK_SPACE))
 		{
-			if (iter == iter2) continue;
-			RECT rr = (*iter)->getRect();
-			rr.bottom++;
-			if (IntersectRect(&rr, &rr, &(*iter2)->getRect())) //블럭과 충돌하는데
+			spaceDownTime++;
+			if (true)
 			{
-				if ((*iter)->getRect().bottom >= (*iter2)->getRect().top)//두번째가 첫번째 밑에 있으면
+				if (_isJump && spaceDownTime > 8)
 				{
-					(*iter)->setSpeedY(0);
-					(*iter)->setY((*iter2)->getY() - 50);
+					_isBigJump = true;
+					_isJump = false;
+					jumpTime = 80;
+				}
+				else if (!_isBigJump && !_isJump)
+				{
+					_isJump = true;
+					_isBigJump = false;
+					jumpTime = 50;
+					y = _player.getY();
 				}
 			}
 		}
 
-		//블럭 움직임
-		(*iter)->move();
+		if (KEYMANAGER->isOnceKeyUp(VK_SPACE))
+		{
+			spaceDownTime = 0;
+		}
+
+		if (_isBigJump)
+		{
+			playerImage->setFrameY(3);
+			if (jumpTime < 1)
+			{
+				_player.setY(y);
+			}
+			else if (jumpTime > 41)
+			{
+				_player.setY(_player.getY() - 1);
+				playerImage->setFrameX(((_isLeft) ? 0 : 2));
+			}
+			else if (jumpTime <= 41)
+			{
+				_player.setY(_player.getY() + 1);
+				playerImage->setFrameX(((_isLeft) ? 1 : 3));
+			}
+
+			_player.setX(_player.getX() + ((_isLeft) ? -1.2 : 1.2));
+		}
+		else if (_isJump)
+		{
+			playerImage->setFrameY(3);
+			if (jumpTime < 3)
+			{
+				_player.setY(y);
+			}
+			else if(jumpTime > 25)
+			{
+				_player.setY(_player.getY() - 1);
+				playerImage->setFrameX(((_isLeft) ? 0 : 2));
+			}
+			else if (jumpTime <= 25)
+			{
+				_player.setY(_player.getY() + 1);
+				playerImage->setFrameX(((_isLeft) ? 1 : 3));
+			}
+
+			_player.setX(_player.getX() + ((_isLeft) ? -1.2 : 1.2));
+		}	
+	
+		if ((_isJump || _isBigJump) && jumpTime <= 0)
+		{
+			_isJump = false;
+			_isBigJump = false;
+			playerImage->setFrameY(((_isLeft) ? 1 : 2));
+		}
+		else
+		{
+			jumpTime--;
+		}
+	}
+	else
+	{
+		if (_player.getRect().top < WIN_SIZE_Y)
+		{
+			_player.setY(_player.getY() + 1);
+		}
+		if (time % 5 == 0)
+		{
+			playerImage->setFrameY(8);
+
+			if (playerImage->getFrameX() >= 3)
+			{
+				playerImage->setFrameX(0);
+			}
+			else
+			{
+				playerImage->setFrameX(playerImage->getFrameX() + 1);
+			}
+
+			time = 0;
+		}
+		time++;
 	}
 
-	//키보드
-	//_player.setSpeedX(0);
-	if (_isLeft && KEYMANAGER->isStayKeyDown(VK_LEFT))
+	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
-		_player.setX(_player.getX() - 3);
-	}
-	if (_isRight && KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		_player.setX(_player.getX() + 3);
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_SPACE))
-	{
-		_player.jump();
-	}
-
-	_player.move();
-
-	if (KEYMANAGER->isStayKeyDown('1'))
-	{
-		stage1();
-	}
-	if (KEYMANAGER->isStayKeyDown('2'))
-	{
-		stage2();
-	}
-	if (KEYMANAGER->isStayKeyDown('3'))
-	{
-		stage3();
+		gameInit();
 	}
 }
 
@@ -109,232 +156,239 @@ void GameStudy::render(HDC hdc)
 {
 	HDC backDC = getBackBuffer()->getMemDC();
 	IMAGEMANAGER->render("mapImage", backDC);
-	IMAGEMANAGER->render("background", backDC);
+	//IMAGEMANAGER->render("background", backDC);
+	//IMAGEMANAGER->render("ponpoko bg", backDC);
 
-	_player.render(backDC);
-	_queen.render(backDC);
 
-	for (auto iter = _block.begin(); iter != _block.end(); iter++)
+	Image* objectImage = IMAGEMANAGER->findImage("objectImage");
+
+	for (int i = 0; i < 560; i++)
 	{
-		(*iter)->render(backDC);
+		switch (_block[i].type)
+		{
+		case TYPE_FLOOR:
+			objectImage->render(backDC, _block[i].object.getRect().left, _block[i].object.getRect().top, 0, 40 * 7, 20, 20);
+			break;
+		case TYPE_THORN:
+			objectImage->render(backDC, _block[i].object.getRect().left, _block[i].object.getRect().top, 40, 40 * 7, 20, 20);
+			//drawRectangle(backDC, _block[i].object.getRect());
+			break;
+		case TYPE_FLOOR_LADDER: case TYPE_LADDER:
+			objectImage->render(backDC, _block[i].object.getRect().left, _block[i].object.getRect().top, 80, 40 * 7, 20, 20);
+			break;
+		}
+
+		//drawRectangle(backDC, makeRect(_block[i].object.getRect().left, _block[i].object.getRect().top, _block[i].object.getWidth(), 3));
 	}
 
-	if (_isGameLose) TextOut(backDC, WIN_SIZE_X / 2, WIN_SIZE_Y / 2, "you lose!", _tcslen("you lose!"));
-	if (_isGameWin) TextOut(backDC, WIN_SIZE_X / 2, WIN_SIZE_Y / 2, "you Win!", _tcslen("you Win!"));
-
+	IMAGEMANAGER->render("image", backDC, _player.getRect().left - 10, _player.getRect().top - 20);
+	//drawRectangle(backDC, _player.getRect());
+	//drawRectangle(backDC, makeRect(_player.getRect().left + 2, _player.getRect().bottom, _player.getWidth() - 4, 3));
 	getBackBuffer()->render(hdc);
 }
 
 //게임 초기화
 void GameStudy::gameInit()
 {
-	_player.setImage(IMAGEMANAGER->findImage("king gold"));
-	_player.setSpeed(0);
-	_player.setSize(30, 50);
-	_player.setPosition(100, 100);
-	_player.initialize();
+	int top = 100;
+	int left = 125;
 
-	_queen.setImage(IMAGEMANAGER->findImage("queen normal"));
-	_queen.setSize(30, 50);
+	SpriteImage* playerImage = static_cast<SpriteImage*>(IMAGEMANAGER->findImage("image"));
+	_player.setImage(playerImage);
 
-	_isGameWin = false;
-	_isGameLose = false;
-}
+	_player.setPosition(500, top + (18 * 20));
+	_player.setSize(20, 20);
+	playerImage->setFrameY(0);
+	playerImage->setFrameX(0);
 
-
-void GameStudy::stage1()
-{
-	gameInit();
-	releaseBlock();
-
-	int blockPosition[150] =
+	int tile[20 * 28] =
 	{
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-		0, 4, 0, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0,
-		0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-		0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 1, 1, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0, 0, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 	};
 
-	for (int i = 0; i < 150; i++)
+	for (int i = 0; i < 560; i++)
 	{
-		if (blockPosition[i] == 1 || blockPosition[i] == 2)
-		{
-			Block* block = new Block;
-			block->setBlockKind(blockPosition[i]);
-			block->setPosition(100 + (i % 15 * 50), 100 + (i / 15 * 50));
-			block->setSize(50, 50);
-			_block.push_back(block);
-		}
-		else if (blockPosition[i] == 3)
-		{
-			_player.setPosition(100 + (i % 15 * 50), 100 + (i / 15 * 50));
-		}
-		else if (blockPosition[i] == 4)
-		{
-			_queen.setPosition(100 + (i % 15 * 50), 100 + (i / 15 * 50));
-		}
-	}
-}
-void GameStudy::stage2()
-{
-	gameInit();
-	releaseBlock();
-
-	int blockPosition[150] =
-	{
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0,
-		0, 0, 0, 4, 1, 1, 0, 3, 0, 1, 1, 2, 0, 0, 0,
-		0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0,
-		0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	};
-
-	for (int i = 0; i < 150; i++)
-	{
-		if (blockPosition[i] == 1 || blockPosition[i] == 2)
-		{
-			Block* block = new Block;
-			block->setBlockKind(blockPosition[i]);
-			block->setPosition(100 + (i % 15 * 50), 100 + (i / 15 * 50));
-			block->setSize(50, 50);
-			_block.push_back(block);
-		}
-		else if (blockPosition[i] == 3)
-		{
-			_player.setPosition(100 + (i % 15 * 50), 100 + (i / 15 * 50));
-		}
-		else if (blockPosition[i] == 4)
-		{
-			_queen.setPosition(100 + (i % 15 * 50), 100 + (i / 15 * 50));
-		}
-	}
-}
-void GameStudy::stage3()
-{
-	gameInit();
-	releaseBlock();
-
-	int blockPosition[150] =
-	{
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		3, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-		1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	};
-
-	for (int i = 0; i < 150; i++)
-	{
-		if (blockPosition[i] == 1 || blockPosition[i] == 2)
-		{
-			Block* block = new Block;
-			block->setBlockKind(blockPosition[i]);
-			block->setPosition(100 + (i % 15 * 50), 100 + (i / 15 * 50));
-			block->setSize(50, 50);
-			_block.push_back(block);
-		}
-		else if (blockPosition[i] == 3)
-		{
-			_player.setPosition(100 + (i % 15 * 50), 100 + (i / 15 * 50));
-		}
-		else if (blockPosition[i] == 4)
-		{
-			_queen.setPosition(100 + (i % 15 * 50), 100 + (i / 15 * 50));
-		}
-	}
-}
-
-void GameStudy::releaseBlock()
-{
-	for (auto iter = _block.begin(); iter != _block.end(); iter++)
-	{
-		SAFE_DELETE(*iter);
-		(*iter) = NULL;
+		_block[i].type = OBJECT_TYPE(tile[i]);
+		_block[i].object.setPosition(left + (i % 28 * 20), top + (i / 28 * 20));
+		_block[i].object.setSize(20, 20);
 	}
 
-	_block.clear();
+	_isDead = false;
+	_isJump = false;
+	_isBigJump = false;
+	_isLeft = true;
 }
 
-void GameStudy::playerCollition()
+void GameStudy::playerMove()
 {
-	//블록 충돌처리
-	RECT playerRect = _player.getRect();
+	SpriteImage* playerImage = static_cast<SpriteImage*>(_player.getImage());
+
+	RECT playerBottomSensor = makeRect(_player.getRect().left + 2, _player.getRect().bottom, _player.getWidth() - 4, 3);
+	RECT blockTopSensor;
 	RECT r;
-
-	//플레이어 상하단 센서
-	RECT playerTopSensor = makeRect(playerRect.left + 1, playerRect.top - 1, _player.getWidth() - 2, 1);
-	RECT playerBottomSensor = makeRect(playerRect.left + 1, playerRect.bottom + 1, _player.getWidth() - 2, 1);
-	//플레이어 측면 센서
-	RECT playerLeftSensor = makeRect(playerRect.left - 1, playerRect.top, 1, _player.getHeight());
-	RECT playerRightSensor = makeRect(playerRect.right + 1, playerRect.top, 1, _player.getHeight());
-
-	for (auto iter = _block.begin(); iter != _block.end(); iter++)
+	//좌측이동
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
-		//상단 체크
-		if (IntersectRect(&r, &playerTopSensor, &(*iter)->getRect()))
+		for (int i = 0; i < 560; i++)
 		{
-			_player.setSpeedY(0);
-			_player.setY((*iter)->getY() + 51);
-			if (_player.isGoldHand()) (*iter)->setGold();
-			if ((*iter)->getBlockKind() == 2) _player.setNormalHand();
+			blockTopSensor = makeRect(_block[i].object.getRect().left, _block[i].object.getRect().top, _block[i].object.getWidth(), 2);
+			if ((_block[i].type == TYPE_FLOOR || _block[i].type == TYPE_FLOOR_LADDER))
+			{
+				if (IntersectRect(&r, &playerBottomSensor, &blockTopSensor))
+				{
+					playerImage->setFrameY(1);
+					if (playerImage->getFrameX() >= playerImage->getMaxFrameX())
+					{
+						playerImage->setFrameX(0);
+					}
+					else
+					{
+						playerImage->setFrameX(playerImage->getFrameX() + 1);
+					}
+					_player.setX(_player.getX() - 3);
+					break;
+				}
+			}			
 		}
-		//하단 체크
-		if (IntersectRect(&r, &playerBottomSensor, &(*iter)->getRect())) //블럭과 충돌하는데
+		_isLeft = true;
+	}
+
+	if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+	{
+		playerImage->setFrameY(0);
+		playerImage->setFrameX(0);
+	}
+
+	//우측이동
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	{
+		for (int i = 0; i < 560; i++)
 		{
-			_player.setSpeedY(0);
-			_player.setY((*iter)->getY() - 50);
-			if (_player.isGoldHand()) (*iter)->setGold();
-			if ((*iter)->getBlockKind() == 2) _player.setNormalHand();
+			blockTopSensor = makeRect(_block[i].object.getRect().left, _block[i].object.getRect().top, _block[i].object.getWidth(), 2);
+			if ((_block[i].type == TYPE_FLOOR || _block[i].type == TYPE_FLOOR_LADDER))
+			{
+				if (IntersectRect(&r, &playerBottomSensor, &blockTopSensor))
+				{
+					playerImage->setFrameY(2);
+					if (playerImage->getFrameX() >= playerImage->getMaxFrameX())
+					{
+						playerImage->setFrameX(0);
+					}
+					else
+					{
+						playerImage->setFrameX(playerImage->getFrameX() + 1);
+					}
+					_player.setX(_player.getX() + 3);
+					break;
+				}
+			}			
 		}
-		//좌측 체크
-		if (IntersectRect(&r, &playerLeftSensor, &(*iter)->getRect())) //블럭과 충돌하는데
+		_isLeft = false;
+	}
+
+	if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+	{
+		playerImage->setFrameY(0);
+		playerImage->setFrameX(1);
+	}
+
+	//위로 이동
+	RECT playerLadderRect = makeRectCenter(_player.getPosition(), 2, 20);
+	RECT playerLadderDownRect = makeRectCenter(_player.getX(), _player.getY() + 12, 2, 3);
+	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	{
+		for (int i = 0; i < 560; i++)
 		{
-			_isLeft = false;
-			if (_player.isGoldHand()) (*iter)->setGold();
-			if ((*iter)->getBlockKind() == 2) _player.setNormalHand();
-		}
-		//우측 체크
-		if (IntersectRect(&r, &playerRightSensor, &(*iter)->getRect())) //블럭과 충돌하는데
-		{
-			_isRight = false;
-			if (_player.isGoldHand()) (*iter)->setGold();
-			if ((*iter)->getBlockKind() == 2) _player.setNormalHand();
+			if ((_block[i].type == TYPE_LADDER || _block[i].type == TYPE_FLOOR_LADDER) && 
+				IntersectRect(&r, &playerLadderRect, &_block[i].object.getRect()))
+			{
+				playerImage->setFrameY(4);
+				if (playerImage->getFrameX() >= 2)
+				{
+					playerImage->setFrameX(0);
+				}
+				else
+				{
+					playerImage->setFrameX(playerImage->getFrameX() + 1);
+				}
+				_player.setY(_player.getY() - 3);
+				break;
+			}
 		}
 	}
 
-	if (!_player.isGoldHand())
+	//밑으로 이동
+	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
-		_player.setImage(IMAGEMANAGER->findImage("king normal"));
+		for (int i = 0; i < 560; i++)
+		{
+			
+			if ((_block[i].type == TYPE_LADDER || _block[i].type == TYPE_FLOOR_LADDER) &&
+				//IntersectRect(&r, &playerLadderRect, &_block[i].object.getRect()) &&
+				IntersectRect(&r, &playerLadderDownRect, &_block[i].object.getRect()))
+			{
+				playerImage->setFrameY(4);
+				if (playerImage->getFrameX() >= 2)
+				{
+					playerImage->setFrameX(0);
+				}
+				else
+				{
+					playerImage->setFrameX(playerImage->getFrameX() + 1);
+				}
+				_player.setY(_player.getY() + 3);
+				break;
+			}
+		}
 	}
 
-	if (IntersectRect(&r, &_player.getRect(), &_queen.getRect()))
+	playerBottomSensor = makeRect(_player.getRect().left + 3, _player.getRect().bottom, _player.getWidth() - 6, 3);
+	bool isDead = true;
+	for (int i = 0; i < 560; i++)
 	{
-		if (_player.isGoldHand())
+		blockTopSensor = makeRect(_block[i].object.getRect().left, _block[i].object.getRect().top, _block[i].object.getWidth(), 2);
+		if (((_block[i].type == TYPE_FLOOR || _block[i].type == TYPE_FLOOR_LADDER) &&
+			IntersectRect(&r, &playerBottomSensor, &blockTopSensor)) || // 너구리가 땅을 딛고 있을때
+			((_block[i].type == TYPE_LADDER || _block[i].type == TYPE_FLOOR_LADDER)
+			&& IntersectRect(&r, &playerLadderRect, &_block[i].object.getRect())) || //사다리에 타고 있을때
+			((_block[i].type == TYPE_LADDER || _block[i].type == TYPE_FLOOR_LADDER)
+			&& IntersectRect(&r, &playerLadderDownRect, &_block[i].object.getRect())) //플레이어 꽁지가 사다리에 있을때
+			)
 		{
-			//패배
-			_queen.setImage(IMAGEMANAGER->findImage("queen gold"));
-			_isGameLose = true;
+			isDead = false;
+			break;
 		}
-		else
+
+		if (_block[i].type == TYPE_THORN && IntersectRect(&r, &_player.getRect(), &_block[i].object.getRect()))
 		{
-			_isGameWin = true;
+			isDead = true;
+			break;
 		}
+	}
+
+	if (!(_isJump || _isBigJump) && isDead)
+	{
+		cout << "죽음" << endl;
+		_isDead = true;;
 	}
 }
 
