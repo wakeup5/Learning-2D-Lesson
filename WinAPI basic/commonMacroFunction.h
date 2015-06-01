@@ -444,7 +444,8 @@ inline bool isCollisionCircle(RECT &c1, RECT &c2)
 @param	float 다른 원의 중심y
 @return	float 충돌 후의 각도
 */
-inline float getAngleToCollisionCircle(float x1, float y1, float x2, float y2)
+/*
+inline float getAngleRadian(float x1, float y1, float x2, float y2)
 {
 	float x = x2 - x1;
 	float y = y2 - y1;
@@ -457,6 +458,7 @@ inline float getAngleToCollisionCircle(float x1, float y1, float x2, float y2)
 	}
 	return angle;
 }
+*/
 
 /** getDistance 두 점 사이의 거리를 리턴
 @date	2015/05/22
@@ -466,10 +468,12 @@ inline float getAngleToCollisionCircle(float x1, float y1, float x2, float y2)
 @param	float
 @return	float
 */
+/*
 inline float getDistance(float x1, float y1, float x2, float y2)
 {
 	return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
+*/
 
 /** getRadianByTwoPosition 두 점의 기울기로 라디안 각도를 구함
 @date	2015/05/22
@@ -479,17 +483,9 @@ inline float getDistance(float x1, float y1, float x2, float y2)
 @param	float
 @return	float
 */
+/*
 inline float getRadianByTwoPosition(float x1, float y1, float x2, float y2)
 {
 	return atan2(y1 - y2, x2 - x1);
 }
-
-/**
-숫자 디버깅용 함수
 */
-inline void debugPrintNum(HDC hdc, int x, int y, float num)
-{
-	TCHAR s[128];
-	sprintf_s(s, "%.5f", num);
-	TextOut(hdc, x, y, s, _tcslen(s));
-}

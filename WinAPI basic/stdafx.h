@@ -35,6 +35,8 @@
 #include "KeyManager.h"
 #include "ImageManager.h"
 
+#include "util.h"
+
 //클래스
 #include "GameObject.h"
 

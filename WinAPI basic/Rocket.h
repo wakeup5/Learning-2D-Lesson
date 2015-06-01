@@ -6,8 +6,12 @@ class Rocket :
 	public GameNode
 {
 private:
-	std::vector<Missile*> _missile;
+	Image* _image;
 	SpriteImage* _boostImage;
+
+	GameObject _info;
+
+	Missile* _missile;
 public:
 	Rocket();
 	virtual ~Rocket();

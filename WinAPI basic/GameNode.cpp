@@ -10,8 +10,7 @@ GameNode::GameNode()
 
 GameNode::~GameNode()
 {
-	SAFE_DELETE(_object);
-	SAFE_DELETE(_image);
+
 }
 Image* GameNode::_backBuffer;
 
@@ -29,8 +28,6 @@ HRESULT GameNode::initialize(bool managerInit)
 		IMAGEMANAGER->initialize();				//이미지 매니져 셋팅
 		GameNode::_backBuffer = IMAGEMANAGER->addImage("backBuffer", WIN_SIZE_X, WIN_SIZE_Y);
 	}
-
-	_object = new GameObject();
 
 	return S_OK;
 }

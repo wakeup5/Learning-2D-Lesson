@@ -28,6 +28,9 @@
     <Filter Include="GameStudy\GameClass">
       <UniqueIdentifier>{b59db531-7e85-4f56-9554-35581988b27b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game2DFramework\util">
+      <UniqueIdentifier>{6e898b9f-4061-4591-bbc4-4aab491863bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -73,7 +76,10 @@
       <Filter>GameStudy\GameClass</Filter>
     </ClInclude>
     <ClInclude Include="Missile.h">
-      <Filter>GameStudy\GameClass</Filter>
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +114,10 @@
       <Filter>GameStudy\GameClass</Filter>
     </ClCompile>
     <ClCompile Include="Missile.cpp">
-      <Filter>GameStudy\GameClass</Filter>
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,10 +7,6 @@ private:
 	static Image* _backBuffer;
 	HDC _hdc;
 	bool _managerInit;
-protected:
-	GameObject* _object;
-	Image* _image;
-
 public:
 	GameNode();
 	virtual ~GameNode();
@@ -26,8 +22,5 @@ public:
 	Image* getBackBuffer(void) { return _backBuffer; }
 	HDC getMemDC() { return _backBuffer->getMemDC(); }
 	HDC getHDC() { return _hdc; }
-
-	GameObject* getObject(){ return _object; }
-	GameObject* getInfo(){ return _object; }
 };
 
