@@ -4,12 +4,34 @@
 
 GameObject::GameObject()
 {
+	_centerX = 0.0f;
+	_centerY = 0.0f;
+
+	_width = 0;
+	_height = 0;
+
+	_speedX = 0.0f;
+	_speedY = 0.0f;
+
+	_angleD = 0.0f;
+	_angleR = 0.0f;
+
+	_speed = 0.0f;
 }
 
 
 GameObject::~GameObject()
 {
 
+}
+
+void GameObject::initialize(float centerX, float centerY, int width, int height, float angleD, float speed)
+{
+	setPosition(centerX, centerY);
+	setAngleD(angleD);
+	setSpeed(speed);
+	setSize(width, height);
+	updateRect();
 }
 
 void GameObject::setAngleD(float angleD)

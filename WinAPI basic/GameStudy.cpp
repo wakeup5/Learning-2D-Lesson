@@ -10,6 +10,9 @@ HRESULT GameStudy::initialize(void)
 	IMAGEMANAGER->addImage("mapImage", "resource/mapBlack.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 	IMAGEMANAGER->addImage("background", "resource/background.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 
+	_rocket = new Rocket();
+	_rocket->initialize();
+
 	return S_OK;
 }
 
@@ -17,13 +20,14 @@ HRESULT GameStudy::initialize(void)
 void GameStudy::release(void)
 {
 	GameNode::release();
+	_rocket->release();
 }
 
 //화면갱신
 void GameStudy::update(void)
 {
 	GameNode::update();
-	
+	_rocket->update();
 }
 
 //화면출력
@@ -32,5 +36,7 @@ void GameStudy::render()
 	IMAGEMANAGER->render("mapImage", getMemDC());
 	IMAGEMANAGER->render("background", getMemDC());
 	
+	_rocket->render();
+
 	GameNode::render();
 }

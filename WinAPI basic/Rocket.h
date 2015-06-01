@@ -1,10 +1,16 @@
 #pragma once
 #include "GameNode.h"
-class Missile : public GameNode
+#include "Missile.h"
+
+class Rocket :
+	public GameNode
 {
+private:
+	std::vector<Missile*> _missile;
+	SpriteImage* _boostImage;
 public:
-	Missile();
-	virtual ~Missile();
+	Rocket();
+	virtual ~Rocket();
 
 	virtual HRESULT initialize();
 	virtual void release(void);

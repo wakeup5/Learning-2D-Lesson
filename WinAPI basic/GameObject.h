@@ -22,6 +22,8 @@ public:
 	GameObject();
 	~GameObject();
 
+	void initialize(float centerX, float centerY, int width = 0, int height = 0, float angleD = 0.0f, float speed = 0.0f);
+
 	void setPosition(POINT p) { _centerX = p.x, _centerY = p.y;}
 	void setPosition(float x, float y) { _centerX = x, _centerY = y;}
 	POINT getPosition(){ return POINT{ _centerX, _centerY }; }

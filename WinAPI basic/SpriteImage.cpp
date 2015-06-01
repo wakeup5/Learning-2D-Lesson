@@ -63,3 +63,86 @@ void SpriteImage::render(HDC hdc, float destX, float destY, BYTE alpha)
 }
 
 
+void SpriteImage::nextFrameX()
+{
+	if (_currentFrameCol >= _maxFrameCol)
+	{
+		_currentFrameCol = 0;
+	}
+	else
+	{
+		_currentFrameCol++;
+	}
+}
+void SpriteImage::nextFrameY()
+{
+	if (_currentFrameRow >= _maxFrameRow)
+	{
+		_currentFrameRow = 0;
+	}
+	else
+	{
+		_currentFrameRow++;
+	}
+}
+
+void SpriteImage::prevFrameX()
+{
+	if (_currentFrameCol < 0)
+	{
+		_currentFrameCol = _maxFrameCol;
+	}
+	else
+	{
+		_currentFrameCol--;
+	}
+}
+void SpriteImage::prevFrameY()
+{
+	if (_currentFrameRow < 0)
+	{
+		_currentFrameRow = _maxFrameRow;
+	}
+	else
+	{
+		_currentFrameRow--;
+	}
+}
+
+void SpriteImage::nextFrameX(int delay)
+{
+	if (_time % delay == 0)
+	{
+		nextFrameX();
+		_time = 0;
+	}
+	_time++;
+}
+void SpriteImage::nextFrameY(int delay)
+{
+	if (_time % delay == 0)
+	{
+		nextFrameY();
+		_time = 0;
+	}
+	_time++;
+}
+
+void SpriteImage::prevFrameX(int delay)
+{
+	if (_time % delay == 0)
+	{
+		prevFrameX();
+		_time = 0;
+	}
+	_time++;
+}
+void SpriteImage::prevFrameY(int delay)
+{
+	if (_time % delay == 0)
+	{
+		prevFrameY();
+		_time = 0;
+	}
+	_time++;
+}

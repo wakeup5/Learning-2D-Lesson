@@ -10,8 +10,10 @@ GameNode::GameNode()
 
 GameNode::~GameNode()
 {
-
+	SAFE_DELETE(_object);
+	SAFE_DELETE(_image);
 }
+Image* GameNode::_backBuffer;
 
 //초기화
 HRESULT GameNode::initialize(bool managerInit)
@@ -25,8 +27,10 @@ HRESULT GameNode::initialize(bool managerInit)
 
 		KEYMANAGER->initialize();					//키매니져 셋팅
 		IMAGEMANAGER->initialize();				//이미지 매니져 셋팅
-		_backBuffer = IMAGEMANAGER->addImage("backBuffer", WIN_SIZE_X, WIN_SIZE_Y);
+		GameNode::_backBuffer = IMAGEMANAGER->addImage("backBuffer", WIN_SIZE_X, WIN_SIZE_Y);
 	}
+
+	_object = new GameObject();
 
 	return S_OK;
 }

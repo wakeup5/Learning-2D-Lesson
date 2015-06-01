@@ -25,7 +25,7 @@
     <Filter Include="Game2DFramework\image">
       <UniqueIdentifier>{aa195cc9-ae78-4163-8851-a880de85b232}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameClass">
+    <Filter Include="GameStudy\GameClass">
       <UniqueIdentifier>{b59db531-7e85-4f56-9554-35581988b27b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -67,7 +67,13 @@
       <Filter>Game2DFramework\image</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>GameClass</Filter>
+      <Filter>GameStudy</Filter>
+    </ClInclude>
+    <ClInclude Include="Rocket.h">
+      <Filter>GameStudy\GameClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
+      <Filter>GameStudy\GameClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,7 +102,13 @@
       <Filter>Game2DFramework\image</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>GameClass</Filter>
+      <Filter>GameStudy</Filter>
+    </ClCompile>
+    <ClCompile Include="Rocket.cpp">
+      <Filter>GameStudy\GameClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>GameStudy\GameClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

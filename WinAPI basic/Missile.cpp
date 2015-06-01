@@ -4,8 +4,6 @@
 
 Missile::Missile()
 {
-	_width = 10;
-	_height = 10;
 }
 
 
@@ -13,9 +11,27 @@ Missile::~Missile()
 {
 }
 
-void Missile::move()
+
+HRESULT Missile::initialize()
 {
-	double radian = _degree * M_PI / 180;
-	_point.x = ROUNDING(_point.x - _speed * sin(radian), 0);
-	_point.y = ROUNDING(_point.y - _speed * cos(radian), 0);
+	GameNode::initialize();
+
+	//_object->setSize(5, 30);
+	_image = IMAGEMANAGER->addImage("bullet", "resource/missile.bmp", 5, 30, TRUE, RGB(255, 255, 255));
+
+	return S_OK;
+}
+void Missile::release(void)
+{
+
+}
+void Missile::update(void)
+{
+	//_object->getUpdateRect();
+	//_image->setCenter(getInfo()->getX(), getInfo()->getY());
+	getInfo()->move();
+}
+void Missile::render()
+{
+	_image->render(getMemDC(), getInfo()->getRect().left, getInfo()->getRect().top);
 }

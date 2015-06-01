@@ -12,6 +12,8 @@ private:
 
 	int _frameNum;
 
+	int _time = 0;
+
 	void setBoundingBox()
 	{
 		_imageScale = makeRectCenter(_centerX, _centerY, _frameWidth, _frameHeight);
@@ -69,5 +71,17 @@ public:
 
 	inline int getFrameWidth(){ return _frameWidth; }
 	inline int getFrameHeight(){ return _frameHeight; }
+
+	void nextFrameX();
+	void nextFrameY();
+	void prevFrameX();
+	void prevFrameY();
+
+	void nextFrameX(int delay);
+	void nextFrameY(int delay);
+	void prevFrameX(int delay);
+	void prevFrameY(int delay);
+
+
 };
 

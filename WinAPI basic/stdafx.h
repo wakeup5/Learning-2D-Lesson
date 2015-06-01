@@ -77,7 +77,7 @@
 #define DEBUGGING
 
 #ifdef DEBUGGING
-#pragma comment(linker,"/entry:WinMainCRTStartup /subsystem:console")
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #define DEBUGF(format, value) {printf(format, value);}
 #define DEBUG(str) {printf(str);}
 #endif
