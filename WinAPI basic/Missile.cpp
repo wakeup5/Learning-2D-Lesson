@@ -69,8 +69,8 @@ void Missile::move()
 
 		_missileVectorIter->move();
 
-		_missileVectorIter->image->nextFrameX(5);
-		_missileVectorIter->boostImage->nextFrameX(5);
+		_missileVectorIter->image->nextFrameX(1);
+		_missileVectorIter->boostImage->nextFrameX(3);
 
 		float x = _missileVectorIter->getX();
 		float y = _missileVectorIter->getY();

@@ -4,7 +4,6 @@
 class Missile :	public GameNode
 {
 private:
-
 	class MissileObject : public GameObject
 	{
 	public:
