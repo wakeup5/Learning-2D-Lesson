@@ -16,7 +16,8 @@ private:
 
 	float _speed;
 
-	Image* _image;
+	RECT _rect;
+
 public:
 	GameObject();
 	~GameObject();
@@ -36,7 +37,9 @@ public:
 
 	int getWidth(){ return _width; }
 	int getHeight(){ return _height; }
-	RECT getRect(){ return makeRectCenter(_centerX, _centerY, _width, _height); }
+	void updateRect(){ _rect = makeRectCenter(_centerX, _centerY, _width, _height); }
+	RECT getRect(){ return _rect; }
+	RECT getUpdateRect() { updateRect(); return _rect; }
 
 	void setAngleD(float angleD);
 	float getAngleD();
@@ -53,13 +56,6 @@ public:
 	void setSpeed(float speed);
 	float getSpeed();
 
-	virtual void move();
-
-	void setImage(Image* image){ _image = image; }
-	Image* getImage(){ return _image; }
-	//void initializeImage(std::string key, const char* fileName, int sourX, int sourY, int sourWidth, int sourHeight, bool trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
-	
-	void render(HDC);
-	//void spriteRenter(HDC);
+	void move();
 };
 

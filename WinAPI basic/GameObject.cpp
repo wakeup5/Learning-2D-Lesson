@@ -74,19 +74,18 @@ float GameObject::getSpeedY()
 
 void GameObject::setSpeed(float speed)
 {
-	/*
 	if (speed < 0)
 	{
 		speed = speed * -1;
 		setAngleD(getAngleD() + 180);
 	}
-	*/
 
 	_speed = speed;
 
 	_speedX = _speed * cos(_angleR);
 	_speedY = -_speed * sin(_angleR);
 }
+
 float GameObject::getSpeed()
 {
 	return _speed;
@@ -96,11 +95,6 @@ void GameObject::move()
 {
 	_centerX += _speedX;
 	_centerY += _speedY;
-}
 
-void GameObject::render(HDC hdc)
-{
-	if (!_image) return;
-
-	_image->render(hdc, _centerX - 50 / 2, _centerY - _height / 2);
+	updateRect();
 }

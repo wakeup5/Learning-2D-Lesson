@@ -1,23 +1,27 @@
 #pragma once
 
-#include "Image.h"
-
 class GameNode
 {
 private:
 	Image* _backBuffer;
+	HDC _hdc;
+	bool _managerInit;
+
+	GameObject *_object;
 public:
 	GameNode();
 	virtual ~GameNode();
 
-	virtual HRESULT initialize(void);
+	//virtual HRESULT initialize(void);
+	virtual HRESULT initialize(bool = false);
 	virtual void release(void);
 	virtual void update(void);
-	virtual void render(HDC hdc);
+	virtual void render();
 
 	virtual LRESULT mainProc(HWND, UINT, WPARAM, LPARAM);
 
-	void setBackBuffer();
-	Image *getBackBuffer(){ return _backBuffer; }
+	Image* getBackBuffer(void) { return _backBuffer; }
+	HDC getMemDC() { return _backBuffer->getMemDC(); }
+	HDC getHDC() { return _hdc; }
 };
 
