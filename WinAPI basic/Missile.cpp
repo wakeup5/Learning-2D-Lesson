@@ -20,6 +20,7 @@ HRESULT Missile::initialize(int max, float range)
 	_range = range;
 
 	//정적으로 생성
+	/*
 	for (int i = 0; i < _max; i++)
 	{
 		Missile::MissileObject missile;
@@ -36,6 +37,10 @@ HRESULT Missile::initialize(int max, float range)
 
 		_missileVector.push_back(missile);
 	}
+	*/
+
+	//동적으로 생성
+	//init 없음
 
 	return S_OK;
 }
@@ -63,6 +68,8 @@ void Missile::render()
 
 void Missile::move()
 {
+	//정적
+	/*
 	for (_missileVectorIter = _missileVector.begin(); _missileVectorIter != _missileVector.end(); _missileVectorIter++)
 	{
 		if (!_missileVectorIter->isFire) continue;
@@ -84,6 +91,35 @@ void Missile::move()
 			_missileVectorIter->isFire = false;
 		}
 	}
+	*/
+
+	//동적
+	for (_missileVectorIter = _missileVector.begin(); _missileVectorIter != _missileVector.end();)
+	{
+		_missileVectorIter->move();
+
+		_missileVectorIter->image->nextFrameX(5);
+		_missileVectorIter->boostImage->nextFrameX(3);
+
+		float x = _missileVectorIter->getX();
+		float y = _missileVectorIter->getY();
+
+		_missileVectorIter->image->setCenter(x, y);
+		_missileVectorIter->boostImage->setCenter(x, y + 50);
+
+		//라이프 타임
+		if (_range < myUtil::getDistanceByTwoPoint(_missileVectorIter->startX, _missileVectorIter->startY, x, y))
+		{
+			SAFE_RELEASE(_missileVectorIter->image);
+			SAFE_RELEASE(_missileVectorIter->boostImage);
+			_missileVectorIter = _missileVector.erase(_missileVectorIter);
+		}
+		else
+		{
+			_missileVectorIter++;
+		}
+	}
+
 }
 void Missile::draw()
 {
@@ -98,7 +134,8 @@ void Missile::draw()
 
 void Missile::fire(float startX, float startY)
 {
-	DEBUG("sss");
+	//정적
+	/*
 	for (_missileVectorIter = _missileVector.begin(); _missileVectorIter != _missileVector.end(); _missileVectorIter++)
 	{
 		if (_missileVectorIter->isFire) continue;
@@ -109,5 +146,26 @@ void Missile::fire(float startX, float startY)
 		_missileVectorIter->isFire = true;
 
 		break;
+	}
+	*/
+	//동적
+	if (_missileVector.size() < _max)
+	{
+		Missile::MissileObject missile;
+		missile.image = new SpriteImage;
+		missile.image->initialize("resource/missile2.bmp", 390, 61, 13, 1, TRUE, RGB(255, 0, 255));
+		missile.boostImage = new SpriteImage;
+		missile.boostImage->initialize("resource/missile boost.bmp", 84, 34, 4, 1, TRUE, RGB(255, 0, 255));
+
+		missile.setAngleD(90);
+		missile.setSpeed(5.3f);
+
+		missile.setSize(missile.image->getFrameWidth(), missile.image->getFrameHeight());
+		missile.setPosition(startX, startY);
+		missile.startX = startX;
+		missile.startY = startY;
+		missile.isFire = true;
+
+		_missileVector.push_back(missile);
 	}
 }

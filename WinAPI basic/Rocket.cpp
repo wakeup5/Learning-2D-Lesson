@@ -23,13 +23,17 @@ HRESULT Rocket::initialize()
 	_boostImage = IMAGEMANAGER->addSpriteImage("rocket boost", "resource/boost.bmp", 200, 298, 5, 1, TRUE, RGB(255, 0, 255));
 
 	_missile = new Missile;
-	_missile->initialize(10, 300);
+	_missile->initialize(10, 400);
+
+	_bullet = new Bullet;
+	_bullet->initialize(200, 200);
 
 	return S_OK;
 }
 void Rocket::release()
 {
 	_missile->release();
+	_bullet->release();
 }
 void Rocket::update()
 {
@@ -58,12 +62,22 @@ void Rocket::update()
 		_missile->fire(_info.getX(), _info.getY() - 50);
 	}
 
+	if (KEYMANAGER->isStayKeyDown('1'))
+	{
+		_bullet->fire(_info.getX(), _info.getY() - 50, M_PI / 2);
+		_bullet->fire(_info.getX(), _info.getY() - 50, M_PI * 1 / 4);
+		_bullet->fire(_info.getX(), _info.getY() - 50, M_PI * 1.5 / 4);
+		_bullet->fire(_info.getX(), _info.getY() - 50, M_PI * 2.5 / 4);
+		_bullet->fire(_info.getX(), _info.getY() - 50, M_PI * 3 / 4);
+	}
+
 	_image->setCenter(_info.getX(), _info.getY());
 
 	_boostImage->nextFrameX(2);
 	_boostImage->setCenter(_info.getX(), _info.getY() + 185);
 
 	_missile->update();
+	_bullet->update();
 }
 void Rocket::render()
 {
@@ -71,4 +85,5 @@ void Rocket::render()
 	_boostImage->render(getMemDC());
 
 	_missile->render();
+	_bullet->render();
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "GameNode.h"
 #include "Missile.h"
+#include "Bullet.h"
 
 class Rocket :
 	public GameNode
@@ -12,6 +13,7 @@ private:
 	GameObject _info;
 
 	Missile* _missile;
+	Bullet* _bullet;
 public:
 	Rocket();
 	virtual ~Rocket();
