@@ -1,19 +1,19 @@
 #pragma once
-#include "GameObject.h"
+#include "GameNode.h"
 class Enemy :
-	public GameObject
+	public GameNode
 {
 private:
-	bool _isLive = false;
-	int _speed = 10;
+	class EnemyObject : public GameObject
+	{
+	public:
+
+	};
+
 public:
 	Enemy();
 	~Enemy();
 
-	void setIsLive(bool i){ _isLive = i; }
-	bool getIsLive(){ return _isLive; }
 
-	void setSpeed(int speed){ _speed = speed; }
-	int getSpeed(){ return _speed; }
 };
 

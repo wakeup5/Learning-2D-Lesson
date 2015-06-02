@@ -24,18 +24,18 @@ public:
 
 	void initialize(float centerX, float centerY, int width = 0, int height = 0, float angleD = 0.0f, float speed = 0.0f);
 
-	void setPosition(POINT p) { _centerX = p.x, _centerY = p.y;}
-	void setPosition(float x, float y) { _centerX = x, _centerY = y;}
+	void setPosition(POINT p) { _centerX = p.x, _centerY = p.y; updateRect(); }
+	void setPosition(float x, float y) { _centerX = x, _centerY = y; updateRect(); }
 	POINT getPosition(){ return POINT{ _centerX, _centerY }; }
 
-	void setX(float x){ _centerX = x; }
-	void setY(float y){ _centerY = y; }
+	void setX(float x){ _centerX = x; updateRect(); }
+	void setY(float y){ _centerY = y; updateRect(); }
 	float getY(){ return _centerY; }
 	float getX(){ return _centerX; }
 
-	void setWidth(int width){ _width = width; }
-	void setHeight(int height){ _height = height; }
-	void setSize(int width, int height){ _width = width; _height = height; }
+	void setWidth(int width){ _width = width; updateRect(); }
+	void setHeight(int height){ _height = height; updateRect(); }
+	void setSize(int width, int height){ _width = width; _height = height; updateRect(); }
 
 	int getWidth(){ return _width; }
 	int getHeight(){ return _height; }

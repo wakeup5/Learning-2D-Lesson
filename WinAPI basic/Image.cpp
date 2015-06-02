@@ -13,7 +13,6 @@ Image::Image()
 
 }
 
-
 Image::~Image()
 {
 
@@ -137,6 +136,26 @@ void Image::release(void)
 		_trans = FALSE;
 		_transColor = RGB(0, 0, 0);
 	}
+
+	std::vector<SpriteImage*>::iterator iter;
+	for (iter = _vSpriteImage.begin(); iter != _vSpriteImage.end();)
+	{
+		SAFE_DELETE((*iter));
+		iter = _vSpriteImage.erase(iter);
+	}
+
+	_vSpriteImage.clear();
+}
+
+SpriteImage* Image::getSpriteImage(int frameCol, int frameRow)
+{
+	SpriteImage * sprite = new SpriteImage();
+
+	sprite->initialize(this, frameCol, frameRow);
+
+	_vSpriteImage.push_back(sprite);
+
+	return sprite;
 }
 
 //투명키 값 설정

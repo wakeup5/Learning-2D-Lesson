@@ -4,13 +4,14 @@
 @date   2015/05/26
 */
 #pragma once
-
+#include "SpriteImage.h"
 /**
 @class	Image
 @author	박진한(wlsgks5@naver.com)
 @date	2015/05/26
 @brief	이미지와 이미지의 위치, 크기, 투명도값을 가진 클래스
 */
+class SpriteImage;
 class Image
 {
 protected:
@@ -68,6 +69,8 @@ protected:
 	/// 투명 이미지를 적용할 메모리DC
 	ImageInfo *_blendImage;
 
+	std::vector<SpriteImage*> _vSpriteImage;
+
 	virtual void setBoundingBox()
 	{
 		_imageScale = makeRectCenter(_centerX, _centerY, _width, _height);
@@ -87,6 +90,8 @@ public:
 
 	/// 이미지 자원 반환
 	void release(void);
+
+	SpriteImage* getSpriteImage(int frameCol, int frameRow);
 
 	//투명키 값 설정
 	void setTransColor(BOOL trans, COLORREF transColor);

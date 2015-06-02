@@ -2,7 +2,7 @@
 #include "SpriteImage.h"
 
 
-SpriteImage::SpriteImage() : Image()
+SpriteImage::SpriteImage()
 {
 	_currentFrameCol = 0;
 	_currentFrameRow = 0;
@@ -12,40 +12,25 @@ SpriteImage::SpriteImage() : Image()
 	_frameHeight = 0;
 }
 
-
 SpriteImage::~SpriteImage()
 {
 
 }
 
-//폭 높이와 행열 갯수
-HRESULT SpriteImage::initialize(const char* fileName, int width, int height, int frameColumn, int frameRow, BOOL trans, COLORREF transColor)
+HRESULT SpriteImage::initialize(Image* image, int frameColumn, int frameRow)
 {
-	return initialize(fileName, _centerX, _centerY, width, height, frameColumn, frameRow, trans, transColor);
-}
-//폭 높이, 중심 좌표, 행열 갯수
-HRESULT SpriteImage::initialize(const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans, COLORREF transColor)
-{
-	if (FAILED(Image::initialize(fileName, centerX, centerY, width, height, trans, transColor)) || _imageInfo == NULL)
-	{
-		release();
-		return E_FAIL;
-	}
-	//이미지 리소스를 얻는데 실패하면
-	if (Image::_imageInfo->hBit == 0)
-	{
-		release();
-		return E_FAIL;
-	}
-	//Image::setTransColor(trans, transColor);
+	_image = image;
+
+	_centerX = _image->getX();
+	_centerY = _image->getY();
+
 	_maxFrameCol = frameColumn - 1;
 	_maxFrameRow = frameRow - 1;
 
-	_frameWidth = width / frameColumn;
-	_frameHeight = height / frameRow;
+	_frameWidth = _image->getWidth() / frameColumn;
+	_frameHeight = _image->getHeight() / frameRow;
 
 	setBoundingBox();
-
 
 	return S_OK;
 }
@@ -58,89 +43,110 @@ void SpriteImage::render(HDC hdc, BYTE alpha)
 
 void SpriteImage::render(HDC hdc, float destX, float destY, BYTE alpha)
 {
-	Image::render(hdc, destX, destY, _currentFrameCol * _frameWidth, _currentFrameRow * _frameHeight, _frameWidth, _frameHeight, alpha);
+	_image->render(hdc, destX, destY, _currentFrameCol * _frameWidth, _currentFrameRow * _frameHeight, _frameWidth, _frameHeight, alpha);
 }
 
 void SpriteImage::nextFrameX()
 {
-	if (_currentFrameCol >= _maxFrameCol)
+	if (_currentFrameCol++ >= _maxFrameCol)
 	{
 		_currentFrameCol = 0;
-	}
-	else
-	{
-		_currentFrameCol++;
 	}
 }
 void SpriteImage::nextFrameY()
 {
-	if (_currentFrameRow >= _maxFrameRow)
+	if (_currentFrameRow++ >= _maxFrameRow)
 	{
 		_currentFrameRow = 0;
-	}
-	else
-	{
-		_currentFrameRow++;
 	}
 }
 
 void SpriteImage::prevFrameX()
 {
-	if (_currentFrameCol < 0)
+	if (_currentFrameCol++ < 0)
 	{
 		_currentFrameCol = _maxFrameCol;
-	}
-	else
-	{
-		_currentFrameCol--;
 	}
 }
 void SpriteImage::prevFrameY()
 {
-	if (_currentFrameRow < 0)
+	if (_currentFrameRow++ < 0)
 	{
 		_currentFrameRow = _maxFrameRow;
 	}
-	else
-	{
-		_currentFrameRow--;
-	}
 }
 
-void SpriteImage::nextFrameX(int delay)
+void SpriteImage::nextFrame()
 {
-	if (_time % delay == 0)
-	{
-		nextFrameX();
-		_time = 0;
-	}
-	_time++;
-}
-void SpriteImage::nextFrameY(int delay)
-{
-	if (_time % delay == 0)
+	nextFrameX();
+	if (_currentFrameCol >= _maxFrameCol)
 	{
 		nextFrameY();
-		_time = 0;
 	}
-	_time++;
 }
-
-void SpriteImage::prevFrameX(int delay)
+void SpriteImage::prevFrame()
 {
-	if (_time % delay == 0)
-	{
-		prevFrameX();
-		_time = 0;
-	}
-	_time++;
-}
-void SpriteImage::prevFrameY(int delay)
-{
-	if (_time % delay == 0)
+	prevFrameX();
+	if (_currentFrameCol < 0)
 	{
 		prevFrameY();
-		_time = 0;
 	}
-	_time++;
+}
+
+
+void SpriteImage::nextFrameX(float mSecond)
+{
+	float tick = GetTickCount();
+	if (mSecond + _time <= tick)
+	{
+		_time = tick;
+		nextFrameX();
+	}
+}
+void SpriteImage::nextFrameY(float mSecond)
+{
+	float tick = GetTickCount();
+	if (mSecond + _time <= tick)
+	{
+		_time = tick;
+		nextFrameY();
+	}
+}
+
+void SpriteImage::prevFrameX(float mSecond)
+{
+	float tick = GetTickCount();
+	if (mSecond + _time <= tick)
+	{
+		_time = tick;
+		prevFrameX();
+	}
+}
+void SpriteImage::prevFrameY(float mSecond)
+{
+	float tick = GetTickCount();
+	if (mSecond + _time <= tick)
+	{
+		_time = tick;
+		prevFrameY();
+	}
+}
+
+void SpriteImage::nextFrame(float mSecond)
+{
+	float tick = GetTickCount();
+	if (mSecond + _time <= tick)
+	{
+		_time = tick;
+		nextFrame();
+	}
+}
+void SpriteImage::prevFrame(float mSecond)
+{
+	float tick = GetTickCount();
+	if (mSecond + _time <= tick)
+	{
+		_time = tick;
+		nextFrame();
+	}
 }

@@ -11,12 +11,17 @@ Bullet::~Bullet()
 {
 }
 
-HRESULT Bullet::initialize(int max, float range)
+HRESULT Bullet::initialize(int max, float range, const char* fileName, int frameCol, int frameRow)
 {
 	GameNode::initialize();
 
 	_max = max;
 	_range = range;
+
+	_image = IMAGEMANAGER->addImage("bullet", fileName, 5, 30, TRUE, RGB(255, 0, 255));
+
+	_frameCol = frameCol;
+	_frameRow = frameRow;
 
 	return S_OK;
 }
@@ -24,7 +29,6 @@ void Bullet::release()
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();)
 	{
-		SAFE_RELEASE(_viBullet->image);
 		_viBullet = _vBullet.erase(_viBullet);
 	}
 
@@ -52,11 +56,12 @@ void Bullet::move()
 		float y = _viBullet->getY();
 
 		_viBullet->image->setCenter(x, y);
+		_viBullet->image->nextFrame(50);
 
 		//라이프 타임
 		if (_range < myUtil::getDistanceByTwoPoint(_viBullet->startX, _viBullet->startY, x, y))
 		{
-			SAFE_RELEASE(_viBullet->image);
+			//SAFE_RELEASE(_viBullet->image);
 			_viBullet = _vBullet.erase(_viBullet);
 		}
 		else
@@ -69,21 +74,20 @@ void Bullet::draw()
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); _viBullet++)
 	{
-		_viBullet->image->render(getMemDC());
+		_viBullet->image->render(getMemDC(), 255 - ((_viBullet->startY) - _viBullet->getY()) / _range * 220);
 	}
 }
-void Bullet::fire(float startX, float startY, float angleR)
+void Bullet::fire(float startX, float startY, float angleR, float speed)
 {
 	if (_vBullet.size() < _max)
 	{
 		Bullet::BulletObject bullet;
-		bullet.image = new Image;
-		bullet.image->initialize("resource/missile.bmp", 5, 30, TRUE, RGB(255, 0, 255));
+		bullet.image = _image->getSpriteImage(_frameCol, _frameRow);
 
 		bullet.setAngleR(angleR);
-		bullet.setSpeed(10.1f);
+		bullet.setSpeed(speed);
 
-		bullet.setSize(bullet.image->getWidth(), bullet.image->getHeight());
+		bullet.setSize(bullet.image->getFrameWidth(), bullet.image->getFrameHeight());
 		bullet.setPosition(startX, startY);
 		bullet.startX = startX;
 		bullet.startY = startY;

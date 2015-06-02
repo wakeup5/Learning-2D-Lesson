@@ -7,7 +7,7 @@ private:
 	class BulletObject : public GameObject
 	{
 	public:
-		Image* image;
+		SpriteImage* image;
 
 		float startX;
 		float startY;
@@ -23,17 +23,20 @@ private:
 
 	int _max;
 	float _range;
+	Image* _image;
+	int _frameCol;
+	int _frameRow;
 public:
 	Bullet();
 	~Bullet();
 
-	virtual HRESULT initialize(int max, float range);
+	virtual HRESULT initialize(int max, float range, const char* fileName, int frameCol = 1, int frameRow = 1);
 	virtual void release();
 	virtual void update();
 	virtual void render();
 
 	virtual void move();
 	virtual void draw();
-	virtual void fire(float startX, float startY, float angleR);
+	virtual void fire(float startX, float startY, float angleR, float speed);
 };
 

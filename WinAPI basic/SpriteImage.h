@@ -1,8 +1,15 @@
 #pragma once
 #include "Image.h"
-class SpriteImage :	public Image
+
+class Image;
+class SpriteImage
 {
 private:
+	Image* _image;
+
+	float _centerX;
+	float _centerY;
+
 	int _currentFrameCol;
 	int _currentFrameRow;
 	int _maxFrameCol;
@@ -14,6 +21,8 @@ private:
 
 	int _time = 0;
 
+	RECT _imageScale;
+
 	void setBoundingBox()
 	{
 		_imageScale = makeRectCenter(_centerX, _centerY, _frameWidth, _frameHeight);
@@ -24,44 +33,35 @@ public:
 
 	//ÇÁ·¹ÀÓ °ü·Ã
 	//Æø ³ôÀÌ¿Í Çà¿­ °¹¼ö
-	HRESULT initialize(const char* fileName, int width, int height, int frameColumn, int frameRow, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
-	//Æø ³ôÀÌ, Áß½É ÁÂÇ¥, Çà¿­ °¹¼ö
-	HRESULT initialize(const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans = FALSE, COLORREF transColor = RGB(0, 0, 0));
+	HRESULT initialize(Image* image, int frameColumn, int frameRow);
 
 	//ÇÁ·¹ÀÓ ·»´õ
 	virtual void render(HDC hdc, BYTE alpha = 255);
 	virtual void render(HDC hdc, float destX, float destY, BYTE alpha = 255);
 
+	void setImage(Image* image){ _image = image; }
+	RECT getRect(){ setBoundingBox(); return _imageScale; }
+
 	inline void setFrameX(int frameX)
 	{
-		if (frameX > _maxFrameCol)
-		{
-			_currentFrameCol = _maxFrameCol;
-		}
-		else if (frameX < 0)
-		{
-			_currentFrameCol = 0;
-		}
-		else
-		{
-			_currentFrameCol = frameX;
-		}
+		if (frameX > _maxFrameCol) _currentFrameCol = _maxFrameCol;
+		else if (frameX < 0) _currentFrameCol = 0;
+		else _currentFrameCol = frameX;
 	}
 	inline void setFrameY(int frameY)
 	{
-		if (frameY > _maxFrameRow)
-		{
-			_currentFrameRow = _maxFrameRow;
-		}
-		else if (frameY < 0)
-		{
-			_currentFrameRow = 0;
-		}
-		else
-		{
-			_currentFrameRow = frameY;
-		}
+		if (frameY > _maxFrameRow) _currentFrameRow = _maxFrameRow;
+		else if (frameY < 0) _currentFrameRow = 0;
+		else _currentFrameRow = frameY;
 	}
+
+	void setCenter(float x, float y){ _centerX = x; _centerY = y; }
+	void setX(float x){ _centerX = x; }
+	void setY(float y){ _centerY = y; }
+
+	POINT getCenter(){ return POINT{ _centerX, _centerY }; }
+	float getX(){ return _centerX; }
+	float getY(){ return _centerY; }
 
 	inline int getMaxFrameX(){ return _maxFrameCol; }
 	inline int getMaxFrameY(){ return _maxFrameRow; }
@@ -77,11 +77,15 @@ public:
 	void prevFrameX();
 	void prevFrameY();
 
-	void nextFrameX(int delay);
-	void nextFrameY(int delay);
-	void prevFrameX(int delay);
-	void prevFrameY(int delay);
+	void nextFrame();
+	void prevFrame();
 
+	void nextFrameX(float mSecond);
+	void nextFrameY(float mSecond);
+	void prevFrameX(float mSecond);
+	void prevFrameY(float mSecond);
 
+	void nextFrame(float mSecond);
+	void prevFrame(float mSecond);
 };
 

@@ -24,6 +24,9 @@ private:
 
 	int _max;
 	float _range;
+
+	Image* _missileImage;
+	Image* _boostImage;
 public:
 	Missile();
 	~Missile();

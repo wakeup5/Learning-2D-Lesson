@@ -87,6 +87,7 @@ Image* ImageManager::addImage(std::string key, const char* fileName, float cente
 	return image;
 }
 
+/*
 SpriteImage* ImageManager::addSpriteImage(std::string key, const char* fileName, int width, int height, int frameColumn, int frameRow, BOOL trans, COLORREF transColor)
 {
 	SpriteImage *image = static_cast<SpriteImage*>(findImage(key));
@@ -108,7 +109,8 @@ SpriteImage* ImageManager::addSpriteImage(std::string key, const char* fileName,
 
 	return image;
 }
-
+*/
+/*
 SpriteImage* ImageManager::addSpriteImage(std::string key, const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans, COLORREF transColor)
 {
 	SpriteImage *image = static_cast<SpriteImage*>(findImage(key));
@@ -130,7 +132,7 @@ SpriteImage* ImageManager::addSpriteImage(std::string key, const char* fileName,
 
 	return image;
 }
-
+*/
 Image* ImageManager::findImage(std::string key)
 {
 	ImageMapIter imageIter = _imageMap.find(key);

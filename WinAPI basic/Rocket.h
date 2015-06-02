@@ -4,13 +4,14 @@
 #include "Bullet.h"
 
 class Rocket :
-	public GameNode
+	public GameNode,
+	public GameObject
 {
 private:
 	Image* _image;
 	SpriteImage* _boostImage;
 
-	GameObject _info;
+	//GameObject _info;
 
 	Missile* _missile;
 	Bullet* _bullet;

@@ -4,9 +4,11 @@
 
 Enemy::Enemy()
 {
+
 }
 
 
 Enemy::~Enemy()
 {
+
 }
