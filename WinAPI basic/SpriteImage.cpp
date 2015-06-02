@@ -10,7 +10,6 @@ SpriteImage::SpriteImage() : Image()
 	_maxFrameRow = 0;
 	_frameWidth = 0;
 	_frameHeight = 0;
-
 }
 
 
@@ -32,6 +31,12 @@ HRESULT SpriteImage::initialize(const char* fileName, float centerX, float cente
 		release();
 		return E_FAIL;
 	}
+	//이미지 리소스를 얻는데 실패하면
+	if (Image::_imageInfo->hBit == 0)
+	{
+		release();
+		return E_FAIL;
+	}
 	//Image::setTransColor(trans, transColor);
 	_maxFrameCol = frameColumn - 1;
 	_maxFrameRow = frameRow - 1;
@@ -41,12 +46,6 @@ HRESULT SpriteImage::initialize(const char* fileName, float centerX, float cente
 
 	setBoundingBox();
 
-	//이미지 리소스를 얻는데 실패하면
-	if (Image::_imageInfo->hBit == 0)
-	{
-		release();
-		return E_FAIL;
-	}
 
 	return S_OK;
 }
@@ -61,7 +60,6 @@ void SpriteImage::render(HDC hdc, float destX, float destY, BYTE alpha)
 {
 	Image::render(hdc, destX, destY, _currentFrameCol * _frameWidth, _currentFrameRow * _frameHeight, _frameWidth, _frameHeight, alpha);
 }
-
 
 void SpriteImage::nextFrameX()
 {

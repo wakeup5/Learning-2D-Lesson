@@ -96,11 +96,13 @@ float GameObject::getSpeedY()
 
 void GameObject::setSpeed(float speed)
 {
+	/*
 	if (speed < 0)
 	{
 		speed = speed * -1;
 		setAngleD(getAngleD() + 180);
 	}
+	*/
 
 	_speed = speed;
 

@@ -72,16 +72,7 @@
     <ClInclude Include="GameObject.h">
       <Filter>GameStudy</Filter>
     </ClInclude>
-    <ClInclude Include="Rocket.h">
-      <Filter>GameStudy\GameClass</Filter>
-    </ClInclude>
     <ClInclude Include="util.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Missile.h">
-      <Filter>GameStudy\GameClass</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,16 +104,7 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>GameStudy</Filter>
     </ClCompile>
-    <ClCompile Include="Rocket.cpp">
-      <Filter>GameStudy\GameClass</Filter>
-    </ClCompile>
     <ClCompile Include="util.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Missile.cpp">
-      <Filter>GameStudy\GameClass</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
