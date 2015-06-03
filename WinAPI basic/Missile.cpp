@@ -126,8 +126,8 @@ void Missile::draw()
 	{
 		if (!_missileVectorIter->isFire) continue;
 		
-		_missileVectorIter->image->render(getMemDC(), 255 - ((_missileVectorIter->startY) - _missileVectorIter->getY()) / _range * 255);
-		_missileVectorIter->boostImage->render(getMemDC(), 255 - ((_missileVectorIter->startY) - _missileVectorIter->getY()) / _range * 255);
+		_missileVectorIter->image->render(getMemDC());
+		_missileVectorIter->boostImage->render(getMemDC());
 	}
 }
 

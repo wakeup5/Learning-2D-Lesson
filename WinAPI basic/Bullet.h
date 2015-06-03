@@ -3,7 +3,7 @@
 
 class Bullet : public GameNode
 {
-private:
+public:
 	class BulletObject : public GameObject
 	{
 	public:
@@ -18,6 +18,10 @@ private:
 		~BulletObject(){}
 	};
 
+	typedef std::vector<BulletObject> VPBullet;
+	typedef std::vector<BulletObject>::iterator VIPBullet;
+
+private:
 	std::vector<BulletObject> _vBullet;
 	std::vector<BulletObject>::iterator _viBullet;
 
@@ -38,5 +42,7 @@ public:
 	virtual void move();
 	virtual void draw();
 	virtual void fire(float startX, float startY, float angleR, float speed);
+
+	std::vector<BulletObject>* getBullets(){ return &_vBullet; }
 };
 

@@ -35,6 +35,8 @@
 #include "KeyManager.h"
 #include "ImageManager.h"
 
+#include "ObjectManager.h"
+
 #include "util.h"
 
 //클래스
@@ -71,6 +73,8 @@
 #define KEYMANAGER KeyManager::getSingleton()
 //class ImageManager
 #define IMAGEMANAGER ImageManager::getSingleton()
+//class ObjectManager
+#define OBJECTMANAGER ObjectManager::getSingleton()
 
 //round number
 #define ROUNDING(x, dig)	( floor((x) * pow(float(10), dig) + 0.5f) / pow(float(10), dig) )

@@ -90,6 +90,7 @@
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Missile.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rocket.h" />
@@ -109,6 +110,7 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Missile.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="SpriteImage.cpp" />
     <ClCompile Include="stdafx.cpp">

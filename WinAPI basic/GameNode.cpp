@@ -27,6 +27,8 @@ HRESULT GameNode::initialize(bool managerInit)
 		KEYMANAGER->initialize();					//키매니져 셋팅
 		IMAGEMANAGER->initialize();				//이미지 매니져 셋팅
 		GameNode::_backBuffer = IMAGEMANAGER->addImage("backBuffer", WIN_SIZE_X, WIN_SIZE_Y);
+
+		OBJECTMANAGER->initialize();
 	}
 
 	return S_OK;
@@ -45,6 +47,9 @@ void GameNode::release(void)
 
 	IMAGEMANAGER->release();
 	IMAGEMANAGER->releaseSingleton();
+
+	OBJECTMANAGER->release();
+	OBJECTMANAGER->initialize();
 }
 
 //화면갱신
@@ -52,12 +57,14 @@ void GameNode::update(void)
 {
 	//화면 갱신
 	InvalidateRect(_hWnd, NULL, false);
+	
 }
 
 //화면출력
 void GameNode::render()
 {
 	_backBuffer->render(getHDC());
+	
 }
 
 LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

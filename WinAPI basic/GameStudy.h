@@ -1,12 +1,14 @@
 #pragma once
 #include "GameNode.h"
 #include "Rocket.h"
+#include "Enemy.h"
 
 class GameStudy :
 	public GameNode
 {
 private:
 	Rocket* _rocket;
+	Enemy* _enemy;
 
 public:
 	GameStudy(){}

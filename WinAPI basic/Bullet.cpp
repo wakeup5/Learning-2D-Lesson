@@ -74,7 +74,7 @@ void Bullet::draw()
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); _viBullet++)
 	{
-		_viBullet->image->render(getMemDC(), 255 - ((_viBullet->startY) - _viBullet->getY()) / _range * 220);
+		_viBullet->image->render(getMemDC());
 	}
 }
 void Bullet::fire(float startX, float startY, float angleR, float speed)

@@ -3,7 +3,7 @@
 
 class Missile :	public GameNode
 {
-private:
+public:
 	class MissileObject : public GameObject
 	{
 	public:
@@ -19,6 +19,10 @@ private:
 		~MissileObject(){}
 	};
 
+	typedef std::vector<MissileObject> VPMissile;
+	typedef std::vector<MissileObject>::iterator VIPMissile;
+
+private:
 	std::vector<MissileObject> _missileVector;
 	std::vector<MissileObject>::iterator _missileVectorIter;
 
@@ -39,5 +43,7 @@ public:
 	virtual void move();
 	virtual void draw();
 	virtual void fire(float startX, float startY);
+
+	VPMissile* getMissiles(){ return &_missileVector; }
 };
 
