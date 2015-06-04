@@ -21,7 +21,7 @@ public:
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render();
-
+	
 	virtual LRESULT mainProc(HWND, UINT, WPARAM, LPARAM);
 
 	Image* getBackBuffer(void) { return _backBuffer; }
