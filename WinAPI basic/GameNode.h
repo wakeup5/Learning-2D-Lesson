@@ -7,6 +7,11 @@ private:
 	static Image* _backBuffer;
 	HDC _hdc;
 	bool _managerInit;
+
+public:
+	HWND _screen1WND[2];
+	int _currentCtrl;
+
 public:
 	GameNode();
 	virtual ~GameNode();
@@ -16,6 +21,8 @@ public:
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render();
+
+	virtual void controlMessage(int message);
 
 	virtual LRESULT mainProc(HWND, UINT, WPARAM, LPARAM);
 

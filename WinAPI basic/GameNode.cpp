@@ -27,8 +27,6 @@ HRESULT GameNode::initialize(bool managerInit)
 		KEYMANAGER->initialize();					//키매니져 셋팅
 		IMAGEMANAGER->initialize();				//이미지 매니져 셋팅
 		GameNode::_backBuffer = IMAGEMANAGER->addImage("backBuffer", WIN_SIZE_X, WIN_SIZE_Y);
-
-		OBJECTMANAGER->initialize();
 	}
 
 	return S_OK;
@@ -47,16 +45,13 @@ void GameNode::release(void)
 
 	IMAGEMANAGER->release();
 	IMAGEMANAGER->releaseSingleton();
-
-	OBJECTMANAGER->release();
-	OBJECTMANAGER->initialize();
 }
 
 //화면갱신
 void GameNode::update(void)
 {
 	//화면 갱신
-	InvalidateRect(_hWnd, NULL, false);
+	//InvalidateRect(_hWnd, NULL, false);
 	
 }
 
@@ -65,6 +60,11 @@ void GameNode::render()
 {
 	_backBuffer->render(getHDC());
 	
+}
+
+void GameNode::controlMessage(int message)
+{
+
 }
 
 LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
@@ -81,15 +81,18 @@ LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		PostQuitMessage(0);
 		return 0;
 	case WM_PAINT:
-		//hdc = BeginPaint(hWnd, &ps);
 		this->render();
-		//EndPaint(hWnd, &ps);
 		break;
 	case WM_MOUSEMOVE:
 		_mousePoint = makeMousePoint(lParam);
 		break;
 	case WM_TIMER:
 		this->update();
+		break;
+	case WM_COMMAND:
+		controlMessage(LOWORD(wParam));
+		InvalidateRect(_hWnd, NULL, false);
+
 		break;
 	case WM_KEYDOWN:
 		switch (wParam)
@@ -103,3 +106,4 @@ LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
 	return DefWindowProc(hWnd, iMessage, wParam, lParam);
 }
+

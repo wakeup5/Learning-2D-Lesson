@@ -1,19 +1,13 @@
 #pragma once
 #include "GameNode.h"
-#include "Sceen1.h"
-
-class GameStudy :
+class Screen1 :
 	public GameNode
 {
 private:
-	Sceen1* _s1;
-	int _sceenNum;
-	bool _isInit;
-
-	int _playerNum;
+	char _str[128];
 public:
-	GameStudy(){}
-	virtual ~GameStudy(){}
+	Screen1();
+	virtual ~Screen1();
 
 	virtual HRESULT initialize(void);
 	virtual void release(void);
@@ -22,3 +16,4 @@ public:
 
 	virtual void controlMessage(int message);
 };
+
