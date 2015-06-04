@@ -27,6 +27,9 @@
 #include <time.h>
 #include <iostream>
 
+//게임 오브젝트 GUID 관리
+#include "objectGUID.h"
+
 //매크로 헤더
 #include "commonMacroFunction.h"
 

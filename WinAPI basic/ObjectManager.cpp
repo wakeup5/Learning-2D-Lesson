@@ -20,42 +20,26 @@ void ObjectManager::release()
 {
 	for (_miNode = _mNode.begin(); _miNode != _mNode.end();)
 	{
-		_miNode->second->release();
-		SAFE_DELETE(_miNode->second);
+		//_miNode->second->release();
+		//SAFE_DELETE(_miNode->second);
 		_miNode = _mNode.erase(_miNode);
 	}
 
 	_mNode.clear();
 }
 
-void ObjectManager::update()
-{
-	for (_miNode = _mNode.begin(); _miNode != _mNode.end(); _miNode++)
-	{
-		_miNode->second->update();
-	}
-}
-
-void ObjectManager::render()
-{
-	for (_miNode = _mNode.begin(); _miNode != _mNode.end(); _miNode++)
-	{
-		_miNode->second->render();
-	}
-}
-
-GameNode* ObjectManager::addObject(std::string key, GameNode* node)
+GameNode* ObjectManager::addObject(GUID id, GameNode* node)
 {
 	if (node)
 	{
-		_mNode.insert(std::make_pair(key, node));
+		_mNode.insert(std::make_pair(id, node));
 	}
 
 	return node;
 }
-GameNode* ObjectManager::findObject(std::string key)
+GameNode* ObjectManager::findObject(GUID id)
 {
-	std::map<std::string, GameNode*>::iterator iter = _mNode.find(key);
+	MINode iter = _mNode.find(id);
 
 	if (iter != _mNode.end())
 	{
@@ -65,9 +49,9 @@ GameNode* ObjectManager::findObject(std::string key)
 	return NULL;
 }
 
-bool ObjectManager::removeObject(std::string key)
+bool ObjectManager::removeObject(GUID id)
 {
-	std::map<std::string, GameNode*>::iterator iter = _mNode.find(key);
+	MINode iter = _mNode.find(id);
 
 	if (iter != _mNode.end())
 	{

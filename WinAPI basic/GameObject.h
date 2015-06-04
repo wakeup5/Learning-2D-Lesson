@@ -1,5 +1,5 @@
 #pragma once
-class GameObject
+class GameObject : public GameNode
 {
 private:
 	float _centerX;

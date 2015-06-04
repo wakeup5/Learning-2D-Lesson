@@ -16,7 +16,6 @@ public:
 	GameNode();
 	virtual ~GameNode();
 
-	//virtual HRESULT initialize(void);
 	virtual HRESULT initialize(bool = false);
 	virtual void release(void);
 	virtual void update(void);

@@ -61,7 +61,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	}
 
 	//게임용	
-	while (false)
+	while (true)
 	{
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
 		{
@@ -72,15 +72,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 			TranslateMessage(&message);
 			DispatchMessage(&message);
 		}
-		//처리할 메세지가 없으면 렌더 호출
-		//render();
-	}
-
-	//일반 윈도우 창
-	while (GetMessage(&message, 0, 0, 0))
-	{
-		TranslateMessage(&message);
-		DispatchMessage(&message);
+		else
+		{
+			Sleep(5);
+			_gameStudy.update();
+			_gameStudy.render();
+		}
 	}
 
 	_gameStudy.release();

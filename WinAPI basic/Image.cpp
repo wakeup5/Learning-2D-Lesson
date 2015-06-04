@@ -211,9 +211,13 @@ void Image::alphaRender(HDC hdc, float destX, float destY, int sourX, int sourY,
 	//투명처리를 할 경우
 	if (_trans)
 	{
+		//알파블렌더에 문제가 있는듯. 화면 밖을 복사 하려면 안나옴.
+		if (destX + width > WIN_SIZE_X) width = WIN_SIZE_X - destX;
+		if (destY + height > WIN_SIZE_Y) height = WIN_SIZE_Y - destY;
+
 		//이미지 위치와 크기만큼 배경 DC의 그림을 가져와 blendImage에 복사.
 		BitBlt(_blendImage->hMemDC, destX, destY, width, height, hdc, destX, destY, SRCCOPY);
-		
+
 		//blendImage에 이미지를 복사
 		GdiTransparentBlt(_blendImage->hMemDC, destX, destY, width, height, _imageInfo->hMemDC, sourX, sourY, width, height, _transColor);
 
@@ -224,6 +228,6 @@ void Image::alphaRender(HDC hdc, float destX, float destY, int sourX, int sourY,
 	//하지 않을 경우
 	else
 	{
-		//AlphaBlend(hdc, destX, destY, width, height, _blendImage->hMemDC, sourX, sourY, width, height, _blendFunc);
+		AlphaBlend(hdc, destX, destY, width, height, _blendImage->hMemDC, sourX, sourY, width, height, _blendFunc);
 	}
 }
