@@ -6,11 +6,7 @@ class GameStudy :
 	public GameNode
 {
 private:
-	Sceen1* _s1;
-	int _sceenNum;
-	bool _isInit;
 
-	int _playerNum;
 public:
 	GameStudy(){}
 	virtual ~GameStudy(){}
@@ -20,5 +16,4 @@ public:
 	virtual void update(void);
 	virtual void render(void);
 
-	virtual void controlMessage(int message);
 };

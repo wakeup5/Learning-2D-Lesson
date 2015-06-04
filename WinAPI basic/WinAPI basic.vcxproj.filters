@@ -31,9 +31,6 @@
     <Filter Include="숙제">
       <UniqueIdentifier>{74e12559-094d-484e-a2ff-1a7491be217d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStudy\class">
-      <UniqueIdentifier>{d62a9455-1a45-4809-8b97-a642955d55e4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -81,12 +78,6 @@
     <ClInclude Include="commonMacroFunction.h">
       <Filter>Game2DFramework\util</Filter>
     </ClInclude>
-    <ClInclude Include="Sceen1.h">
-      <Filter>GameStudy\class</Filter>
-    </ClInclude>
-    <ClInclude Include="Sceen3.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -122,17 +113,6 @@
     <ClCompile Include="util.cpp">
       <Filter>Game2DFramework\util</Filter>
     </ClCompile>
-    <ClCompile Include="Sceen1.cpp">
-      <Filter>GameStudy\class</Filter>
-    </ClCompile>
-    <ClCompile Include="Sceen3.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="map.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="숙제.txt">

@@ -51,7 +51,7 @@ void GameNode::release(void)
 void GameNode::update(void)
 {
 	//화면 갱신
-	//InvalidateRect(_hWnd, NULL, false);
+	InvalidateRect(_hWnd, NULL, false);
 	
 }
 
@@ -60,11 +60,6 @@ void GameNode::render()
 {
 	_backBuffer->render(getHDC());
 	
-}
-
-void GameNode::controlMessage(int message)
-{
-
 }
 
 LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
@@ -90,8 +85,8 @@ LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		this->update();
 		break;
 	case WM_COMMAND:
-		controlMessage(LOWORD(wParam));
-		InvalidateRect(_hWnd, NULL, false);
+		//controlMessage(LOWORD(wParam));
+		//InvalidateRect(_hWnd, NULL, false);
 
 		break;
 	case WM_KEYDOWN:

@@ -90,8 +90,6 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Sceen1.h" />
-    <ClInclude Include="Sceen3.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="SpriteImage.h" />
     <ClInclude Include="stdafx.h" />
@@ -106,8 +104,6 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
-    <ClCompile Include="Sceen1.cpp" />
-    <ClCompile Include="Sceen3.cpp" />
     <ClCompile Include="SpriteImage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -115,9 +111,6 @@
     </ClCompile>
     <ClCompile Include="util.cpp" />
     <ClCompile Include="WinAPI basic.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="map.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="숙제.txt" />
