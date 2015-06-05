@@ -30,9 +30,19 @@ void Enemy::update(void)
 	_image->nextFrame(_frameTime);
 	_image->setCenter(getX(), getY());
 
+	GameObject::activate();
 	move();
 }
 void Enemy::render(void)
+{
+	draw();
+}
+
+void Enemy::move()
+{
+
+}
+void Enemy::draw()
 {
 	_image->render(getMemDC());
 }

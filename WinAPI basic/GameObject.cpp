@@ -115,7 +115,7 @@ float GameObject::getSpeed()
 	return _speed;
 }
 
-void GameObject::move()
+void GameObject::activate()
 {
 	_centerX += _speedX;
 	_centerY += _speedY;

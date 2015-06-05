@@ -1,6 +1,6 @@
 #pragma once
 #include "GameNode.h"
-#include "SaveLodeTest.h"
+#include "SaveLoad.h"
 #include "PlayerManager.h"
 #include "EnemyManager.h"
 
@@ -8,6 +8,8 @@ class GameStudy :
 	public GameNode
 {
 private:
+	SaveLoad* _sl;
+
 	PlayerManager* _playerManager;
 	EnemyManager* _enemyManager;
 public:

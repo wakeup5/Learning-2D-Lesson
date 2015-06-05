@@ -83,6 +83,31 @@ void PlayerManager::update(void)
 	_player->update();
 	_bullet->update();
 	_missile->update();
+
+	//利 醚舅苞 面倒贸府
+	Bullet* eBullet = OBJECTMANAGER->findObject<Bullet>(GUID_ENEMYS_BULLET);
+	Bullet::VPBullet* vEBullet = eBullet->getBullets();
+	Bullet::VIPBullet viEBullet;
+	RECT r;
+
+	for (viEBullet = vEBullet->begin(); viEBullet != vEBullet->end();)
+	{
+		if (IntersectRect(&r, &_player->getRect(), &(*viEBullet)->getRect()))
+		{
+			viEBullet = vEBullet->erase(viEBullet);
+			_player->setHp(_player->getHp() - 1);
+		}
+		else
+		{
+			viEBullet++;
+		}
+	}
+
+	if (_player->getHp() <= 0)
+	{
+		//_player->release();
+		//SAFE_DELETE(_player);
+	}
 }
 void PlayerManager::render()
 {

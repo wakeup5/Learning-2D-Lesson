@@ -1,7 +1,7 @@
 #pragma once
 class GameObject : public GameNode
 {
-private:
+protected:
 	float _centerX;
 	float _centerY;
 
@@ -58,6 +58,6 @@ public:
 	void setSpeed(float speed);
 	float getSpeed();
 
-	void move();
+	void activate();
 };
 

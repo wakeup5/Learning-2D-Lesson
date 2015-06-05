@@ -1,6 +1,7 @@
 #pragma once
 #include "GameNode.h"
 #include "Enemy.h"
+#include "HpEnemy.h"
 
 class EnemyManager :
 	public GameNode
@@ -11,6 +12,9 @@ private:
 
 	VEnemy _vEnemy;
 	VIEnemy _viEnemy;
+
+	Bullet* _bullet;
+	Timer* _bulletTimer;
 public:
 	EnemyManager();
 	~EnemyManager();
@@ -19,5 +23,7 @@ public:
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(void);
+
+	VEnemy* getEnemys(){ return &_vEnemy; }
 };
 

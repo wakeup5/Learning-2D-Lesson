@@ -49,6 +49,9 @@
     <Filter Include="GameStudy\GameClass\enemy">
       <UniqueIdentifier>{ed24934e-79a2-40a2-bbfb-b5e436cbe425}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameStudy\GameClass\common">
+      <UniqueIdentifier>{59fa7080-de54-4139-a657-98b2e54010ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -111,9 +114,6 @@
     <ClInclude Include="Bullet.h">
       <Filter>GameStudy\GameClass\bullet</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="resource1.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -122,6 +122,18 @@
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
       <Filter>GameStudy\GameClass\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="HPBar.h">
+      <Filter>GameStudy\GameClass\common</Filter>
+    </ClInclude>
+    <ClInclude Include="HpEnemy.h">
+      <Filter>GameStudy\GameClass\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>GameStudy\GameClass\common</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLoad.h">
+      <Filter>GameStudy\GameClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -170,14 +182,23 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>GameStudy\GameClass\bullet</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>GameStudy\GameClass\enemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>GameStudy\GameClass\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="HPBar.cpp">
+      <Filter>GameStudy\GameClass\common</Filter>
+    </ClCompile>
+    <ClCompile Include="HpEnemy.cpp">
+      <Filter>GameStudy\GameClass\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>GameStudy\GameClass\common</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoad.cpp">
+      <Filter>GameStudy\GameClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

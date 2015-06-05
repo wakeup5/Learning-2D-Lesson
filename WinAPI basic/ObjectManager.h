@@ -28,6 +28,18 @@ public:
 	
 	bool removeObject(GUID id);
 	GameNode* addObject(GUID id, GameNode * node);
-	GameNode* findObject(GUID id);
+
+	template <typename T>
+	T* findObject(GUID id)
+	{
+		MINode iter = _mNode.find(id);
+
+		if (iter != _mNode.end())
+		{
+			return static_cast<T*>(iter->second);
+		}
+
+		return NULL;
+	}
 };
 

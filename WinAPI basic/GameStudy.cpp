@@ -10,6 +10,9 @@ HRESULT GameStudy::initialize(void)
 	IMAGEMANAGER->addImage("mapImage", "resource/mapBlack.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 	IMAGEMANAGER->addImage("background", "resource/background.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 
+	_sl = new SaveLoad;
+	_sl->initialize();
+
 	_playerManager = new PlayerManager;
 	_playerManager->initialize();
 
@@ -31,6 +34,7 @@ void GameStudy::release(void)
 void GameStudy::update(void)
 {
 	GameNode::update();
+	_sl->update();
 	_playerManager->update();
 	_enemyManager->update();
 }

@@ -28,7 +28,7 @@ void Bullet::BulletObject::release()
 }
 void Bullet::BulletObject::update()
 {
-	move();
+	GameObject::activate();
 	_image->nextFrame(50);
 	_image->setCenter(getX(), getY());
 }

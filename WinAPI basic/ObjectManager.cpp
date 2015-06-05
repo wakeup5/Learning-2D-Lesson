@@ -37,6 +37,7 @@ GameNode* ObjectManager::addObject(GUID id, GameNode* node)
 
 	return node;
 }
+/*
 GameNode* ObjectManager::findObject(GUID id)
 {
 	MINode iter = _mNode.find(id);
@@ -48,6 +49,7 @@ GameNode* ObjectManager::findObject(GUID id)
 
 	return NULL;
 }
+*/
 
 bool ObjectManager::removeObject(GUID id)
 {
