@@ -2,8 +2,8 @@
 class Timer
 {
 private:
-	int _time;
-	float _delay;
+	ULONGLONG _time;
+	ULONGLONG _delay;
 public:
 	Timer();
 	~Timer();
@@ -18,7 +18,7 @@ public:
 
 	bool getTiming()
 	{
-		DWORD tick = GetTickCount();
+		ULONGLONG tick = GetTickCount64();
 
 		if (_delay + _time <= tick)
 		{
@@ -28,5 +28,6 @@ public:
 
 		return false;
 	}
+
 };
 

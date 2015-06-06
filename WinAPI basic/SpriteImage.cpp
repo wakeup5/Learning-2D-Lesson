@@ -78,18 +78,26 @@ void SpriteImage::prevFrameY()
 
 void SpriteImage::nextFrame()
 {
-	nextFrameX();
-	if (_currentFrameCol >= _maxFrameCol)
+	if (_currentFrameCol++ >= _maxFrameCol)
 	{
-		nextFrameY();
+		_currentFrameCol = 0;
+
+		if (_currentFrameRow++ >= _maxFrameRow)
+		{
+			_currentFrameRow = 0;
+		}
 	}
 }
 void SpriteImage::prevFrame()
 {
-	prevFrameX();
-	if (_currentFrameCol < 0)
+	if (_currentFrameCol++ < 0)
 	{
-		prevFrameY();
+		_currentFrameCol = _maxFrameCol;
+
+		if (_currentFrameRow++ < 0)
+		{
+			_currentFrameRow = _maxFrameRow;
+		}
 	}
 }
 

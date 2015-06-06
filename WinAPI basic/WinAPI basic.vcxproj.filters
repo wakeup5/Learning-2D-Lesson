@@ -135,6 +135,15 @@
     <ClInclude Include="SaveLoad.h">
       <Filter>GameStudy\GameClass</Filter>
     </ClInclude>
+    <ClInclude Include="DataManager.h">
+      <Filter>Game2DFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TonadoBullet.h">
+      <Filter>GameStudy\GameClass\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="PieceBullet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -199,6 +208,15 @@
     </ClCompile>
     <ClCompile Include="SaveLoad.cpp">
       <Filter>GameStudy\GameClass</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager.cpp">
+      <Filter>Game2DFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TonadoBullet.cpp">
+      <Filter>GameStudy\GameClass\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="PieceBullet.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

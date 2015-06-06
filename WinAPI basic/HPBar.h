@@ -5,6 +5,7 @@ class HPBar :
 {
 private:
 	Image* _image;
+	Image* _backImage;
 
 	float* _x;
 	float* _y;
@@ -19,7 +20,7 @@ public:
 	HPBar();
 	~HPBar();
 
-	virtual HRESULT initialize(Image* image, float* x, float* y, int* hp, int maxHp, float dx = 0, float dy = 0);
+	virtual HRESULT initialize(Image* image, Image* backImage, float* x, float* y, int* hp, int maxHp, float dx = 0, float dy = 0);
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(void);

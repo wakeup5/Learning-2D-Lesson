@@ -42,8 +42,11 @@ void GameStudy::update(void)
 //화면출력
 void GameStudy::render()
 {
+	static int time = 0;
+	time++;
 	IMAGEMANAGER->render("mapImage", getMemDC());
-	IMAGEMANAGER->render("background", getMemDC());
+	IMAGEMANAGER->render("background", getMemDC(), 0, time % WIN_SIZE_Y);
+	IMAGEMANAGER->render("background", getMemDC(), 0, time % WIN_SIZE_Y - WIN_SIZE_Y);
 
 	_playerManager->render();
 	_enemyManager->render();

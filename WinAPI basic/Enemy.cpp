@@ -18,6 +18,7 @@ HRESULT Enemy::initialize(SpriteImage* image, float frameTime)
 
 	_image = image;
 	_frameTime = frameTime;
+	_createTickTime = GetTickCount();
 
 	return S_OK;
 }
@@ -27,11 +28,13 @@ void Enemy::release(void)
 }
 void Enemy::update(void)
 {
-	_image->nextFrame(_frameTime);
-	_image->setCenter(getX(), getY());
+	if (_pattern != NULL) _pattern(GetTickCount() - _createTickTime);
+	move();
 
 	GameObject::activate();
-	move();
+
+	_image->nextFrame(_frameTime);
+	_image->setCenter(getX(), getY());
 }
 void Enemy::render(void)
 {

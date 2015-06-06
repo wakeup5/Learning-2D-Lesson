@@ -214,6 +214,18 @@ void Image::alphaRender(HDC hdc, float destX, float destY, int sourX, int sourY,
 		//알파블렌더에 문제가 있는듯. 화면 밖을 복사 하려면 안나옴.
 		if (destX + width > WIN_SIZE_X) width = WIN_SIZE_X - destX;
 		if (destY + height > WIN_SIZE_Y) height = WIN_SIZE_Y - destY;
+		if (destX < 0)
+		{
+			sourX -= destX;
+			width += destX;
+			destX = 0;
+		}
+		if (destY < 0)
+		{
+			sourY -= destY;
+			height += destY;
+			destY = 0;
+		}
 
 		//이미지 위치와 크기만큼 배경 DC의 그림을 가져와 blendImage에 복사.
 		BitBlt(_blendImage->hMemDC, destX, destY, width, height, hdc, destX, destY, SRCCOPY);

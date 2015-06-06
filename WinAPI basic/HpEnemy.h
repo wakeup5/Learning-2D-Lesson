@@ -12,7 +12,7 @@ public:
 	HpEnemy();
 	~HpEnemy();
 
-	virtual HRESULT initialize(SpriteImage* image, float frameTime, Image* hpImage, int maxHp);
+	virtual HRESULT initialize(SpriteImage* image, float frameTime, Image* hpImage, Image* backHpImage, int maxHp);
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(void);

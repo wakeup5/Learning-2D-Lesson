@@ -10,7 +10,7 @@ Player::Player()
 Player::~Player()
 {
 }
-
+ 
 HRESULT Player::initialize(void)
 {
 	GameObject::initialize(WIN_SIZE_X / 2, WIN_SIZE_Y - 100, 30, 30, 90, 0);
@@ -19,13 +19,16 @@ HRESULT Player::initialize(void)
 
 	_hp = _maxHp = 20;
 
-	_hpBar.initialize(IMAGEMANAGER->addImage("player hp bar", "resource/hp bar.bmp", 100, 4), &_centerX, &_centerY, &_hp, _maxHp);
+	_hpBar.initialize(
+		IMAGEMANAGER->addImage("player hp bar", "resource/hp bar.bmp", 100, 4),
+		IMAGEMANAGER->addImage("player hp bar back", "resource/hp bar back.bmp", 100, 4),
+		&_centerX, &_centerY, &_hp, _maxHp);
 
 	return S_OK;
 }
 void Player::release(void)
 {
-	
+
 }
 void Player::update(void)
 {

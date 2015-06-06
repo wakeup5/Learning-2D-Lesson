@@ -10,14 +10,14 @@ HpEnemy::HpEnemy()
 HpEnemy::~HpEnemy()
 {
 }
-HRESULT HpEnemy::initialize(SpriteImage* image, float frameTime, Image* hpImage, int maxHp)
+HRESULT HpEnemy::initialize(SpriteImage* image, float frameTime, Image* hpImage, Image* backHpImage, int maxHp)
 {
 	Enemy::initialize(image, frameTime);
 
 	_maxHp = maxHp;
 	_hp = maxHp;
 
-	_hpBar.initialize(hpImage, &_centerX, &_centerY, &_hp, maxHp);
+	_hpBar.initialize(hpImage, backHpImage, &_centerX, &_centerY, &_hp, maxHp);
 
 	return S_OK;
 }
@@ -32,7 +32,6 @@ void HpEnemy::update(void)
 void HpEnemy::render(void)
 {
 	Enemy::render();
-
 }
 
 void HpEnemy::move()

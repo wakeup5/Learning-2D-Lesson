@@ -37,12 +37,14 @@ void Bullet::BulletObject::render()
 	_image->render(getMemDC());
 }
 
-HRESULT Bullet::initialize(int max, float range, Image* image, int frameCol, int frameRow)
+HRESULT Bullet::initialize(int max, float range, int damage, Image* image, int frameCol, int frameRow)
 {
 	GameNode::initialize();
 
 	_max = max;
 	_range = range;
+
+	_damage = damage;
 
 	_image = image;
 
@@ -104,6 +106,7 @@ void Bullet::fire(float startX, float startY, float angleR, float speed)
 		Bullet::BulletObject* bullet = new BulletObject;
 		SpriteImage* image = _image->getSpriteImage(_frameCol, _frameRow);
 		bullet->initialize(startX, startY, image);
+		bullet->setDamage(_damage);
 		bullet->setAngleR(angleR);
 		bullet->setSpeed(speed);
 

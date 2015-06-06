@@ -26,6 +26,7 @@
 #include <vector>
 #include <time.h>
 #include <iostream>
+#include <functional>
 
 //게임 오브젝트 GUID 관리
 #include "objectGUID.h"
@@ -44,6 +45,7 @@
 
 //클래스
 #include "GameObject.h"
+#include "Timer.h"
 
 //게임 스터디
 #include "GameStudy.h"

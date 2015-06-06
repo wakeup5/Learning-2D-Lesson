@@ -11,9 +11,10 @@ HPBar::~HPBar()
 {
 }
 
-HRESULT HPBar::initialize(Image* image, float* x, float* y, int* hp, int maxHp, float dx, float dy)
+HRESULT HPBar::initialize(Image* image, Image* backImage, float* x, float* y, int* hp, int maxHp, float dx, float dy)
 {
 	_image = image;
+	_backImage = backImage;
 	_x = x;
 	_y = y;
 	_hp = hp;
@@ -38,5 +39,6 @@ void HPBar::render(void)
 	float imageWidth = _image->getWidth();
 	float imageHeight = _image->getHeight();
 
+	_backImage->render(getMemDC(), (*_x + _diffX) - imageWidth / 2, (*_y + _diffY) - imageHeight / 2, 0, 0, imageWidth, imageHeight);
 	_image->render(getMemDC(), (*_x + _diffX) - imageWidth / 2, (*_y + _diffY) - imageHeight / 2, 0, 0, imageWidth * ratio, imageHeight);
 }

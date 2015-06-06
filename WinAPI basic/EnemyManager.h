@@ -13,6 +13,8 @@ private:
 	VEnemy _vEnemy;
 	VIEnemy _viEnemy;
 
+	HpEnemy* _boss;
+
 	Bullet* _bullet;
 	Timer* _bulletTimer;
 public:
