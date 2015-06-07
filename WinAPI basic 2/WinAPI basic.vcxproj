@@ -80,63 +80,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="DataManager.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStudy.h" />
+    <ClInclude Include="HiddenSearch.h" />
     <ClInclude Include="HPBar.h" />
-    <ClInclude Include="HpEnemy.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="objectGUID.h" />
     <ClInclude Include="ObjectManager.h" />
-    <ClInclude Include="PieceBullet.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
-    <ClInclude Include="SaveLoad.h" />
-    <ClInclude Include="SaveLodeTest.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="SpriteImage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="TonadoBullet.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="DataManager.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStudy.cpp" />
+    <ClCompile Include="HiddenSearch.cpp" />
     <ClCompile Include="HPBar.cpp" />
-    <ClCompile Include="HpEnemy.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
-    <ClCompile Include="PieceBullet.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerManager.cpp" />
-    <ClCompile Include="SaveLoad.cpp" />
-    <ClCompile Include="SaveLodeTest.cpp" />
     <ClCompile Include="SpriteImage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TonadoBullet.cpp" />
     <ClCompile Include="util.cpp" />
     <ClCompile Include="WinAPI basic.cpp" />
   </ItemGroup>

@@ -213,7 +213,7 @@ void EnemyManager::update(void)
 				
 				if (t > 100 && t < 150)
 				{
-					if (t % 5 < 2)
+					if (t % 5 < 1)
 					{
 						bullet->fire(boss->getX(), boss->getY(),
 							myUtil::getGradeRadianByTwoPoint(boss->getX(), boss->getY(), player->getX(), player->getY()),

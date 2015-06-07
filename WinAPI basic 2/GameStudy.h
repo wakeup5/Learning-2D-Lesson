@@ -1,17 +1,18 @@
 #pragma once
 #include "GameNode.h"
-#include "SaveLoad.h"
-#include "PlayerManager.h"
-#include "EnemyManager.h"
+#include "HiddenSearch.h"
 
 class GameStudy :
 	public GameNode
 {
 private:
-	SaveLoad* _sl;
+	HiddenSearch* _hs;
 
-	PlayerManager* _playerManager;
-	EnemyManager* _enemyManager;
+	int _stage;
+
+	int _time;
+	bool _isGameOver;
+	int _gameTime;
 public:
 	GameStudy(){}
 	virtual ~GameStudy(){}
@@ -21,4 +22,7 @@ public:
 	virtual void update(void);
 	virtual void render(void);
 
+	void init1();
+	void init2();
+	void init3();
 };
