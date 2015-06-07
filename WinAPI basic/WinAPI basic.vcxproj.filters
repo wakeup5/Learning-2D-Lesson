@@ -142,7 +142,7 @@
       <Filter>GameStudy\GameClass\bullet</Filter>
     </ClInclude>
     <ClInclude Include="PieceBullet.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>GameStudy\GameClass\bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +216,7 @@
       <Filter>GameStudy\GameClass\bullet</Filter>
     </ClCompile>
     <ClCompile Include="PieceBullet.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>GameStudy\GameClass\bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -149,7 +149,7 @@ void Image::release(void)
 
 SpriteImage* Image::getSpriteImage(int frameCol, int frameRow)
 {
-	SpriteImage * sprite = new SpriteImage();
+	SpriteImage* sprite = new SpriteImage();
 
 	sprite->initialize(this, frameCol, frameRow);
 
@@ -195,7 +195,9 @@ void Image::render(HDC hdc, float destX, float destY, int sourX, int sourY, int 
 	//투명도가 없으면
 	if (_trans)
 	{
+		//GdiTransparentBlt(_imageInfo->hMemDC, sourX, sourX, width, height, _imageInfo->hMemDC, sourX, sourY, width, height, _transColor);
 		GdiTransparentBlt(hdc, destX, destY, width, height, _imageInfo->hMemDC, sourX, sourY, width, height, _transColor);
+		//GdiTransparentBlt(hdc, destX, destY, width, height, _imageInfo->hMemDC, sourX, sourY, width, height, _transColor);
 	}
 	else
 	{

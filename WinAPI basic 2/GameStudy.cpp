@@ -25,7 +25,7 @@ HRESULT GameStudy::initialize(void)
 void GameStudy::release(void)
 {
 	GameNode::release();
-	if (_hs != NULL) _hs->release();
+	SAFE_RELEASE(_hs);
 }
 
 //화면갱신
@@ -39,8 +39,7 @@ void GameStudy::update(void)
 	{
 		if (_stage == 1) init1();
 	}
-
-	if (_hs != NULL)
+	else
 	{
 		if (!_isGameOver && !_hs->isClear()) _hs->update();
 
@@ -51,9 +50,7 @@ void GameStudy::update(void)
 			if (time > 100)
 			{
 				_stage++;
-				_hs->release();
-				SAFE_DELETE(_hs);
-				_time = GetTickCount();
+				SAFE_RELEASE(_hs);
 			}
 		}
 		else
@@ -68,7 +65,8 @@ void GameStudy::update(void)
 			{
 				if (go > 100)
 				{
-					if (_stage == 1) init1();
+					SAFE_RELEASE(_hs);
+
 					_isGameOver = false;
 					go = 0;
 				}

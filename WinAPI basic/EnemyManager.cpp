@@ -31,9 +31,8 @@ HRESULT EnemyManager::initialize()
 		enemy->setHp(10);
 		enemy->setPattern([enemy](float time)
 		{
-			//cout << int(time) % 1000 << endl;
 			if (int(time) % 1000 < 500)
-				enemy->setAngleR(time / 100);
+				enemy->setAngleR(enemy->getAngleR() + 0.1);
 		});
 		_vEnemy.push_back(enemy);
 	}
