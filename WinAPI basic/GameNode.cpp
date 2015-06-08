@@ -28,7 +28,10 @@ HRESULT GameNode::initialize(bool managerInit)
 		IMAGEMANAGER->initialize();				//이미지 매니져 셋팅
 		GameNode::_backBuffer = IMAGEMANAGER->addImage("backBuffer", WIN_SIZE_X, WIN_SIZE_Y);
 
+		TIMEMANAGER->initialize();
+
 		OBJECTMANAGER->initialize();
+
 	}
 
 	return S_OK;
@@ -47,6 +50,9 @@ void GameNode::release(void)
 
 	IMAGEMANAGER->release();
 	IMAGEMANAGER->releaseSingleton();
+
+	TIMEMANAGER->release();
+	TIMEMANAGER->releaseSingleton();
 
 	OBJECTMANAGER->release();
 	OBJECTMANAGER->releaseSingleton();

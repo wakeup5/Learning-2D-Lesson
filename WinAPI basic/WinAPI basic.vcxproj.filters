@@ -129,9 +129,6 @@
     <ClInclude Include="HpEnemy.h">
       <Filter>GameStudy\GameClass\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>GameStudy\GameClass\common</Filter>
-    </ClInclude>
     <ClInclude Include="SaveLoad.h">
       <Filter>GameStudy\GameClass</Filter>
     </ClInclude>
@@ -143,6 +140,15 @@
     </ClInclude>
     <ClInclude Include="PieceBullet.h">
       <Filter>GameStudy\GameClass\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPattern.h">
+      <Filter>GameStudy\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Game2DFramework\time</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +209,6 @@
     <ClCompile Include="HpEnemy.cpp">
       <Filter>GameStudy\GameClass\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>GameStudy\GameClass\common</Filter>
-    </ClCompile>
     <ClCompile Include="SaveLoad.cpp">
       <Filter>GameStudy\GameClass</Filter>
     </ClCompile>
@@ -217,6 +220,12 @@
     </ClCompile>
     <ClCompile Include="PieceBullet.cpp">
       <Filter>GameStudy\GameClass\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Game2DFramework\time</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Game2DFramework\manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 #pragma once
 #include "Image.h"
+#include "TimeManager.h"
 
 class Image;
 class SpriteImage
@@ -20,6 +21,7 @@ private:
 	int _frameNum;
 
 	int _time = 0;
+	CheckTimer* _timer;
 
 	RECT _imageScale;
 

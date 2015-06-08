@@ -38,6 +38,7 @@
 #include "RandomFunction.h"
 #include "KeyManager.h"
 #include "ImageManager.h"
+#include "TimeManager.h"
 
 #include "ObjectManager.h"
 
@@ -46,6 +47,7 @@
 //클래스
 #include "GameObject.h"
 #include "Timer.h"
+#include "ObjectPattern.h"
 
 //게임 스터디
 #include "GameStudy.h"
@@ -80,24 +82,20 @@
 #define IMAGEMANAGER ImageManager::getSingleton()
 //class ObjectManager
 #define OBJECTMANAGER ObjectManager::getSingleton()
+//class TimeManager
+#define TIMEMANAGER TimeManager::getSingleton()
 
 //round number
 #define ROUNDING(x, dig)	( floor((x) * pow(float(10), dig) + 0.5f) / pow(float(10), dig) )
 
-//debugging
-#define DEBUGGING
-
-#ifdef DEBUGGING
+#ifdef _DEBUG
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #define DEBUGF(format, value) {printf(format, value);}
 #define DEBUG(str) {printf(str);}
-#endif
-
-#ifndef DEBUGGING
+#else
 #define DEBUGF(format, value) {}
 #define DEBUG(str) {}
 #endif
-
 
 /* ========================================
 *  ## 전역변수 ##

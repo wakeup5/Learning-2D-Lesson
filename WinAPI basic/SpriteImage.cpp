@@ -32,6 +32,8 @@ HRESULT SpriteImage::initialize(Image* image, int frameColumn, int frameRow)
 
 	setBoundingBox();
 
+	_timer = TIMEMANAGER->addTimer();
+
 	return S_OK;
 }
 
@@ -104,57 +106,45 @@ void SpriteImage::prevFrame()
 
 void SpriteImage::nextFrameX(float mSecond)
 {
-	float tick = GetTickCount();
-	if (mSecond + _time <= tick)
+	if (_timer->checkTime(mSecond))
 	{
-		_time = tick;
 		nextFrameX();
 	}
 }
 void SpriteImage::nextFrameY(float mSecond)
 {
-	float tick = GetTickCount();
-	if (mSecond + _time <= tick)
+	if (_timer->checkTime(mSecond))
 	{
-		_time = tick;
 		nextFrameY();
 	}
 }
 
 void SpriteImage::prevFrameX(float mSecond)
 {
-	float tick = GetTickCount();
-	if (mSecond + _time <= tick)
+	if (_timer->checkTime(mSecond))
 	{
-		_time = tick;
 		prevFrameX();
 	}
 }
 void SpriteImage::prevFrameY(float mSecond)
 {
-	float tick = GetTickCount();
-	if (mSecond + _time <= tick)
+	if (_timer->checkTime(mSecond))
 	{
-		_time = tick;
 		prevFrameY();
 	}
 }
 
 void SpriteImage::nextFrame(float mSecond)
 {
-	float tick = GetTickCount();
-	if (mSecond + _time <= tick)
+	if (_timer->checkTime(mSecond))
 	{
-		_time = tick;
 		nextFrame();
 	}
 }
 void SpriteImage::prevFrame(float mSecond)
 {
-	float tick = GetTickCount();
-	if (mSecond + _time <= tick)
+	if (_timer->checkTime(mSecond))
 	{
-		_time = tick;
 		nextFrame();
 	}
 }

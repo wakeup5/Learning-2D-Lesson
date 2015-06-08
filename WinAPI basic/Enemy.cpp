@@ -28,10 +28,9 @@ void Enemy::release(void)
 }
 void Enemy::update(void)
 {
-	if (_pattern != NULL) _pattern(GetTickCount() - _createTickTime);
+	//printf("%d, ", );
+	if (_pattern != NULL) _pattern(this, GetTickCount() - _createTickTime);
 	move();
-
-	GameObject::activate();
 
 	_image->nextFrame(_frameTime);
 	_image->setCenter(getX(), getY());

@@ -15,6 +15,11 @@ HRESULT EnemyManager::initialize()
 {
 	GameNode::initialize();
 
+	_bullet = new Bullet;
+	_bullet->initialize(600, 1000, 1, IMAGEMANAGER->addImage("enemy bullet", "resource/enemy bullet.bmp", 16, 8, TRUE, RGB(255, 0, 255)), 2, 1);
+
+	OBJECTMANAGER->addObject(GUID_ENEMYS_BULLET, _bullet);
+
 	for (int j = 0; j < 5; j++)
 	{
 		HpEnemy* enemy = new HpEnemy;
@@ -29,23 +34,21 @@ HRESULT EnemyManager::initialize()
 		enemy->setAngleR(0);
 		enemy->setSpeed(2);
 		enemy->setHp(10);
-		enemy->setPattern([enemy](float time)
+		enemy->setPattern([](Enemy* self, float time)
 		{
-			if (int(time) % 1000 < 500)
-				enemy->setAngleR(enemy->getAngleR() + 0.1);
+			if (self->getPatternState() == 0 && Pattern::movePattern(self, Pattern::PATTERN_MOVE_LEFT, new int(100))) self->setPatternState(1);
+			if (self->getPatternState() == 1 && Pattern::movePattern(self, Pattern::PATTERN_MOVE_RIGHT, new int(WIN_SIZE_X - 100))) self->setPatternState(2);
+			if (self->getPatternState() == 2 && Pattern::movePattern(self, Pattern::PATTERN_MOVE_LEFT, new int(WIN_SIZE_X / 2))) self->setPatternState(3);
+			if (self->getPatternState() == 3 && Pattern::movePattern(self, Pattern::PATTERN_MOVE_DOWN, NULL, new int(500))) self->setPatternState(4);
+			if (self->getPatternState() == 4 && Pattern::movePattern(self, Pattern::PATTERN_MOVE_UP, NULL, new int(200))) self->setPatternState(0);
 		});
+
 		_vEnemy.push_back(enemy);
 	}
 
 	OBJECTMANAGER->addObject(GUID_ENEMY_MANAGER, this);
 
-	_bullet = new Bullet;
-	_bullet->initialize(600, 1000, 1, IMAGEMANAGER->addImage("enemy bullet", "resource/enemy bullet.bmp", 16, 8, TRUE, RGB(255, 0, 255)), 2, 1);
-
-	OBJECTMANAGER->addObject(GUID_ENEMYS_BULLET, _bullet);
-
-	_bulletTimer = new Timer;
-	_bulletTimer->initialize(500);
+	_isBoss = false;
 
 	return S_OK;
 }
@@ -65,21 +68,21 @@ void EnemyManager::update(void)
 	//플레이어 정보
 	Player* player = OBJECTMANAGER->findObject<Player>(GUID_PLAYER);
 
-	if (player && _bulletTimer->getTiming())
+	if (player && !_isBoss && TIMEMANAGER->addTimer("enemy bullet")->checkTime(1000))
 	{
 		for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); _viEnemy++)
 		{
 			_bullet->fire((*_viEnemy)->getX(),
 				(*_viEnemy)->getY(),
 				myUtil::getGradeRadianByTwoPoint((*_viEnemy)->getX(), (*_viEnemy)->getY(), player->getX(), player->getY()),
-				2);
+				RANDOM->getFloatTo(2.0f, 4.1f));
 		}
 	}
 
 	Bullet::VPBullet* vBullet = OBJECTMANAGER->findObject<Bullet>(GUID_PLAYER_BULLET)->getBullets();
 	Bullet::VPBullet* vMissile = OBJECTMANAGER->findObject<Bullet>(GUID_PLAYER_MISSILE)->getBullets();
 	Bullet::VPBullet* vTonado = OBJECTMANAGER->findObject<Bullet>(GUID_PLAYER_TONADO)->getBullets();
-	Bullet::VPBullet* vpiece = OBJECTMANAGER->findObject<Bullet>(GUID_PLAYER_PIECE)->getBullets();
+	Bullet::VPBullet* vPiece = OBJECTMANAGER->findObject<Bullet>(GUID_PLAYER_PIECE)->getBullets();
 	
 	for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end();)
 	{
@@ -95,7 +98,7 @@ void EnemyManager::update(void)
 			enemy->setHp(enemy->getHp() - bullet->getDamage());
 		});
 
-		Bullet::collitionCheck<HpEnemy>(vpiece, *_viEnemy, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
+		Bullet::collitionCheck<HpEnemy>(vPiece, *_viEnemy, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
 			enemy->setHp(enemy->getHp() - bullet->getDamage());
 		});
 
@@ -110,10 +113,9 @@ void EnemyManager::update(void)
 		}
 	}
 
-	static bool isBossInit = false;
 	if (_vEnemy.empty())
 	{
-		if (!isBossInit)
+		if (!_isBoss)
 		{
 			HpEnemy* boss = new HpEnemy;
 			boss->initialize(
@@ -129,8 +131,10 @@ void EnemyManager::update(void)
 
 			Bullet* bullet = _bullet;
 
-			boss->setPattern([boss, bullet, player](float time)
+			boss->setPattern([boss, bullet, player](Enemy* self, float time)
 			{
+				boss->activate();
+
 				int t = (static_cast<int>(time) / 100) % 150;
 				
 				static int p = 0;
@@ -151,11 +155,6 @@ void EnemyManager::update(void)
 				{
 					boss->setSpeed(2);
 					boss->setAngleD(0);
-
-					for (int i = 0; i < 30; i++)
-					{
-						bullet->fire(boss->getX(), boss->getY(), (float(i) / 30) * 2 * M_PI, 3);
-					}
 				}
 				if (t == 30)
 				{
@@ -192,15 +191,6 @@ void EnemyManager::update(void)
 						}
 					attack1 = true;
 				}
-				if (t == 72 || t == 74)
-				{
-					for (int i = 0; i < 10; i++)
-					{
-						bullet->fire(boss->getX(), boss->getY(),
-							myUtil::getGradeRadianByTwoPoint(boss->getX(), boss->getY(), player->getX(), player->getY()) + (i - 5) * 0.2,
-							5);
-					}
-				}
 				if (t == 85)
 				{
 					boss->setAngleD(90);
@@ -223,7 +213,7 @@ void EnemyManager::update(void)
 			});
 
 			_vEnemy.push_back(boss);
-			isBossInit = true;
+			_isBoss = true;
 		}
 	}
 	_bullet->update();

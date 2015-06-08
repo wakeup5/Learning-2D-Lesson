@@ -51,5 +51,6 @@ void GameStudy::render()
 	_playerManager->render();
 	_enemyManager->render();
 
+	TIMEMANAGER->render(getMemDC());
 	GameNode::render();
 }

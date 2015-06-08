@@ -1,15 +1,19 @@
 #pragma once
 #include "GameNode.h"
+#include "ObjectPattern.h"
+
 class Enemy : public GameObject
 {
 private:
 	SpriteImage* _image;
 	float _frameTime;
 
-	std::function<void(float)> _pattern;
+	typedef std::function<void(Enemy*, float)> PatternFunc;
+	PatternFunc _pattern;
 
 	DWORD _createTickTime;
 
+	int _patternState;
 protected:
 	int _hp;
 	int _maxHp;
@@ -29,6 +33,9 @@ public:
 	void setHp(int hp){ _hp = hp; }
 	int getHp(){ return _hp; }
 
-	void setPattern(std::function<void(float)> pattern){ _pattern = pattern; }
+	void setPattern(PatternFunc pattern){ _pattern = pattern; }
+
+	void setPatternState(int p){ _patternState = p; }
+	int getPatternState(){ return _patternState; }
 };
 

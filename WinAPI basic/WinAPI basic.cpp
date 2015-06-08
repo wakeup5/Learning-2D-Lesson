@@ -60,9 +60,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		return 0;
 	}
 
-	Timer* timer = new Timer;
-	timer->initialize(5);
-
 	//°ÔÀÓ¿ë	
 	while (true)
 	{
@@ -77,11 +74,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		}
 		else
 		{
-			if (timer->getTiming())
-			{
-				_gameStudy.update();
-				_gameStudy.render();
-			}
+			TIMEMANAGER->update(60.0f);
+			_gameStudy.update();
+			_gameStudy.render();
 		}
 	}
 

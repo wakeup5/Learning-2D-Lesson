@@ -37,12 +37,6 @@ HRESULT PlayerManager::initialize(void)
 		8, 1, 2, 1);
 	OBJECTMANAGER->addObject(GUID_PLAYER_PIECE, _piece);
 
-	_bulletTimer = new Timer;
-	_bulletTimer->initialize(120);
-
-	_missileTimer = new Timer;
-	_missileTimer->initialize(200);
-
 	return S_OK;
 }
 void PlayerManager::release(void)
@@ -72,35 +66,23 @@ void PlayerManager::update(void)
 		_player->setY(_player->getY() + 3);
 	}
 
-	if (KEYMANAGER->isStayKeyDown('A'))
+	if (KEYMANAGER->isStayKeyDown('A') && TIMEMANAGER->addTimer("player bullet")->checkTime(150))
 	{
-		if (_bulletTimer->getTiming())
-		{
-			_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 4 * 3, 10);
-			_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 4 * 1, 10);
-			_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 2, 10);
-			_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 4 * 1.5, 10);
-			_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 4 * 2.5, 10);
-		}
+		_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 4 * 3, 10);
+		_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 4 * 1, 10);
+		_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 2, 10);
+		_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 4 * 1.5, 10);
+		_bullet->fire(_player->getX(), _player->getY() - 50, M_PI / 4 * 2.5, 10);
 	}
-
-	if (KEYMANAGER->isStayKeyDown('S'))
+	if (KEYMANAGER->isStayKeyDown('S') && TIMEMANAGER->addTimer("player missile")->checkTime(250))
 	{
-		if (_missileTimer->getTiming())
-		{
-			_missile->fire(_player->getX(), _player->getY() - 50, M_PI / 2, 3);
-		}
+		_missile->fire(_player->getX(), _player->getY() - 50, M_PI / 2, 3);
 	}
-
-	if (KEYMANAGER->isStayKeyDown('D'))
+	if (KEYMANAGER->isStayKeyDown('D') && TIMEMANAGER->addTimer("player tonado")->checkTime(170))
 	{
-		if (_missileTimer->getTiming())
-		{
-			_tonado->fire(_player->getX(), _player->getY() - 50, M_PI / 2, 3);
-		}
+		_tonado->fire(_player->getX(), _player->getY() - 50, M_PI / 2, 3);
 	}
-
-	if (KEYMANAGER->isOnceKeyDown('F'))
+	if (KEYMANAGER->isOnceKeyDown('F') && TIMEMANAGER->addTimer("player piece")->checkTime(250))
 	{
 		_piece->fire(_player->getX(), _player->getY() - 50, M_PI / 2, 3);
 	}

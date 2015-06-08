@@ -17,6 +17,8 @@ private:
 
 	Bullet* _bullet;
 	Timer* _bulletTimer;
+
+	bool _isBoss;
 public:
 	EnemyManager();
 	~EnemyManager();
