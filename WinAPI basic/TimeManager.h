@@ -29,7 +29,7 @@ public:
 		bool checkFPS(int elapsedFPS)
 		{
 			float FPSCount = TimeManager::getSingleton()->getWorldTime() / TimeManager::getSingleton()->getElapsedTime();
-			if (elapsedFPS + _lastTime <= FPSCount)
+			if (elapsedFPS + _lastFPS <= FPSCount)
 			{
 				_lastFPS = FPSCount;
 				return true;

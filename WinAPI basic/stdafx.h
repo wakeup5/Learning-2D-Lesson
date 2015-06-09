@@ -41,6 +41,7 @@
 #include "TimeManager.h"
 
 #include "ObjectManager.h"
+#include "EffectManager.h"
 
 #include "util.h"
 
@@ -84,6 +85,11 @@
 #define OBJECTMANAGER ObjectManager::getSingleton()
 //class TimeManager
 #define TIMEMANAGER TimeManager::getSingleton()
+//class TimeManager
+#define EFFECTMANAGER EffectManager::getSingleton()
+
+//game info
+#define MAX_GAME_FPS	60.0f
 
 //round number
 #define ROUNDING(x, dig)	( floor((x) * pow(float(10), dig) + 0.5f) / pow(float(10), dig) )

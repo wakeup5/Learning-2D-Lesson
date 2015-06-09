@@ -25,15 +25,6 @@ void SaveLoad::release(void)
 void SaveLoad::update(void)
 {
 	GameNode::update();
-
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		write();
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
-	{
-		read();
-	}
 }
 void SaveLoad::render()
 {

@@ -19,10 +19,15 @@ SpriteImage::~SpriteImage()
 
 HRESULT SpriteImage::initialize(Image* image, int frameColumn, int frameRow)
 {
+	return initialize(image, image->getX(), image->getY(), frameColumn, frameRow);
+}
+
+HRESULT SpriteImage::initialize(Image* image, float centerX, float centerY, int frameColumn, int frameRow)
+{
 	_image = image;
 
-	_centerX = _image->getX();
-	_centerY = _image->getY();
+	_centerX = centerX;
+	_centerY = centerY;
 
 	_maxFrameCol = frameColumn - 1;
 	_maxFrameRow = frameRow - 1;
@@ -48,34 +53,27 @@ void SpriteImage::render(HDC hdc, float destX, float destY, BYTE alpha)
 	_image->render(hdc, destX, destY, _currentFrameCol * _frameWidth, _currentFrameRow * _frameHeight, _frameWidth, _frameHeight, alpha);
 }
 
+void SpriteImage::release()
+{
+	_image->removeSpriteImage(this);
+}
+
 void SpriteImage::nextFrameX()
 {
-	if (_currentFrameCol++ >= _maxFrameCol)
-	{
-		_currentFrameCol = 0;
-	}
+	if (_currentFrameCol++ >= _maxFrameCol) _currentFrameCol = 0;
 }
 void SpriteImage::nextFrameY()
 {
-	if (_currentFrameRow++ >= _maxFrameRow)
-	{
-		_currentFrameRow = 0;
-	}
+	if (_currentFrameRow++ >= _maxFrameRow) _currentFrameRow = 0;
 }
 
 void SpriteImage::prevFrameX()
 {
-	if (_currentFrameCol++ < 0)
-	{
-		_currentFrameCol = _maxFrameCol;
-	}
+	if (_currentFrameCol-- < 0) _currentFrameCol = _maxFrameCol;
 }
 void SpriteImage::prevFrameY()
 {
-	if (_currentFrameRow++ < 0)
-	{
-		_currentFrameRow = _maxFrameRow;
-	}
+	if (_currentFrameRow-- < 0) _currentFrameRow = _maxFrameRow;
 }
 
 void SpriteImage::nextFrame()
@@ -84,67 +82,41 @@ void SpriteImage::nextFrame()
 	{
 		_currentFrameCol = 0;
 
-		if (_currentFrameRow++ >= _maxFrameRow)
-		{
-			_currentFrameRow = 0;
-		}
+		if (_currentFrameRow++ >= _maxFrameRow) _currentFrameRow = 0;
 	}
 }
 void SpriteImage::prevFrame()
 {
-	if (_currentFrameCol++ < 0)
+	if (_currentFrameCol-- < 0)
 	{
 		_currentFrameCol = _maxFrameCol;
 
-		if (_currentFrameRow++ < 0)
-		{
-			_currentFrameRow = _maxFrameRow;
-		}
+		if (_currentFrameRow-- < 0) _currentFrameRow = _maxFrameRow;
 	}
 }
 
 
 void SpriteImage::nextFrameX(float mSecond)
 {
-	if (_timer->checkTime(mSecond))
-	{
-		nextFrameX();
-	}
+	if (_timer->checkTime(mSecond)) nextFrameX();
 }
 void SpriteImage::nextFrameY(float mSecond)
 {
-	if (_timer->checkTime(mSecond))
-	{
-		nextFrameY();
-	}
+	if (_timer->checkTime(mSecond)) nextFrameY();
 }
-
 void SpriteImage::prevFrameX(float mSecond)
 {
-	if (_timer->checkTime(mSecond))
-	{
-		prevFrameX();
-	}
+	if (_timer->checkTime(mSecond)) prevFrameX();
 }
 void SpriteImage::prevFrameY(float mSecond)
 {
-	if (_timer->checkTime(mSecond))
-	{
-		prevFrameY();
-	}
+	if (_timer->checkTime(mSecond)) prevFrameY();
 }
-
 void SpriteImage::nextFrame(float mSecond)
 {
-	if (_timer->checkTime(mSecond))
-	{
-		nextFrame();
-	}
+	if (_timer->checkTime(mSecond)) nextFrame();
 }
 void SpriteImage::prevFrame(float mSecond)
 {
-	if (_timer->checkTime(mSecond))
-	{
-		nextFrame();
-	}
+	if (_timer->checkTime(mSecond)) prevFrame();
 }

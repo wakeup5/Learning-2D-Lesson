@@ -92,6 +92,9 @@ public:
 	void release(void);
 
 	SpriteImage* getSpriteImage(int frameCol, int frameRow);
+	SpriteImage* getSpriteImage(float centerX, float centerY, int frameCol, int frameRow);
+
+	void removeSpriteImage(SpriteImage*);
 
 	//투명키 값 설정
 	void setTransColor(BOOL trans, COLORREF transColor);

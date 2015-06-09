@@ -21,6 +21,8 @@ public:
 
 	static bool movePattern(GameObject* object, PATTERN pattern, int* destX = NULL, int* destY = NULL)
 	{
+		if (object == NULL) return false;
+
 		if (destX == NULL) destX = new int(object->getX());
 		if (destY == NULL) destY = new int(object->getY());
 

@@ -16,7 +16,7 @@ HRESULT EnemyManager::initialize()
 	GameNode::initialize();
 
 	_bullet = new Bullet;
-	_bullet->initialize(600, 1000, 1, IMAGEMANAGER->addImage("enemy bullet", "resource/enemy bullet.bmp", 16, 8, TRUE, RGB(255, 0, 255)), 2, 1);
+	_bullet->initialize(600, 1000, 1, IMAGEMANAGER->findImage("enemy bullet"), 2, 1);
 
 	OBJECTMANAGER->addObject(GUID_ENEMYS_BULLET, _bullet);
 
@@ -24,10 +24,10 @@ HRESULT EnemyManager::initialize()
 	{
 		HpEnemy* enemy = new HpEnemy;
 		enemy->initialize(
-			IMAGEMANAGER->addSpriteImage("ufo", "resource/enemy.bmp", 306, 58, 6, 2, TRUE, RGB(255, 0, 255)),
+			IMAGEMANAGER->findImage("ufo")->getSpriteImage(6, 2),
 			RANDOM->getFloatTo(20, 100),
-			IMAGEMANAGER->addImage("hp bar", "resource/hp bar.bmp", 50, 4),
-			IMAGEMANAGER->addImage("hp bar back", "resource/hp bar back.bmp", 50, 4),
+			IMAGEMANAGER->findImage("hp bar"),
+			IMAGEMANAGER->findImage("hp bar back"),
 			10);
 		enemy->setPosition((WIN_SIZE_X / 2) + (j - 2) * 100, 200);
 		enemy->setSize(50, 50);
@@ -54,7 +54,14 @@ HRESULT EnemyManager::initialize()
 }
 void EnemyManager::release(void)
 {
+	for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end();)
+	{
+		(*_viEnemy)->release();
+		SAFE_DELETE((*_viEnemy));
+		_viEnemy = _vEnemy.erase(_viEnemy);
+	}
 
+	_vEnemy.clear();
 }
 void EnemyManager::update(void)
 {
@@ -68,7 +75,7 @@ void EnemyManager::update(void)
 	//플레이어 정보
 	Player* player = OBJECTMANAGER->findObject<Player>(GUID_PLAYER);
 
-	if (player && !_isBoss && TIMEMANAGER->addTimer("enemy bullet")->checkTime(1000))
+	if (player != NULL && !_isBoss && TIMEMANAGER->addTimer("enemy bullet")->checkTime(1000))
 	{
 		for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end(); _viEnemy++)
 		{
@@ -86,20 +93,32 @@ void EnemyManager::update(void)
 	
 	for (_viEnemy = _vEnemy.begin(); _viEnemy != _vEnemy.end();)
 	{
-		Bullet::collitionCheck<HpEnemy>(vBullet, *_viEnemy, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
+		Bullet::collitionCheck<HpEnemy>(*_viEnemy, vBullet, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
 			enemy->setHp(enemy->getHp() - bullet->getDamage());
+			EFFECTMANAGER->addEffect(
+				IMAGEMANAGER->findImage("bullet up effect")
+				->getSpriteImage(bullet->getX(), bullet->getRect().top, 17, 1));
 		});
 
-		Bullet::collitionCheck<HpEnemy>(vMissile, *_viEnemy, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
+		Bullet::collitionCheck<HpEnemy>(*_viEnemy, vMissile, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
 			enemy->setHp(enemy->getHp() - bullet->getDamage());
+			EFFECTMANAGER->addEffect(
+				IMAGEMANAGER->findImage("missile down effect")
+				->getSpriteImage(bullet->getX(), bullet->getRect().top, 15, 1));
 		});
 
-		Bullet::collitionCheck<HpEnemy>(vTonado, *_viEnemy, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
+		Bullet::collitionCheck<HpEnemy>(*_viEnemy, vTonado, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
 			enemy->setHp(enemy->getHp() - bullet->getDamage());
+			EFFECTMANAGER->addEffect(
+				IMAGEMANAGER->findImage("bullet up effect")
+				->getSpriteImage(bullet->getX(), bullet->getRect().top, 17, 1));
 		});
 
-		Bullet::collitionCheck<HpEnemy>(vPiece, *_viEnemy, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
+		Bullet::collitionCheck<HpEnemy>(*_viEnemy, vPiece, [](HpEnemy* enemy, Bullet::BulletObject* bullet){
 			enemy->setHp(enemy->getHp() - bullet->getDamage());
+			EFFECTMANAGER->addEffect(
+				IMAGEMANAGER->findImage("bullet up effect")
+				->getSpriteImage(bullet->getX(), bullet->getRect().top, 17, 1));
 		});
 
 		if ((*_viEnemy)->getHp() <= 0)
@@ -119,10 +138,10 @@ void EnemyManager::update(void)
 		{
 			HpEnemy* boss = new HpEnemy;
 			boss->initialize(
-				IMAGEMANAGER->addSpriteImage("boss", "resource/boss.bmp", 1685, 400, 8, 2, TRUE, RGB(255, 0, 255)),
+				IMAGEMANAGER->findImage("boss")->getSpriteImage(8, 2),
 				50,
-				IMAGEMANAGER->addImage("boss hp bar", "resource/hp bar.bmp", 300, 8),
-				IMAGEMANAGER->addImage("boss hp bar back", "resource/hp bar back.bmp", 300, 8),
+				IMAGEMANAGER->findImage("boss hp bar"),
+				IMAGEMANAGER->findImage("boss hp bar back"),
 				2000);
 			boss->setPosition(WIN_SIZE_X / 2, 200);
 			boss->setSize(200, 220);

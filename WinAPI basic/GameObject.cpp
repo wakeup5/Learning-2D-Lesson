@@ -117,8 +117,8 @@ float GameObject::getSpeed()
 
 void GameObject::activate()
 {
-	_centerX += _speedX;
-	_centerY += _speedY;
+	_centerX += _speedX * TIMEMANAGER->getElapsedTime() * 100;
+	_centerY += _speedY * TIMEMANAGER->getElapsedTime() * 100;
 
 	updateRect();
 }

@@ -52,6 +52,9 @@
     <Filter Include="GameStudy\GameClass\common">
       <UniqueIdentifier>{59fa7080-de54-4139-a657-98b2e54010ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameStudy\GameClass\effect">
+      <UniqueIdentifier>{1a4c1fd3-d832-4ee2-b78b-a2b938e04a0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -150,6 +153,9 @@
     <ClInclude Include="TimeManager.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>GameStudy\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -227,6 +233,9 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>Game2DFramework\manager</Filter>
     </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>GameStudy\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="숙제.txt">
@@ -237,5 +246,61 @@
     <ResourceCompile Include="WinAPI basic.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\slug.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\background.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\backMap.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\boost.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\boss.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\boss1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\bullet_hit_down.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\bullet_hit_up.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\enemy bullet.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\enemy.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\hp bar back.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\hp bar.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\missile boost.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\missile.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\missile_hit.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\missile2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\player bullet.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\player m bullet.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

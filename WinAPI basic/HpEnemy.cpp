@@ -17,13 +17,15 @@ HRESULT HpEnemy::initialize(SpriteImage* image, float frameTime, Image* hpImage,
 	_maxHp = maxHp;
 	_hp = maxHp;
 
-	_hpBar.initialize(hpImage, backHpImage, &_centerX, &_centerY, &_hp, maxHp);
+	_hpBar = new HPBar;
+	_hpBar->initialize(hpImage, backHpImage, &_centerX, &_centerY, &_hp, maxHp);
 
 	return S_OK;
 }
 void HpEnemy::release(void)
 {
-
+	_hpBar->release();
+	SAFE_DELETE(_hpBar);
 }
 void HpEnemy::update(void)
 {
@@ -36,11 +38,11 @@ void HpEnemy::render(void)
 
 void HpEnemy::move()
 {
-	_hpBar.update();
-	_hpBar.setDiff(0, -(getHeight() / 2));
+	_hpBar->update();
+	_hpBar->setDiff(0, -(getHeight() / 2));
 }
 void HpEnemy::draw()
 {
 	Enemy::draw();
-	_hpBar.render();
+	_hpBar->render();
 }

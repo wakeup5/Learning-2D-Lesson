@@ -102,14 +102,14 @@ SpriteImage* ImageManager::addSpriteImage(std::string key, const char* fileName,
 
 SpriteImage* ImageManager::addSpriteImage(std::string key, const char* fileName, float centerX, float centerY, int width, int height, int frameColumn, int frameRow, BOOL trans, COLORREF transColor)
 {
-	Image* image = addImage(key, fileName, centerX, centerY, width, height, trans, transColor);
+	Image* image = addImage(key, fileName, width, height, trans, transColor);
 	SpriteImage* spriteImage;
 	if (image == NULL)
 	{
 		return NULL;
 	}
 
-	spriteImage = image->getSpriteImage(frameColumn, frameRow);
+	spriteImage = image->getSpriteImage(centerX, centerY, frameColumn, frameRow);
 	return spriteImage;
 }
 

@@ -83,6 +83,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="DataManager.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="GameNode.h" />
@@ -116,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
@@ -148,6 +150,26 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinAPI basic.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\background.bmp" />
+    <Image Include="resource\backMap.bmp" />
+    <Image Include="resource\boost.bmp" />
+    <Image Include="resource\boss.bmp" />
+    <Image Include="resource\boss1.bmp" />
+    <Image Include="resource\bullet_hit_down.bmp" />
+    <Image Include="resource\bullet_hit_up.bmp" />
+    <Image Include="resource\enemy bullet.bmp" />
+    <Image Include="resource\enemy.bmp" />
+    <Image Include="resource\hp bar back.bmp" />
+    <Image Include="resource\hp bar.bmp" />
+    <Image Include="resource\missile boost.bmp" />
+    <Image Include="resource\missile.bmp" />
+    <Image Include="resource\missile2.bmp" />
+    <Image Include="resource\missile_hit.bmp" />
+    <Image Include="resource\player bullet.bmp" />
+    <Image Include="resource\player m bullet.bmp" />
+    <Image Include="resource\slug.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

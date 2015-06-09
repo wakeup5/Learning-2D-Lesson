@@ -158,6 +158,32 @@ SpriteImage* Image::getSpriteImage(int frameCol, int frameRow)
 	return sprite;
 }
 
+SpriteImage* Image::getSpriteImage(float centerX, float centerY, int frameCol, int frameRow)
+{
+	SpriteImage* sprite = new SpriteImage();
+
+	sprite->initialize(this, centerX, centerY, frameCol, frameRow);
+
+	_vSpriteImage.push_back(sprite);
+
+	return sprite;
+}
+
+void Image::removeSpriteImage(SpriteImage* sprite)
+{
+	std::vector<SpriteImage*>::iterator iter;
+	for (iter = _vSpriteImage.begin(); iter != _vSpriteImage.end(); iter++)
+	{
+		//주소값 비교?
+		if (sprite == *iter)
+		{
+			SAFE_DELETE((*iter));
+			_vSpriteImage.erase(iter);
+			break;
+		}
+	}
+}
+
 //투명키 값 설정
 void Image::setTransColor(BOOL trans, COLORREF transColor)
 {

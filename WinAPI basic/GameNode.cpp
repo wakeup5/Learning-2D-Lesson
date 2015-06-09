@@ -31,7 +31,7 @@ HRESULT GameNode::initialize(bool managerInit)
 		TIMEMANAGER->initialize();
 
 		OBJECTMANAGER->initialize();
-
+		EFFECTMANAGER->initialize();
 	}
 
 	return S_OK;
@@ -56,6 +56,9 @@ void GameNode::release(void)
 
 	OBJECTMANAGER->release();
 	OBJECTMANAGER->releaseSingleton();
+
+	EFFECTMANAGER->release();
+	EFFECTMANAGER->releaseSingleton();
 }
 
 //화면갱신
@@ -63,19 +66,18 @@ void GameNode::update(void)
 {
 	//화면 갱신
 	//InvalidateRect(_hWnd, NULL, false);
-	
+	EFFECTMANAGER->update();
 }
 
 //화면출력
 void GameNode::render()
 {
+	EFFECTMANAGER->render(getMemDC());
 	_backBuffer->render(getHDC());
-	
 }
 
 LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-
 	switch (iMessage)
 	{
 	case WM_CREATE:
@@ -94,7 +96,7 @@ LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 			PostMessage(hWnd, WM_DESTROY, 0, 0);
 			break;
 		}
-		break;
+		break; 
 	}
 
 	return DefWindowProc(hWnd, iMessage, wParam, lParam);

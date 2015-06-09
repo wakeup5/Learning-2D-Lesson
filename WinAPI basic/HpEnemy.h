@@ -6,7 +6,7 @@ class HpEnemy :
 	public Enemy
 {
 private:
-	HPBar _hpBar;
+	HPBar* _hpBar;
 
 public:
 	HpEnemy();

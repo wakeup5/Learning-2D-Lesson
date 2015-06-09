@@ -36,12 +36,16 @@ public:
 	//프레임 관련
 	//폭 높이와 행열 갯수
 	HRESULT initialize(Image* image, int frameColumn, int frameRow);
+	HRESULT initialize(Image* image, float centerX, float centerY, int frameColumn, int frameRow);
 
 	//프레임 렌더
 	virtual void render(HDC hdc, BYTE alpha = 255);
 	virtual void render(HDC hdc, float destX, float destY, BYTE alpha = 255);
 
 	void setImage(Image* image){ _image = image; }
+	Image* getImage(){ return _image; }
+	virtual void release();
+
 	RECT getRect(){ setBoundingBox(); return _imageScale; }
 
 	inline void setFrameX(int frameX)

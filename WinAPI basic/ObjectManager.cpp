@@ -57,8 +57,8 @@ bool ObjectManager::removeObject(GUID id)
 
 	if (iter != _mNode.end())
 	{
-		iter->second->release();
-		SAFE_DELETE(iter->second);
+		//iter->second->release();
+		//SAFE_DELETE(iter->second);
 		_mNode.erase(iter);
 		return true;
 	}

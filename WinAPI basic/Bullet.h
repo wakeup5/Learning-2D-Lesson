@@ -61,11 +61,13 @@ public:
 
 	//총알과 오브젝트 충돌처리 함수
 	template < typename T >
-	static bool collitionCheck(Bullet::VPBullet* bullet, GameObject* object, std::function<void(T*, Bullet::BulletObject*)> callback)
+	static bool collitionCheck(GameObject* object, Bullet::VPBullet* bullet, std::function<void(T*, Bullet::BulletObject*)> callback)
 	{
 		VIPBullet viBullet;
 		RECT r;
 		bool result = false;
+
+		if (object == NULL) return result;
 
 		for (viBullet = bullet->begin(); viBullet != bullet->end();)
 		{

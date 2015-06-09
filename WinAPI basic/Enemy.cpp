@@ -24,7 +24,7 @@ HRESULT Enemy::initialize(SpriteImage* image, float frameTime)
 }
 void Enemy::release(void)
 {
-
+	//_pattern = NULL;
 }
 void Enemy::update(void)
 {
