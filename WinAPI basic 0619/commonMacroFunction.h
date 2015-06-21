@@ -29,7 +29,7 @@ typedef struct tagPOINTRECT
 @param	y y좌표
 @return	POINT
 */
-inline POINT makePoint(int x, int y)
+inline POINT makePoint(const int x, const int y)
 {
 	return POINT{ x, y };
 }
@@ -42,7 +42,7 @@ inline POINT makePoint(int x, int y)
 @param	int height 높이
 @return	RECT
 */
-inline RECT makeRect(int x, int y, int width, int height)
+inline RECT makeRect(const int x, const int y, const int width, const int height)
 {
 	return RECT{ x, y, x + width, y + height };
 }
@@ -55,7 +55,7 @@ inline RECT makeRect(int x, int y, int width, int height)
 @param	int height 높이
 @return	RECT
 */
-inline RECT makeRectCenter(int centerX, int centerY, int width, int height)
+inline RECT makeRectCenter(const int centerX, const int centerY, const int width, const int height)
 {
 	return RECT{ centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2) };
 }
@@ -67,7 +67,7 @@ inline RECT makeRectCenter(int centerX, int centerY, int width, int height)
 @param	int height 높이
 @return	RECT
 */
-inline RECT makeRectCenter(POINT &p, int width, int height)
+inline RECT makeRectCenter(const POINT &p, const int width, const int height)
 {
 	return makeRectCenter(p.x, p.y, width, height);//RECT{ p.x - (width / 2), p.y - (height / 2), p.x + (width / 2), p.y + (height / 2) };
 }
@@ -77,7 +77,7 @@ inline RECT makeRectCenter(POINT &p, int width, int height)
 @param	LPARAM
 @return	POINT
 */
-inline POINT makeMousePoint(LPARAM lParam)
+inline POINT makeMousePoint(const LPARAM lParam)
 {
 	return POINT{ static_cast<int>(LOWORD(lParam)), static_cast<int>(HIWORD(lParam)) };
 }
@@ -90,7 +90,7 @@ inline POINT makeMousePoint(LPARAM lParam)
 @param	int height 높이
 @return	POINTRECT
 */
-inline POINTRECT makePointRectCenter(int centerX, int centerY, int width, int height)
+inline POINTRECT makePointRectCenter(const int centerX, const int centerY, const int width, const int height)
 {
 	return POINTRECT{ makePoint(centerX, centerY), makeRectCenter(centerX, centerY, width, height) };
 }
@@ -102,7 +102,7 @@ inline POINTRECT makePointRectCenter(int centerX, int centerY, int width, int he
 @param	int height 높이
 @return	POINTRECT
 */
-inline POINTRECT makePointRectCenter(POINT p, int width, int height)
+inline POINTRECT makePointRectCenter(const POINT p, const int width, const int height)
 {
 	return POINTRECT{ p, makeRectCenter(p.x, p.y, width, height) };
 }
@@ -112,25 +112,23 @@ inline POINTRECT makePointRectCenter(POINT p, int width, int height)
 @param	RECT
 @return	RECT
 */
-inline RECT reverseRect(RECT &rect)
+inline RECT reverseRect(const RECT &rect)
 {
-	int temp;
+	RECT temtR;
 
 	if (rect.left > rect.right)
 	{
-		temp = rect.left;
-		rect.left = rect.right;
-		rect.right = temp;
+		temtR.left = rect.right;
+		temtR.right = rect.left;
 	}
 
 	if (rect.top > rect.bottom)
 	{
-		temp = rect.top;
-		rect.top = rect.bottom;
-		rect.bottom = temp;
+		temtR.top = rect.bottom;
+		temtR.bottom = rect.top;
 	}
 
-	return rect;
+	return temtR;
 }
 
 /** makePointByRect RECT의 중심 좌표 리턴
@@ -138,9 +136,9 @@ inline RECT reverseRect(RECT &rect)
 @param	RECT
 @return	POINT
 */
-inline POINT makePointByRect(RECT &r)
+inline POINT makePointByRect(const RECT &r)
 {
-	r = reverseRect(r);
+	RECT tempR = reverseRect(r);
 	return POINT{ r.left + (r.right - r.left) / 2, r.top + (r.bottom - r.top) / 2 };
 }
 
@@ -156,7 +154,7 @@ inline POINT makePointByRect(RECT &r)
 @param	int x2 끝 x좌표
 @param	int y2 끝 y좌표
 */
-inline void drawLine(HDC hdc, int x1, int y1, int x2, int y2)
+inline void drawLine(HDC hdc, const int x1, const int y1, const int x2, const int y2)
 {
 	MoveToEx(hdc, x1, y1, NULL);
 	LineTo(hdc, x2, y2);
@@ -168,7 +166,7 @@ inline void drawLine(HDC hdc, int x1, int y1, int x2, int y2)
 @param	POINT 시작 좌표
 @param	POINT 끝 좌표
 */
-inline void drawLine(HDC hdc, POINT a, POINT b)
+inline void drawLine(HDC hdc, const POINT a, const POINT b)
 {
 	MoveToEx(hdc, a.x, a.y, NULL);
 	LineTo(hdc, b.x, b.y);
@@ -198,7 +196,7 @@ inline void drawLines(HDC hdc, std::vector<POINT> &pointVector)
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawRectangle(HDC hdc, int x, int y, int width, int height)
+inline void drawRectangle(HDC hdc, const int x, const int y, const int width, const int height)
 {
 	Rectangle(hdc, x, y, x + width, y + height);
 }
@@ -209,7 +207,7 @@ inline void drawRectangle(HDC hdc, int x, int y, int width, int height)
 @param	HDC 윈도우 dc의 핸들
 @param	RECT
 */
-inline void drawRectangle(HDC hdc, RECT &r)
+inline void drawRectangle(HDC hdc, const RECT &r)
 {
 	Rectangle(hdc, r.left, r.top, r.right, r.bottom);
 }
@@ -222,7 +220,7 @@ inline void drawRectangle(HDC hdc, RECT &r)
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawRectangleCenter(HDC hdc, int centerX, int centerY, int width, int height)
+inline void drawRectangleCenter(HDC hdc, const int centerX, const int centerY, const int width, const int height)
 {
 	Rectangle(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 }
@@ -234,7 +232,7 @@ inline void drawRectangleCenter(HDC hdc, int centerX, int centerY, int width, in
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawRectangleCenter(HDC hdc, POINT &p, int width, int height)
+inline void drawRectangleCenter(HDC hdc, const POINT &p, const int width, const int height)
 {
 	//Rectangle(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 	drawRectangleCenter(hdc, p.x, p.y, width, height);
@@ -248,7 +246,7 @@ inline void drawRectangleCenter(HDC hdc, POINT &p, int width, int height)
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawEllipse(HDC hdc, int x, int y, int width, int height)
+inline void drawEllipse(HDC hdc, const int x, const int y, const int width, const int height)
 {
 	Ellipse(hdc, x, y, x + width, y + height);
 }
@@ -259,7 +257,7 @@ inline void drawEllipse(HDC hdc, int x, int y, int width, int height)
 @param	HDC 윈도우 dc의 핸들
 @param	RECT
 */
-inline void drawEllipse(HDC hdc, RECT &r)
+inline void drawEllipse(HDC hdc, const RECT &r)
 {
 	Ellipse(hdc, r.left, r.top, r.right, r.bottom);
 }
@@ -272,7 +270,7 @@ inline void drawEllipse(HDC hdc, RECT &r)
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawEllipseCenter(HDC hdc, int centerX, int centerY, int width, int height)
+inline void drawEllipseCenter(HDC hdc, const int centerX, const int centerY, const int width, const int height)
 {
 	Ellipse(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 }
@@ -284,7 +282,7 @@ inline void drawEllipseCenter(HDC hdc, int centerX, int centerY, int width, int 
 @param	int width 폭
 @param	int height 높이
 */
-inline void drawEllipseCenter(HDC hdc, POINT &p, int width, int height)
+inline void drawEllipseCenter(HDC hdc, const POINT &p, const int width, const int height)
 {
 	//Ellipse(hdc, centerX - (width / 2), centerY - (height / 2), centerX + (width / 2), centerY + (height / 2));
 	drawEllipseCenter(hdc, p.x, p.y, width, height);
@@ -300,19 +298,19 @@ inline void drawEllipseCenter(HDC hdc, POINT &p, int width, int height)
 @param	RECT
 @return	bool 안에 존재하는지의 여부
 */
-inline bool checkInRectangle(POINT &point, RECT &rect)
+inline bool checkInRectangle(const POINT &point, const RECT &rect)
 {
-	rect = reverseRect(rect);
+	RECT rect1 = reverseRect(rect);
 
-	if (point.x >= rect.left &&
-		point.x <= rect.right &&
-		point.y >= rect.top &&
-		point.y <= rect.bottom)
+	if (point.x >= rect1.left &&
+		point.x <= rect1.right &&
+		point.y >= rect1.top &&
+		point.y <= rect1.bottom)
 		return true;
 	else
 		return false;
 }
-inline bool isCollisionRectangle(POINT &p, RECT &r)
+inline bool isCollisionRectangle(const POINT &p, const RECT &r)
 {
 	return checkInRectangle(p, r);
 }
@@ -324,15 +322,15 @@ inline bool isCollisionRectangle(POINT &p, RECT &r)
 @param	RECT
 @return	bool 안에 존재하는지의 여부
 */
-inline bool checkInRectangle(RECT &rect1, RECT &rect2)
+inline bool checkInRectangle(const RECT &rect1, const RECT &rect2)
 {
-	rect1 = reverseRect(rect1);
-	rect2 = reverseRect(rect2);
+	RECT trect1 = reverseRect(rect1);
+	RECT trect2 = reverseRect(rect2);
 
-	if (rect1.left < rect2.right &&
-		rect1.right > rect2.left &&
-		rect1.top < rect2.bottom &&
-		rect1.bottom > rect2.top)
+	if (trect1.left < trect2.right &&
+		trect1.right > trect2.left &&
+		trect1.top < trect2.bottom &&
+		trect1.bottom > trect2.top)
 	{
 		return true;
 	}
@@ -341,7 +339,7 @@ inline bool checkInRectangle(RECT &rect1, RECT &rect2)
 		return false;
 	}
 }
-inline bool isCollisionRectangle(RECT &r1, RECT &r2)
+inline bool isCollisionRectangle(const RECT &r1, const RECT &r2)
 {
 	return checkInRectangle(r1, r2);
 }

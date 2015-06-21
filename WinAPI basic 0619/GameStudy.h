@@ -1,12 +1,11 @@
 #pragma once
 #include "GameNode.h"
-#include "BackGround.h"
-#include "AnimationImage.h"
+#include "JangGi.h"
 
 class GameStudy : public GameNode
 {
 private:
-	AnimationImage* _image;
+	JangGi* _jg;
 public:
 	GameStudy(){}
 	virtual ~GameStudy(){}

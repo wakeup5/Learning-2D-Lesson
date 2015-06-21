@@ -185,6 +185,7 @@ AnimationImage* Image::createAnimate(float centerX, float centerY, int frameCol,
 
 void Image::removeSpriteImage(SpriteImage* sprite)
 {
+	return;
 	std::vector<SpriteImage*>::iterator iter;
 	for (iter = _vSpriteImage.begin(); iter != _vSpriteImage.end(); iter++)
 	{

@@ -26,7 +26,7 @@ HRESULT GameNode::initialize(bool managerInit)
 
 		KEYMANAGER->initialize();					//키매니져 셋팅
 		IMAGEMANAGER->initialize();				//이미지 매니져 셋팅
-		_backBuffer = IMAGEMANAGER->addImage("backBuffer", STAGE_WIDTH, STAGE_HEIGHT);
+		_backBuffer = IMAGEMANAGER->addImage("backBuffer", WIN_SIZE_X, WIN_SIZE_Y);
 
 		TIMEMANAGER->initialize();
 

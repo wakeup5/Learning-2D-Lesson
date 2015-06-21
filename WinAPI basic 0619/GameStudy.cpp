@@ -10,10 +10,9 @@ HRESULT GameStudy::initialize(void)
 
 	imageLoad();
 
-	_image = IMAGEMANAGER->findImage("e")->createAnimate(4, 3);
-	_image->setPlayFrame(8, 100, true, true);
-	_image->setFPS(8);
-	_image->start();
+	_jg = new JangGi;
+	_jg->initialize();
+
 	return S_OK;
 }
 
@@ -21,13 +20,17 @@ HRESULT GameStudy::initialize(void)
 void GameStudy::release(void)
 {
 	GameNode::release();
+
+	_jg->release();
 }
 
 //화면갱신
 void GameStudy::update(void)
 {
 	GameNode::update();
-	_image->frameUpdate(TIMEMANAGER->getElapsedTime());
+	
+	_jg->update();
+
 	EFFECTMANAGER->update();
 }
 
@@ -35,13 +38,15 @@ void GameStudy::update(void)
 void GameStudy::render()
 {
 	IMAGEMANAGER->render("backMap", getMemDC());
-	_image->render(getMemDC(), 100, 100);
+
+	_jg->render();
+
 	GameNode::render();
 }
 
 void GameStudy::imageLoad()
 {
 	IMAGEMANAGER->addImage("backMap", "resource/backMap.bmp", WIN_SIZE_X, WIN_SIZE_Y);
-	IMAGEMANAGER->addImage("queen", "resource/queen.bmp", 160, 45, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("e", "resource/enemy_move.bmp", 160, 150, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("janggi back", "resource/back.bmp", 500, 500);
+	IMAGEMANAGER->addImage("janggi mal", "resource/jang_gi.bmp", 385, 110, true, RGB(255, 0, 255));
 }
