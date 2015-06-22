@@ -96,10 +96,10 @@ public:
 	/// 이미지 자원 반환
 	void release(void);
 
-	/// 이미지를 잘라 스프라이트 이미지를 생성하여 리턴 - 안씀
-	SpriteImage* createSprite(int frameCol, int frameRow);
-	/// 이미지를 잘라 스프라이트 이미지를 생성하여 리턴 - 안씀
-	SpriteImage* createSprite(float centerX, float centerY, int frameCol, int frameRow);
+	/// 이미지를 잘라 스프라이트 이미지를 생성하여 리턴
+	SpriteImage* createSprite(int frameCol, int frameRow, int frameX = 0, int frameY = 0);
+	/// 이미지를 잘라 스프라이트 이미지를 생성하여 리턴
+	SpriteImage* createSprite(float centerX, float centerY, int frameCol, int frameRow, int frameX = 0, int frameY = 0);
 
 	/// 이미지를 잘라 애니메이션 이미지를 생성하여 리턴
 	AnimationImage* createAnimate(int frameCol, int frameRow);

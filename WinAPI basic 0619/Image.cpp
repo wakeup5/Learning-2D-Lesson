@@ -146,22 +146,22 @@ void Image::release(void)
 	_vSpriteImage.clear();
 }
 
-SpriteImage* Image::createSprite(int frameCol, int frameRow)
+SpriteImage* Image::createSprite(int frameCol, int frameRow, int frameX, int frameY)
 {
 	SpriteImage* sprite = new SpriteImage();
 
-	sprite->initialize(this, frameCol, frameRow);
+	sprite->initialize(this, frameCol, frameRow, frameX, frameY);
 
 	//_vSpriteImage.push_back(sprite);
 
 	return sprite;
 }
 
-SpriteImage* Image::createSprite(float centerX, float centerY, int frameCol, int frameRow)
+SpriteImage* Image::createSprite(float centerX, float centerY, int frameCol, int frameRow, int frameX, int frameY)
 {
 	SpriteImage* sprite = new SpriteImage();
 
-	sprite->initialize(this, centerX, centerY, frameCol, frameRow);
+	sprite->initialize(this, centerX, centerY, frameCol, frameRow, frameX, frameY);
 
 	//_vSpriteImage.push_back(sprite);
 

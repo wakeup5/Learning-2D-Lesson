@@ -17,12 +17,12 @@ SpriteImage::~SpriteImage()
 
 }
 
-HRESULT SpriteImage::initialize(Image* image, int frameColumn, int frameRow)
+HRESULT SpriteImage::initialize(Image* image, int frameColumn, int frameRow, int frameX, int frameY)
 {
-	return initialize(image, image->getX(), image->getY(), frameColumn, frameRow);
+	return initialize(image, image->getX(), image->getY(), frameColumn, frameRow, frameX, frameY);
 }
 
-HRESULT SpriteImage::initialize(Image* image, float centerX, float centerY, int frameColumn, int frameRow)
+HRESULT SpriteImage::initialize(Image* image, float centerX, float centerY, int frameColumn, int frameRow, int frameX, int frameY)
 {
 	_image = image;
 
@@ -34,6 +34,9 @@ HRESULT SpriteImage::initialize(Image* image, float centerX, float centerY, int 
 
 	_frameWidth = _image->getWidth() / frameColumn;
 	_frameHeight = _image->getHeight() / frameRow;
+
+	_currentFrameCol = frameX;
+	_currentFrameRow = frameY;
 
 	setBoundingBox();
 
