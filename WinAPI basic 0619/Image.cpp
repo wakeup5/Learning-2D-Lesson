@@ -248,7 +248,6 @@ void Image::render(HDC hdc, float destX, float destY, int sourX, int sourY, int 
 		destY = 0;
 	}
 
-
 	//투명도가 있으면
 	if (alpha != 255)
 	{
@@ -288,6 +287,7 @@ void Image::alphaRender(HDC hdc, float destX, float destY, int sourX, int sourY,
 	//하지 않을 경우
 	else
 	{
-		AlphaBlend(hdc, destX, destY, width, height, _blendImage->hMemDC, sourX, sourY, width, height, _blendFunc);
+		BitBlt(_blendImage->hMemDC, destX, destY, width, height, _imageInfo->hMemDC, sourX, sourY, SRCCOPY);
+		AlphaBlend(hdc, destX, destY, width, height, _blendImage->hMemDC, destX, destY, width, height, _blendFunc);
 	}
 }

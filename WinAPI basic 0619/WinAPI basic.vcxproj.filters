@@ -43,6 +43,9 @@
     <Filter Include="GameStudy\manager">
       <UniqueIdentifier>{8138aa3b-a309-4576-9fc6-8c8e609da9f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameStudy\GameClass\scene">
+      <UniqueIdentifier>{3ce2d665-63a9-420a-b47e-777c87de5216}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -106,7 +109,13 @@
       <Filter>Game2DFramework\image</Filter>
     </ClInclude>
     <ClInclude Include="JangGi.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>GameStudy\GameClass</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Game2DFramework\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="IconScene.h">
+      <Filter>GameStudy\GameClass\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +168,13 @@
       <Filter>Game2DFramework\image</Filter>
     </ClCompile>
     <ClCompile Include="JangGi.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>GameStudy\GameClass</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Game2DFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="IconScene.cpp">
+      <Filter>GameStudy\GameClass\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

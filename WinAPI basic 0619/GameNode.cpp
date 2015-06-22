@@ -32,6 +32,7 @@ HRESULT GameNode::initialize(bool managerInit)
 
 		OBJECTMANAGER->initialize();
 		EFFECTMANAGER->initialize();
+		SCENEMANAGER->initialize();
 	}
 
 	return S_OK;
@@ -59,6 +60,9 @@ void GameNode::release(void)
 
 	OBJECTMANAGER->release();
 	OBJECTMANAGER->releaseSingleton();
+
+	SCENEMANAGER->release();
+	SCENEMANAGER->releaseSingleton();
 
 	ReleaseDC(_hWnd, _hdc);
 }

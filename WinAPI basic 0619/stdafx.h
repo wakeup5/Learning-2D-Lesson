@@ -37,6 +37,7 @@
 #include "KeyManager.h"
 #include "ImageManager.h"
 #include "TimeManager.h"
+#include "SceneManager.h"
 
 #include "ObjectManager.h"
 #include "EffectManager.h"
@@ -83,10 +84,10 @@
 #define OBJECTMANAGER ObjectManager::getSingleton()
 //class TimeManager
 #define TIMEMANAGER TimeManager::getSingleton()
-//class TimeManager
+//class EffectManager
 #define EFFECTMANAGER EffectManager::getSingleton()
-//class Camera
-#define CAMERA Camera::getSingleton()
+//class SceneManager
+#define SCENEMANAGER SceneManager::getSingleton() 
 
 //game info
 #define MAX_GAME_FPS	60.0f

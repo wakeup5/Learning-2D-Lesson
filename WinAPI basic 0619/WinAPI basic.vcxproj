@@ -87,6 +87,7 @@
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStudy.h" />
+    <ClInclude Include="IconScene.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="JangGi.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="SpriteImage.h" />
     <ClInclude Include="stdafx.h" />
@@ -109,11 +111,13 @@
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStudy.cpp" />
+    <ClCompile Include="IconScene.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="JangGi.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpriteImage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "GameStudy.h"
+#include "iconScene.h"
 
 using namespace std;
 
@@ -10,8 +11,18 @@ HRESULT GameStudy::initialize(void)
 
 	imageLoad();
 
-	_jg = new JangGi;
-	_jg->initialize();
+	SCENEMANAGER->addScene("icon 1", new IconScene1);
+	SCENEMANAGER->addScene("icon 2", new IconScene2);
+	SCENEMANAGER->addScene("icon 3", new IconScene3);
+	SCENEMANAGER->addScene("icon 4", new IconScene4);
+	SCENEMANAGER->addScene("icon 5", new IconScene5);
+	SCENEMANAGER->addScene("icon 6", new IconScene6);
+	SCENEMANAGER->addScene("icon 7", new IconScene7);
+	SCENEMANAGER->addScene("icon 8", new IconScene8);
+	SCENEMANAGER->addScene("icon 9", new IconScene9);
+	SCENEMANAGER->addScene("icon 10", new IconScene10);
+
+	SCENEMANAGER->changeScene("icon " + to_string(RANDOM->getInt(10)));
 
 	return S_OK;
 }
@@ -21,17 +32,15 @@ void GameStudy::release(void)
 {
 	GameNode::release();
 
-	_jg->release();
 }
 
 //화면갱신
 void GameStudy::update(void)
 {
 	GameNode::update();
-	
-	_jg->update();
 
 	EFFECTMANAGER->update();
+	SCENEMANAGER->update();
 }
 
 //화면출력
@@ -39,8 +48,7 @@ void GameStudy::render()
 {
 	IMAGEMANAGER->render("backMap", getMemDC());
 
-	_jg->render();
-
+	SCENEMANAGER->render();
 	GameNode::render();
 }
 

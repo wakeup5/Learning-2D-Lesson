@@ -19,8 +19,8 @@ public:
 	
 	virtual LRESULT mainProc(HWND, UINT, WPARAM, LPARAM);
 
-	Image* getBackBuffer(void) { return _backBuffer; }
-	HDC getMemDC() { return _backBuffer->getMemDC(); }
+	static Image* getBackBuffer(void) { return _backBuffer; }
+	static HDC getMemDC() { return _backBuffer->getMemDC(); }
 	HDC getHDC() { return _hdc; }
 };
 
