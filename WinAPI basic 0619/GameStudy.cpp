@@ -1,8 +1,6 @@
 ﻿#include "stdafx.h"
 #include "GameStudy.h"
-#include "GameScene.h"
-#include "IntroScene.h"
-#include "EndingScene.h"
+#include "StarcraftScene.h"
 
 using namespace std;
 
@@ -13,11 +11,8 @@ HRESULT GameStudy::initialize(void)
 
 	imageLoad();
 
-	SCENEMANAGER->addScene("intro", new IntroScene);
-	SCENEMANAGER->addScene("game", new GameScene);
-	SCENEMANAGER->addScene("ending", new EndingScene);
-
-	SCENEMANAGER->changeScene("intro");
+	SCENEMANAGER->addScene("starcraft", new StarcraftScene());
+	SCENEMANAGER->changeScene("starcraft");
 
 	return S_OK;
 }
@@ -42,12 +37,12 @@ void GameStudy::update(void)
 void GameStudy::render()
 {
 	IMAGEMANAGER->render("backMap", getMemDC());
-
 	SCENEMANAGER->render();
+	TIMEMANAGER->render(getMemDC());
 	GameNode::render();
 }
 
 void GameStudy::imageLoad()
 {
-	IMAGEMANAGER->addImage("backMap", "resource/backMap.bmp", WIN_SIZE_X, WIN_SIZE_Y);
+	IMAGEMANAGER->addImage("backMap", "backMap.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 }

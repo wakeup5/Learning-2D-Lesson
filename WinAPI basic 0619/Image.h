@@ -123,6 +123,9 @@ public:
 	/// 위치 렌더링 : 화면에 그릴 위치 x, y, 원본이미지의 상단 좌측 좌표 x, y, 잘라낼 폭, 잘라낼 높이
 	void render(HDC hdc, float destX, float destY, int sourX, int sourY, int width, int height, BYTE alpha = 255);
 
+	//루프 렌더링
+	void Image::loopRender(HDC hdc, const LPRECT drawArea, int offsetX, int offsetY);
+
 	/// DC얻기
 	inline HDC getMemDC(){ return _imageInfo->hMemDC; }
 

@@ -9,7 +9,7 @@ Win API
 HINSTANCE _hInstance; // 프로그램 인스턴스
 HWND _hWnd; // 윈도우 핸들
 
-POINT _mousePoint;
+POINT _mousePt;
 
 GameStudy _gameStudy;
 

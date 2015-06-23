@@ -12,17 +12,17 @@
 namespace myUtil
 {
 	/// 두개의 좌표를 받아 엇각?을 반환
-	float getAngleByTwoPoint(float startX, float startY, float endX, float endY);
+	float getAngle(float startX, float startY, float endX, float endY);
 
 	/// 두개의 좌표 사이의 거리를 반환
-	float getDistanceByTwoPoint(float startX, float startY, float endX, float endY);
+	float getDistance(float startX, float startY, float endX, float endY);
 
 	/// 두개의 좌표를 받아 기울기의 라디안 각도를 반환
-	float getGradeRadianByTwoPoint(float x1, float y1, float x2, float y2);
-	float getGradeDegreeByTwoPoint(float x1, float y1, float x2, float y2);
+	float getGradeRadian(float x1, float y1, float x2, float y2);
+	float getGradeDegree(float x1, float y1, float x2, float y2);
 
 	//라디안 각도를 디그리 각도로 변환
-	float degreeFromRadian(float radian);
+	float degFromRad(float radian);
 	//디그리 각도를 라디안 각도로 변환
-	float radianFromDegree(float degree);
+	float radFromDeg(float degree);
 }

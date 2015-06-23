@@ -86,13 +86,13 @@ LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	switch (iMessage)
 	{
 	case WM_CREATE:
-		_mousePoint = makePoint(WIN_SIZE_X / 2, WIN_SIZE_Y / 2);
+		_mousePt = makePoint(WIN_SIZE_X / 2, WIN_SIZE_Y / 2);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
 	case WM_MOUSEMOVE:
-		_mousePoint = makeMousePoint(lParam);
+		_mousePt = makeMousePoint(lParam);
 		break;
 	case WM_KEYDOWN:
 		switch (wParam)

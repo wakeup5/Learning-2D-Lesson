@@ -291,3 +291,70 @@ void Image::alphaRender(HDC hdc, float destX, float destY, int sourX, int sourY,
 		AlphaBlend(hdc, destX, destY, width, height, _blendImage->hMemDC, destX, destY, width, height, _blendFunc);
 	}
 }
+
+//루프 렌더링
+void Image::loopRender(HDC hdc, const LPRECT drawArea, int offsetX, int offsetY)
+{
+	//옵셋값이 음수인 경우에는 보정..
+	if (offsetX < 0) offsetX = _width + (offsetX % _width);
+	if (offsetY < 0) offsetY = _height + (offsetY % _height);
+
+	//그려지는 소스 영역~~
+	RECT rcSour;
+	int sourWidth;
+	int sourHeight;
+
+	//그려지는 dc 영역~~
+	RECT rcDest;
+
+	//그려야할 전체 영역~~
+	int drawAreaX = drawArea->left;
+	int drawAreaY = drawArea->top;
+	int drawAreaW = drawArea->right - drawArea->left;
+	int drawAreaH = drawArea->bottom - drawArea->top;
+
+	for (int y = 0; y < drawAreaH; y += sourHeight)
+	{
+		//소스 영역 높이 계산한다
+		rcSour.top = (y + offsetY) % _height;
+		rcSour.bottom = _height;
+		sourHeight = rcSour.bottom - rcSour.top;
+
+		//소스 영역이 그리기화면을 넘어갔으면..
+		if (y + sourHeight > drawAreaH)
+		{
+			rcSour.bottom -= (y + sourHeight) - drawAreaH;
+			sourHeight = rcSour.bottom - rcSour.top;
+		}
+
+		//그려지는 영역~~~
+		rcDest.top = y + drawAreaY;
+		rcDest.bottom = rcDest.top + sourHeight;
+
+		for (int x = 0; x < drawAreaW; x += sourWidth)
+		{
+			//소스 영역 가로 계산한다
+			rcSour.left = (x + offsetX) % _width;
+			rcSour.right = _width;
+			sourWidth = rcSour.right - rcSour.left;
+
+			//소스 영역이 그리기화면을 넘어갔으면..
+			if (x + sourWidth > drawAreaW)
+			{
+				rcSour.right -= (x + sourWidth) - drawAreaW;
+				sourWidth = rcSour.right - rcSour.left;
+			}
+
+			//그려지는 영역~~~
+			rcDest.left = x + drawAreaX;
+			rcDest.right = rcDest.left + sourWidth;
+
+			//그린당
+			render(hdc, rcDest.left, rcDest.top,
+				rcSour.left, rcSour.top,
+				rcSour.right - rcSour.left,
+				rcSour.bottom - rcSour.top);
+		}
+	}
+
+}

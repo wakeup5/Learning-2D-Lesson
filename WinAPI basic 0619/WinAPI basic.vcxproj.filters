@@ -43,8 +43,14 @@
     <Filter Include="GameStudy\manager">
       <UniqueIdentifier>{8138aa3b-a309-4576-9fc6-8c8e609da9f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStudy\GameClass\scene">
+    <Filter Include="GameStudy\GameClass\starcraft">
+      <UniqueIdentifier>{c0504d3e-5041-4118-918f-1c13c13f67b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStudy\GameClass\starcraft\scene">
       <UniqueIdentifier>{3ce2d665-63a9-420a-b47e-777c87de5216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStudy\GameClass\starcraft\unit">
+      <UniqueIdentifier>{fd97b45e-b0d3-4137-b8fc-c98faa474dde}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -99,29 +105,23 @@
     <ClInclude Include="RandomFunction.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
-    <ClInclude Include="EffectManager.h">
-      <Filter>GameStudy\manager</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>GameStudy\manager</Filter>
     </ClInclude>
     <ClInclude Include="AnimationImage.h">
       <Filter>Game2DFramework\image</Filter>
     </ClInclude>
-    <ClInclude Include="JangGi.h">
-      <Filter>GameStudy\GameClass</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>GameStudy\GameClass\scene</Filter>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
-    <ClInclude Include="IntroScene.h">
-      <Filter>GameStudy\GameClass\scene</Filter>
+    <ClInclude Include="StarcraftScene.h">
+      <Filter>GameStudy\GameClass\starcraft\scene</Filter>
     </ClInclude>
-    <ClInclude Include="EndingScene.h">
-      <Filter>GameStudy\GameClass\scene</Filter>
+    <ClInclude Include="Marine.h">
+      <Filter>GameStudy\GameClass\starcraft\unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -164,57 +164,28 @@
     <ClCompile Include="GameStudy.cpp">
       <Filter>GameStudy</Filter>
     </ClCompile>
-    <ClCompile Include="EffectManager.cpp">
-      <Filter>GameStudy\manager</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>GameStudy\manager</Filter>
     </ClCompile>
     <ClCompile Include="AnimationImage.cpp">
       <Filter>Game2DFramework\image</Filter>
     </ClCompile>
-    <ClCompile Include="JangGi.cpp">
-      <Filter>GameStudy\GameClass</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Game2DFramework\manager</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>GameStudy\GameClass\scene</Filter>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Game2DFramework\manager</Filter>
     </ClCompile>
-    <ClCompile Include="IntroScene.cpp">
-      <Filter>GameStudy\GameClass\scene</Filter>
+    <ClCompile Include="StarcraftScene.cpp">
+      <Filter>GameStudy\GameClass\starcraft\scene</Filter>
     </ClCompile>
-    <ClCompile Include="EndingScene.cpp">
-      <Filter>GameStudy\GameClass\scene</Filter>
+    <ClCompile Include="Marine.cpp">
+      <Filter>GameStudy\GameClass\starcraft\unit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt">
       <Filter>숙제</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="resource\intro.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="resource\circle.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="resource\jang_gi.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="resource\shooter.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="resource\aim.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="resource\back.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="resource\background.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
   </ItemGroup>
 </Project>
