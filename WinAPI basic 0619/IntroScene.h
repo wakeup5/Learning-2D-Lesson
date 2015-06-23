@@ -1,20 +1,17 @@
 #pragma once
-#include "GameNode.h"
-#include "JangGi.h"
-
-class GameStudy : public GameNode
+#include "SceneManager.h"
+class IntroScene :
+	public Scene
 {
 private:
-	JangGi* _jg;
+	Image* _background;
 public:
-	GameStudy(){}
-	virtual ~GameStudy(){}
+	IntroScene();
+	~IntroScene();
 
 	virtual HRESULT initialize(void);
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(void);
-
-	void imageLoad();
-
 };
+

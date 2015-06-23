@@ -114,7 +114,13 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
-    <ClInclude Include="IconScene.h">
+    <ClInclude Include="GameScene.h">
+      <Filter>GameStudy\GameClass\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>GameStudy\GameClass\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScene.h">
       <Filter>GameStudy\GameClass\scene</Filter>
     </ClInclude>
   </ItemGroup>
@@ -173,7 +179,13 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Game2DFramework\manager</Filter>
     </ClCompile>
-    <ClCompile Include="IconScene.cpp">
+    <ClCompile Include="GameScene.cpp">
+      <Filter>GameStudy\GameClass\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>GameStudy\GameClass\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
       <Filter>GameStudy\GameClass\scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -181,5 +193,28 @@
     <Text Include="Text.txt">
       <Filter>숙제</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\intro.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\circle.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\jang_gi.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\shooter.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\aim.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\back.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="resource\background.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

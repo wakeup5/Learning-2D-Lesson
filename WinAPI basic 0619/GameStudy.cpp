@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "GameStudy.h"
-#include "iconScene.h"
+#include "GameScene.h"
+#include "IntroScene.h"
+#include "EndingScene.h"
 
 using namespace std;
 
@@ -11,18 +13,11 @@ HRESULT GameStudy::initialize(void)
 
 	imageLoad();
 
-	SCENEMANAGER->addScene("icon 1", new IconScene1);
-	SCENEMANAGER->addScene("icon 2", new IconScene2);
-	SCENEMANAGER->addScene("icon 3", new IconScene3);
-	SCENEMANAGER->addScene("icon 4", new IconScene4);
-	SCENEMANAGER->addScene("icon 5", new IconScene5);
-	SCENEMANAGER->addScene("icon 6", new IconScene6);
-	SCENEMANAGER->addScene("icon 7", new IconScene7);
-	SCENEMANAGER->addScene("icon 8", new IconScene8);
-	SCENEMANAGER->addScene("icon 9", new IconScene9);
-	SCENEMANAGER->addScene("icon 10", new IconScene10);
+	SCENEMANAGER->addScene("intro", new IntroScene);
+	SCENEMANAGER->addScene("game", new GameScene);
+	SCENEMANAGER->addScene("ending", new EndingScene);
 
-	SCENEMANAGER->changeScene("icon " + to_string(RANDOM->getInt(10)));
+	SCENEMANAGER->changeScene("intro");
 
 	return S_OK;
 }
@@ -55,6 +50,4 @@ void GameStudy::render()
 void GameStudy::imageLoad()
 {
 	IMAGEMANAGER->addImage("backMap", "resource/backMap.bmp", WIN_SIZE_X, WIN_SIZE_Y);
-	IMAGEMANAGER->addImage("janggi back", "resource/back.bmp", 500, 500);
-	IMAGEMANAGER->addImage("janggi mal", "resource/jang_gi.bmp", 385, 110, true, RGB(255, 0, 255));
 }
