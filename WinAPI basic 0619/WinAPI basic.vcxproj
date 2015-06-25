@@ -81,6 +81,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AnimationImage.h" />
+    <ClInclude Include="Bullets.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="EffectManager.h" />
@@ -89,12 +91,15 @@
     <ClInclude Include="GameStudy.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Marine.h" />
     <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Scourge.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="SpriteImage.h" />
     <ClInclude Include="StarcraftScene.h" />
@@ -102,10 +107,14 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Unit.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="Zergling.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationImage.cpp" />
+    <ClCompile Include="Bullets.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
@@ -113,10 +122,13 @@
     <ClCompile Include="GameStudy.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Marine.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Scourge.cpp" />
     <ClCompile Include="SpriteImage.cpp" />
     <ClCompile Include="StarcraftScene.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -125,8 +137,10 @@
     </ClCompile>
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="util.cpp" />
     <ClCompile Include="WinAPI basic.cpp" />
+    <ClCompile Include="Zergling.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />

@@ -48,6 +48,9 @@
 //클래스
 #include "GameObject.h"
 #include "Timer.h"
+#include "Image.h"
+#include "SpriteImage.h"
+#include "AnimationImage.h"
 
 //게임 스터디
 #include "GameStudy.h"

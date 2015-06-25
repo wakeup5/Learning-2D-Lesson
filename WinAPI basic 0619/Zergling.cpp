@@ -1,23 +1,21 @@
 #include "stdafx.h"
-#include "Marine.h"
+#include "Zergling.h"
 
 
-Marine::Marine()
+Zergling::Zergling()
 {
 }
 
 
-Marine::~Marine()
+Zergling::~Zergling()
 {
 }
-
-
-HRESULT Marine::initialize(float x, float y, float angleD, float speed)
+HRESULT Zergling::initialize(float x, float y, float angleD, float speed)
 {
-	Image* marineImage = IMAGEMANAGER->addImage("marine", "resource/starcraft/marine.bmp", 1024, 832, TRUE, RGB(255, 1, 255));
-	if (!marineImage) return E_FAIL;
+	Image* image = IMAGEMANAGER->addImage("zergling", "resource/starcraft/zergling.bmp", 2048, 1536, TRUE, RGB(255, 1, 255));
+	if (!image) return E_FAIL;
 
-	Unit::initialize(marineImage->createSprite(16, 13), x, y, 20, 20, angleD, speed);
+	Unit::initialize(image->createSprite(16, 12), x, y, 20, 20, angleD, speed);
 
 	Image* hpBar = IMAGEMANAGER->addImage("hp bar", "resource/starcraft/hp_bar.bmp", 50, 5);
 	Image* hpBarB = IMAGEMANAGER->addImage("hp bar back", "resource/starcraft/hp_bar_back.bmp", 50, 5);
@@ -27,29 +25,33 @@ HRESULT Marine::initialize(float x, float y, float angleD, float speed)
 	_hpBar->initialize(hpBar, hpBarB, 0, 20);
 	_mpBar->initialize(mpBar, mpBarB, 0, 27);
 
+	_walkTime = 10000;
+
+	return S_OK;
 	return S_OK;
 }
-void Marine::release(void)
+void Zergling::release(void)
 {
 	SAFE_RELEASE(_image);
 }
-
-void Marine::move()
+void Zergling::move()
 {
-	
+
 }
-void Marine::frame()
+
+void Zergling::frame(void)
 {
 	if (getSpeed() == 0)
 	{
-		_image->setFrameY(0);
+		_image->setFrameY(4);
 	}
 	else
 	{
-		if (_image->getFrameY() == 0) _image->setFrameY(4);
+		if (_image->getFrameY() == 0) _image->setFrameY(5);
 	}
+
 }
-void Marine::draw(HDC hdc)
+void Zergling::draw(HDC hdc)
 {
-	
+
 }

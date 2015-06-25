@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "StarcraftScene.h"
 
+extern Unit* _selectUnit;
 
 StarcraftScene::StarcraftScene()
 {
@@ -13,46 +14,67 @@ StarcraftScene::~StarcraftScene()
 
 HRESULT StarcraftScene::initialize(void)
 {
-	_background = IMAGEMANAGER->addImage("space", "resource/starcraft/background.bmp", 100, 100);
-	_map = IMAGEMANAGER->addImage("map", "resource/starcraft/background.bmp", 200, 150);
-	IMAGEMANAGER->addImage("map unit", "resource/starcraft/map_unit.bmp", 10, 10);
+	_background = IMAGEMANAGER->addImage("space", "resource/starcraft/background.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 
-	_marine = new Marine;
-	_marine->initialize();
+	_unit = _selectUnit;
+
+	_camera = IMAGEMANAGER->addImage("camera", WIN_SIZE_X, WIN_SIZE_Y);
+	/*
+	_bullet = new Bullets();
+	_bullet->initialize(NULL, 500, 50);
+	*/
 
 	return S_OK;
 }
 void StarcraftScene::release(void)
 {
-	_marine->release();
+	SAFE_RELEASE(_unit);
 }
 void StarcraftScene::update(void)
 {
 	//_marine->setAngleR(myUtil::getGradeRadian(_marine->getX(), _marine->getY(), _mousePt.x, _mousePt.y));
 
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _marine->setAngleD(_marine->getAngleD() + 5);
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) _marine->setAngleD(_marine->getAngleD() - 5);
-	if (KEYMANAGER->isStayKeyDown(VK_UP)) _marine->setSpeed(_marine->getSpeed() + 0.1);
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _marine->setSpeed(_marine->getSpeed() - 0.1);
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _unit->setAngleD(_unit->getAngleD() + 5);
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) _unit->setAngleD(_unit->getAngleD() - 5);
+	if (KEYMANAGER->isStayKeyDown(VK_UP)) _unit->setAccel(_unit->getViewAccel());
+	else if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _unit->setAccel(-_unit->getViewAccel());
+	else _unit->setAccel(-100);
+
+	if (_unit->getSpeed() < 0)
+	{
+		_unit->setAccel(0);
+		_unit->setSpeed(0);
+	}
+	if (_unit->getSpeed() > _unit->getMaxSpeed())
+	{
+		_unit->setAccel(0);
+		_unit->setSpeed(_unit->getMaxSpeed());
+	}
+
+	_unit->update();
+	_camera->setCenter(-_unit->getX() + _camera->getWidth(), -_unit->getY() + _camera->getHeight());
+
+	//printf("x-%f, y-%f, speed-%f, accel-%f \n", _unit->getX(), _unit->getY(), _unit->getSpeed(), _unit->getAccel());
+
+	if (_unit->getRect().left < 10) _unit->setX(10 + _unit->getWidth() / 2);
+	if (_unit->getRect().right > _background->getWidth() - 10) _unit->setX(_background->getWidth() - 10 - _unit->getWidth() / 2);
+	if (_unit->getRect().top < 10) _unit->setY(10 + _unit->getHeight() / 2);
+	if (_unit->getRect().bottom > _background->getHeight() - 10) _unit->setY(_background->getHeight() - 10 - _unit->getHeight() / 2);
+
+	/*
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		SpriteImage* image = IMAGEMANAGER->addImage("overload", "resource/starcraft/overlord.bmp", 1344, 336, TRUE, RGB(0, 255, 0))->createSprite(16, 4);
+		_bullet->fire(Bullets::createBullet(image, _marine->getX(), _marine->getY(), _marine->getAngleR(), 1));
+	}
+	*/
 	
-	if (_marine->getSpeed() < 0) _marine->setSpeed(0);
-	if (_marine->getSpeed() > 10) _marine->setSpeed(10);
-
-	_marine->update();
-
-	if (_marine->getRect().left < 0) _marine->setX(_marine->getWidth() / 2);
-	if (_marine->getRect().right  > _background->getWidth()) _marine->setX(_background->getWidth() - _marine->getWidth() / 2);
-	if (_marine->getRect().top < 0) _marine->setY(_marine->getHeight() / 2);
-	if (_marine->getRect().bottom > _background->getHeight()) _marine->setY(_background->getHeight() - _marine->getHeight() / 2);
+	//_bullet->update();
 }
 void StarcraftScene::render(void)
 {
-	IMAGEMANAGER->render("space", getMemDC(), -_marine->getX() + WIN_SIZE_X / 2, -_marine->getY() + WIN_SIZE_Y / 2);
-	_marine->render(getMemDC());
-	IMAGEMANAGER->render("map", getMemDC(), WIN_SIZE_X - _map->getWidth(), 0);
-
-	float ratioX = (float)_map->getWidth() / _background->getWidth();
-	float ratioY = (float)_map->getHeight() / _background->getHeight();
-
-	IMAGEMANAGER->render("map unit", getMemDC(), (WIN_SIZE_X - _map->getWidth()) - 5 + (_marine->getX() * ratioX), -5 + (_marine->getY() * ratioY));
+	_background->render(_camera->getMemDC());
+	_unit->render(_camera->getMemDC());
+	_camera->render(getMemDC());
+	//_bullet->render();
 }

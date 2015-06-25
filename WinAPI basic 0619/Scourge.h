@@ -1,11 +1,11 @@
 #pragma once
 #include "Unit.h"
-
-class Marine : public Unit
+class Scourge :
+	public Unit
 {
 public:
-	Marine();
-	~Marine();
+	Scourge();
+	~Scourge();
 
 	virtual HRESULT initialize(float x, float y, float angleD, float speed);
 	virtual void release(void);

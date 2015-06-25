@@ -54,7 +54,7 @@ void GameObject::setAngleR(float angleR)
 {
 	_angleR = angleR;
 	while (_angleR < 0) _angleR += 2 * M_PI;
-	while (_angleR > 2 * M_PI) _angleR -= 2 * M_PI;
+	while (_angleR >= 2 * M_PI) _angleR -= 2 * M_PI;
 
 	_angleD = _angleR * 180 / M_PI;
 
@@ -84,7 +84,7 @@ void GameObject::setSpeedY(float speedY)
 {
 	_speedY = speedY;
 
-	_angleR = atan2(-_speedY, _speedX);
+	_angleR = myUtil::getGradeRadian(_centerX, _centerY, _centerX + _speedX, _centerY + _speedY);//  atan2(-_speedY, _speedX);
 	_angleD = _angleR * 180 / M_PI;
 
 	_speed = (sqrt(pow(_speedX, 2) + pow(_speedY, 2)));
@@ -96,14 +96,6 @@ float GameObject::getSpeedY()
 
 void GameObject::setSpeed(float speed)
 {
-	/*
-	if (speed < 0)
-	{
-		speed = speed * -1;
-		setAngleD(getAngleD() + 180);
-	}
-	*/
-
 	_speed = speed;
 
 	_speedX = _speed * cos(_angleR);
@@ -115,10 +107,46 @@ float GameObject::getSpeed()
 	return _speed;
 }
 
+void GameObject::setAccelX(float accelX)
+{
+	_accelX = accelX;
+
+	_accel = (sqrt(pow(_accelX, 2) + pow(_accelY, 2)));
+}
+float GameObject::getAccelX()
+{
+	return _accelX;
+}
+void GameObject::setAccelY(float accelY)
+{
+	_accelY = accelY;
+
+	_accel = (sqrt(pow(_accelX, 2) + pow(_accelY, 2)));
+}
+float GameObject::getAccelY()
+{
+	return _accelY;
+}
+void GameObject::setAccel(float accel)
+{
+	_accel = accel;
+
+	_accelX = _accel * cos(_angleR);
+	_accelY = -_accel * sin(_angleR);
+
+	setSpeed(_speed + (_accel * TIMEMANAGER->getElapsedTime()));
+}
+float GameObject::getAccel()
+{
+	return _accel;
+}
+
 void GameObject::activate()
 {
-	_centerX += _speedX * TIMEMANAGER->getElapsedTime() * 100;
-	_centerY += _speedY * TIMEMANAGER->getElapsedTime() * 100;
+	setSpeed(_speed + (_accel * TIMEMANAGER->getElapsedTime()));
+
+	_centerX += _speedX * TIMEMANAGER->getElapsedTime();
+	_centerY += _speedY * TIMEMANAGER->getElapsedTime();
 
 	updateRect();
 }

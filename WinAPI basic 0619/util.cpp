@@ -38,17 +38,17 @@ namespace myUtil
 	float getGradeRadian(float x1, float y1, float x2, float y2)
 	{
 		//atan2는 시계방향 기준이므로 y축 반전이 필요하다.
-		return atan2(y1 - y2, x2 - x1);
-		/*
+		//return atan2(y1 - y2, x2 - x1);
+		
 		if (y1 > y2)
 		{
-			return atan2(y2 - y1, x2 - x1);
+			return atan2(y1 - y2, x2 - x1);
 		}
 		else
 		{
 			return 2 * M_PI - atan2(y2 - y1, x2 - x1);
 		}
-		*/
+		
 	}
 	/**	getGradeDegreeByTwoPoint
 	@date	2015/06/13

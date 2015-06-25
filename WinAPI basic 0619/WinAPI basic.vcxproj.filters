@@ -52,6 +52,15 @@
     <Filter Include="GameStudy\GameClass\starcraft\unit">
       <UniqueIdentifier>{fd97b45e-b0d3-4137-b8fc-c98faa474dde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameStudy\GameClass\bullet">
+      <UniqueIdentifier>{165855a0-4618-492e-9375-99262a4fd806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game2DFramework\progressBar">
+      <UniqueIdentifier>{8a5e9e63-1cbf-4a7d-8487-eb41220e059d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game2DFramework\button">
+      <UniqueIdentifier>{500ef528-7875-4347-a1d3-99001ddfc74d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -123,6 +132,27 @@
     <ClInclude Include="Marine.h">
       <Filter>GameStudy\GameClass\starcraft\unit</Filter>
     </ClInclude>
+    <ClInclude Include="Zergling.h">
+      <Filter>GameStudy\GameClass\starcraft\unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullets.h">
+      <Filter>GameStudy\GameClass\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>GameStudy\GameClass\starcraft\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>GameStudy\GameClass\starcraft\unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Scourge.h">
+      <Filter>GameStudy\GameClass\starcraft\unit</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>Game2DFramework\progressBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Game2DFramework\button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -181,6 +211,27 @@
     </ClCompile>
     <ClCompile Include="Marine.cpp">
       <Filter>GameStudy\GameClass\starcraft\unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Zergling.cpp">
+      <Filter>GameStudy\GameClass\starcraft\unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullets.cpp">
+      <Filter>GameStudy\GameClass\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>GameStudy\GameClass\starcraft\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>GameStudy\GameClass\starcraft\unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Scourge.cpp">
+      <Filter>GameStudy\GameClass\starcraft\unit</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>Game2DFramework\progressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Game2DFramework\button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

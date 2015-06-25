@@ -1,6 +1,8 @@
 #pragma once
 #include "SceneManager.h"
 #include "Marine.h"
+#include "Zergling.h"
+#include "Bullets.h"
 
 class StarcraftScene :
 	public Scene
@@ -8,7 +10,11 @@ class StarcraftScene :
 private:
 	Image* _background;
 	Image* _map;
-	Marine* _marine;
+	Unit* _unit;
+
+	Image* _camera;
+
+	//Bullets* _bullet;
 public:
 	virtual HRESULT initialize(void);
 	virtual void release(void);
