@@ -38,6 +38,8 @@
 #include "ImageManager.h"
 #include "TimeManager.h"
 #include "SceneManager.h"
+#include "txtDataManager.h"
+#include "Database.h"
 
 #include "ObjectManager.h"
 #include "EffectManager.h"
@@ -91,6 +93,10 @@
 #define EFFECTMANAGER EffectManager::getSingleton()
 //class SceneManager
 #define SCENEMANAGER SceneManager::getSingleton() 
+//class TxtMAnager
+#define TXTMANAGER txtDataManager::getSingleton()
+//class Database
+#define DATABASE Database::getSingleton()
 
 //game info
 #define MAX_GAME_FPS	60.0f
@@ -114,3 +120,4 @@ extern HINSTANCE _hInstance; // 프로그램 인스턴스
 extern HWND _hWnd; // 윈도우 핸들
 
 extern POINT _mousePt;
+extern BOOL	_leftButtonDown;	//왼쪽 버튼

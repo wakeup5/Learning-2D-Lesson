@@ -1,19 +1,20 @@
 #pragma once
 #include "SceneManager.h"
 #include "Unit.h"
+#include "Button.h"
 
 class IntroScene : public Scene
 {
 private:
 	Image* _image[3];
-	SpriteImage* _buttonU;
-	SpriteImage* _buttonD;
-	Image* _button;
+	Button* _buttonU;
+	Button* _buttonD;
+	Button* _button;
 
 	Unit* _unit[3];
-	Unit* _view;
-	int _selectNum;
-	int _selectMenu;
+	static Unit* _view;
+	static int _selectNum;
+	static int _selectMenu;
 public:
 	IntroScene();
 	~IntroScene();
@@ -24,5 +25,9 @@ public:
 	virtual void render(void);
 
 	void viewInfo();
+
+	static void statusUp();
+	static void statusDown();
+	static void nextScene();
 };
 

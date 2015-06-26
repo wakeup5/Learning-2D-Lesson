@@ -10,6 +10,8 @@ HINSTANCE _hInstance; // 프로그램 인스턴스
 HWND _hWnd; // 윈도우 핸들
 
 POINT _mousePt;
+BOOL _leftButtonDown;
+
 
 GameStudy _gameStudy;
 

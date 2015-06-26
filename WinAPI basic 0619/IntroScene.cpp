@@ -3,8 +3,13 @@
 #include "Marine.h"
 #include "Zergling.h"
 #include "Scourge.h"
+#include "Button.h"
 
 extern Unit* _selectUnit;
+
+Unit* IntroScene::_view;
+int IntroScene::_selectNum;
+int IntroScene::_selectMenu;
 
 IntroScene::IntroScene()
 {
@@ -33,12 +38,23 @@ HRESULT IntroScene::initialize(void)
 	_selectNum = 0;
 	_selectMenu = 0;
 
-	_buttonU = IMAGEMANAGER->addImage("buttonUD", "resource/starcraft/star_button.bmp", 20, 10, TRUE, RGB(255, 0, 255))->createSprite(2, 1);
-	_buttonU->setFrameX(0);
-	_buttonD = IMAGEMANAGER->addImage("buttonUD", "resource/starcraft/star_button.bmp", 20, 10, TRUE, RGB(255, 0, 255))->createSprite(2, 1);
-	_buttonD->setFrameX(1);
-	_button = IMAGEMANAGER->addImage("button", "resource/starcraft/button.bmp", 200, 38);
+	Image* bu = IMAGEMANAGER->addImage("star button up", "resource/starcraft/star_button_up.bmp", 30, 10, TRUE, RGB(255, 0, 255));
+	Image* bd = IMAGEMANAGER->addImage("star button down", "resource/starcraft/star_button_down.bmp", 30, 10, TRUE, RGB(255, 0, 255));
+	
+	int* select = &_selectMenu;
+	Unit* view = _view;
+
+	_buttonU = new Button;
+	_buttonU->initialize(bu, 0, 0, statusUp);
+
+	_buttonD = new Button;
+	_buttonD->initialize(bd, 0, 0, statusDown);
+
+	_button = new Button;
+	_button->initialize(IMAGEMANAGER->addImage("button", "resource/starcraft/button.bmp", 600, 38), 0, 0, nextScene);
+
 	return S_OK;
+
 }
 void IntroScene::release(void)
 {
@@ -59,36 +75,16 @@ void IntroScene::update(void)
 			}
 		}
 		if (_mousePt.y > 200 && _mousePt.y < 500) _selectMenu = float(_mousePt.y - 200) / 50;
-
-		if (PtInRect(&_buttonU->getRect(), _mousePt))
-		{
-			if (_selectMenu == 0 && (_view->getMaxHP() < 5000)) _view->setMaxHP(_view->getMaxHP() + 100);
-			if (_selectMenu == 1 && (_view->getHP() < _view->getMaxHP())) _view->setHP(_view->getHP() + 100);
-			if (_selectMenu == 2 && (_view->getMaxMP() < 5000)) _view->setMaxMP(_view->getMaxMP() + 100);
-			if (_selectMenu == 3 && (_view->getMP() < _view->getMaxMP())) _view->setMP(_view->getMP() + 100);
-			if (_selectMenu == 4 && (_view->getMaxSpeed() < 500)) _view->setMaxSpeed(_view->getMaxSpeed() + 100);
-			if (_selectMenu == 5 && (_view->getViewAccel() < 5000)) _view->setViewAccel(_view->getViewAccel() + 100);
-		}
-		if (PtInRect(&_buttonD->getRect(), _mousePt))
-		{
-			if (_selectMenu == 0 && (_view->getMaxHP() > 0)) _view->setMaxHP(_view->getMaxHP() - 100);
-			if (_selectMenu == 1 && (_view->getHP() > 0)) _view->setHP(_view->getHP() - 100);
-			if (_selectMenu == 2 && (_view->getMaxMP() > 0)) _view->setMaxMP(_view->getMaxMP() - 100);
-			if (_selectMenu == 3 && (_view->getMP() > 0)) _view->setMP(_view->getMP() - 100);
-			if (_selectMenu == 4 && (_view->getMaxSpeed() > 0)) _view->setMaxSpeed(_view->getMaxSpeed() - 100);
-			if (_selectMenu == 5 && (_view->getViewAccel() > 0)) _view->setViewAccel(_view->getViewAccel() - 100);
-		}
-
-		if (PtInRect(&_button->boundingBox(), _mousePt))
-		{
-			SCENEMANAGER->changeScene("starcraft");
-		}
 	}
 
 	float coorX = WIN_SIZE_X / 6 + ((WIN_SIZE_X / 3) * _selectNum);
+
 	_buttonU->setCenter(coorX + 85, 205 + _selectMenu * 50);
 	_buttonD->setCenter(coorX + 95, 205 + _selectMenu * 50);
 	_button->setCenter(coorX, WIN_SIZE_Y - 40);
+	_buttonU->update();
+	_buttonD->update();
+	_button->update();
 
 	if (TIMEMANAGER->checkTime("unit rolling", 50)) if (_view) _view->setAngleD(_view->getAngleD() + 2);
 	if (_view)
@@ -104,9 +100,9 @@ void IntroScene::render(void)
 		_image[i]->render(getMemDC(), (i == _selectNum)? 25 : 255);
 	}
 	if (_view) _view->render(getMemDC());
-	_buttonU->render(getMemDC());
-	_buttonD->render(getMemDC());
-	_button->render(getMemDC());
+	_buttonU->render();
+	_buttonD->render();
+	_button->render();
 	viewInfo();
 }
 
@@ -157,4 +153,43 @@ void IntroScene::viewInfo()
 	printNumber(getMemDC(), coorX + 50, 350, image, _view->getMP());
 	printNumber(getMemDC(), coorX + 50, 400, image, _view->getMaxSpeed());
 	printNumber(getMemDC(), coorX + 50, 450, image, _view->getViewAccel());
+}
+
+
+void IntroScene::statusUp()
+{
+	if (_selectMenu == 0 && (_view->getMaxHP() < 5000)) _view->setMaxHP(_view->getMaxHP() + 100);
+	if (_selectMenu == 1 && (_view->getHP() < _view->getMaxHP())) _view->setHP(_view->getHP() + 100);
+	if (_selectMenu == 2 && (_view->getMaxMP() < 5000)) _view->setMaxMP(_view->getMaxMP() + 100);
+	if (_selectMenu == 3 && (_view->getMP() < _view->getMaxMP())) _view->setMP(_view->getMP() + 100);
+	if (_selectMenu == 4 && (_view->getMaxSpeed() < 500)) _view->setMaxSpeed(_view->getMaxSpeed() + 100);
+	if (_selectMenu == 5 && (_view->getViewAccel() < 5000)) _view->setViewAccel(_view->getViewAccel() + 100);
+}
+void IntroScene::statusDown()
+{
+	if (_selectMenu == 0 && (_view->getMaxHP() > 0)) _view->setMaxHP(_view->getMaxHP() - 100);
+	if (_selectMenu == 1 && (_view->getHP() > 0)) _view->setHP(_view->getHP() - 100);
+	if (_selectMenu == 2 && (_view->getMaxMP() > 0)) _view->setMaxMP(_view->getMaxMP() - 100);
+	if (_selectMenu == 3 && (_view->getMP() > 0)) _view->setMP(_view->getMP() - 100);
+	if (_selectMenu == 4 && (_view->getMaxSpeed() > 0)) _view->setMaxSpeed(_view->getMaxSpeed() - 100);
+	if (_selectMenu == 5 && (_view->getViewAccel() > 0)) _view->setViewAccel(_view->getViewAccel() - 100);
+}
+
+void IntroScene::nextScene()
+{
+	vector<string> el;
+
+	el.push_back("|");
+	el.push_back("saveunit");
+	el.push_back(_view->getUnitName());
+	el.push_back(to_string(_view->getMaxHP()));
+	el.push_back(to_string(_view->getHP()));
+	el.push_back(to_string(_view->getMaxMP()));
+	el.push_back(to_string(_view->getMP()));
+	el.push_back(to_string(_view->getMaxSpeed()));
+	el.push_back(to_string(_view->getViewAccel()));
+
+	TXTMANAGER->txtSave("database.txt", el);
+
+	SCENEMANAGER->changeScene("starcraft");
 }

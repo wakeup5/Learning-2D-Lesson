@@ -2,10 +2,10 @@
 #include "SceneManager.h"
 #include "Marine.h"
 #include "Zergling.h"
+#include "Scourge.h"
 #include "Bullets.h"
 
-class StarcraftScene :
-	public Scene
+class StarcraftScene : public Scene
 {
 private:
 	Image* _background;
@@ -14,7 +14,7 @@ private:
 
 	Image* _camera;
 
-	//Bullets* _bullet;
+	Bullets* _bullet;
 public:
 	virtual HRESULT initialize(void);
 	virtual void release(void);

@@ -85,6 +85,12 @@ LRESULT GameNode::mainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 {
 	switch (iMessage)
 	{
+	case WM_LBUTTONDOWN:
+		_leftButtonDown = true;
+		break;
+	case WM_LBUTTONUP:
+		_leftButtonDown = false;
+		break;
 	case WM_CREATE:
 		_mousePt = makePoint(WIN_SIZE_X / 2, WIN_SIZE_Y / 2);
 		break;

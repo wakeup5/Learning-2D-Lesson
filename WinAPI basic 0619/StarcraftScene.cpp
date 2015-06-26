@@ -10,19 +10,33 @@ StarcraftScene::StarcraftScene()
 
 StarcraftScene::~StarcraftScene()
 {
+	
 }
 
 HRESULT StarcraftScene::initialize(void)
 {
 	_background = IMAGEMANAGER->addImage("space", "resource/starcraft/background.bmp", WIN_SIZE_X, WIN_SIZE_Y);
 
-	_unit = _selectUnit;
+	vector<string> unitInfo = DATABASE->get("saveunit");
+	
+	if (unitInfo[1] == "marine") _unit = new Marine;
+	else if (unitInfo[1] == "zergling") _unit = new Zergling;
+	else if (unitInfo[1] == "scourge") _unit = new Scourge;
+
+	_unit->initialize(WIN_SIZE_X / 2, WIN_SIZE_Y / 2, 0, 0);
+
+	_unit->setMaxHP(atoi(unitInfo[2].c_str()));
+	_unit->setHP(atoi(unitInfo[3].c_str()));
+	_unit->setMaxMP(atoi(unitInfo[4].c_str()));
+	_unit->setMP(atoi(unitInfo[5].c_str()));
+	_unit->setMaxSpeed(atoi(unitInfo[6].c_str()));
+	_unit->setViewAccel(atoi(unitInfo[7].c_str()));
 
 	_camera = IMAGEMANAGER->addImage("camera", WIN_SIZE_X, WIN_SIZE_Y);
-	/*
+	
 	_bullet = new Bullets();
 	_bullet->initialize(NULL, 500, 50);
-	*/
+	
 
 	return S_OK;
 }
@@ -65,16 +79,16 @@ void StarcraftScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
 		SpriteImage* image = IMAGEMANAGER->addImage("overload", "resource/starcraft/overlord.bmp", 1344, 336, TRUE, RGB(0, 255, 0))->createSprite(16, 4);
-		_bullet->fire(Bullets::createBullet(image, _marine->getX(), _marine->getY(), _marine->getAngleR(), 1));
+		_bullet->fire(Bullets::createBullet(image, _unit->getX(), _unit->getY(), _unit->getAngleR(), 1));
 	}
 	*/
-	
-	//_bullet->update();
+
+	_bullet->update();
 }
 void StarcraftScene::render(void)
 {
 	_background->render(_camera->getMemDC());
 	_unit->render(_camera->getMemDC());
 	_camera->render(getMemDC());
-	//_bullet->render();
+	_bullet->render();
 }

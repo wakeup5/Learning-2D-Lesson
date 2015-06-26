@@ -61,6 +61,9 @@
     <Filter Include="Game2DFramework\button">
       <UniqueIdentifier>{500ef528-7875-4347-a1d3-99001ddfc74d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game2DFramework\database">
+      <UniqueIdentifier>{9917f7ac-fd7f-4f5f-bdf6-cc6824611efd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -153,6 +156,12 @@
     <ClInclude Include="Button.h">
       <Filter>Game2DFramework\button</Filter>
     </ClInclude>
+    <ClInclude Include="Database.h">
+      <Filter>Game2DFramework\database</Filter>
+    </ClInclude>
+    <ClInclude Include="txtDataManager.h">
+      <Filter>Game2DFramework\manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -232,6 +241,12 @@
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Game2DFramework\button</Filter>
+    </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>Game2DFramework\database</Filter>
+    </ClCompile>
+    <ClCompile Include="txtDataManager.cpp">
+      <Filter>Game2DFramework\manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

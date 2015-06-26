@@ -13,12 +13,14 @@ protected:
 	float _HP;
 	float _maxMP;
 	float _MP;
-	
+
 	float _maxSpeed;
 	float _viewAccel;
 
 	ProgressBar* _hpBar;
 	ProgressBar* _mpBar;
+
+	char* _unitName;
 public:
 	Unit();
 	~Unit();
@@ -48,5 +50,6 @@ public:
 	void setMaxSpeed(float maxSpeed){ _maxSpeed = maxSpeed; }
 	void setViewAccel(float viewAccel){ _viewAccel = viewAccel; }
 
+	char* getUnitName(){ return _unitName; }
 };
 

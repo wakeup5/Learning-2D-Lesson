@@ -19,6 +19,8 @@ HRESULT Marine::initialize(float x, float y, float angleD, float speed)
 
 	Unit::initialize(marineImage->createSprite(16, 13), x, y, 20, 20, angleD, speed);
 
+	_unitName = "marine";
+
 	Image* hpBar = IMAGEMANAGER->addImage("hp bar", "resource/starcraft/hp_bar.bmp", 50, 5);
 	Image* hpBarB = IMAGEMANAGER->addImage("hp bar back", "resource/starcraft/hp_bar_back.bmp", 50, 5);
 	Image* mpBar = IMAGEMANAGER->addImage("mp bar", "resource/starcraft/mp_bar.bmp", 50, 5);

@@ -17,6 +17,8 @@ HRESULT Zergling::initialize(float x, float y, float angleD, float speed)
 
 	Unit::initialize(image->createSprite(16, 12), x, y, 20, 20, angleD, speed);
 
+	_unitName = "zergling";
+
 	Image* hpBar = IMAGEMANAGER->addImage("hp bar", "resource/starcraft/hp_bar.bmp", 50, 5);
 	Image* hpBarB = IMAGEMANAGER->addImage("hp bar back", "resource/starcraft/hp_bar_back.bmp", 50, 5);
 	Image* mpBar = IMAGEMANAGER->addImage("mp bar", "resource/starcraft/mp_bar.bmp", 50, 5);
@@ -27,7 +29,6 @@ HRESULT Zergling::initialize(float x, float y, float angleD, float speed)
 
 	_walkTime = 10000;
 
-	return S_OK;
 	return S_OK;
 }
 void Zergling::release(void)

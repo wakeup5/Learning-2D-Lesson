@@ -84,6 +84,7 @@
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="Database.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="GameNode.h" />
@@ -107,6 +108,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="txtDataManager.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="Zergling.h" />
@@ -115,6 +117,7 @@
     <ClCompile Include="AnimationImage.cpp" />
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Database.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
@@ -137,6 +140,7 @@
     </ClCompile>
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="txtDataManager.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="util.cpp" />
     <ClCompile Include="WinAPI basic.cpp" />
