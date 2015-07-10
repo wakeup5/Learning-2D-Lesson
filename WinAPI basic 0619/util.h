@@ -25,4 +25,8 @@ namespace myUtil
 	float degFromRad(float radian);
 	//디그리 각도를 라디안 각도로 변환
 	float radFromDeg(float degree);
+
+	char* vectorArrayCombine(vector<string> vArray, const int size);
+	vector<string> charArraySeparation(const char charArray[], const char* separator = " ,/(&%#@");
+
 }

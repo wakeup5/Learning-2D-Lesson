@@ -64,6 +64,18 @@
     <Filter Include="Game2DFramework\database">
       <UniqueIdentifier>{9917f7ac-fd7f-4f5f-bdf6-cc6824611efd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameStudy\GameClass\starcraft\test">
+      <UniqueIdentifier>{3c8dc6c4-b00b-4697-a344-7376ebaa3adb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStudy\GameClass\tile">
+      <UniqueIdentifier>{a81c896a-4118-4dc5-b26b-674b92508f43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStudy\GameClass\fortress">
+      <UniqueIdentifier>{84a9a4a2-08eb-43d8-87ba-8ca4b58fe024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStudy\GameClass\AStarAlgorithms">
+      <UniqueIdentifier>{ebab0c96-f2df-4dc4-8284-e82fed40704d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -162,6 +174,24 @@
     <ClInclude Include="txtDataManager.h">
       <Filter>Game2DFramework\manager</Filter>
     </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>GameStudy\GameClass\starcraft\test</Filter>
+    </ClInclude>
+    <ClInclude Include="TileIntroScene.h">
+      <Filter>GameStudy\GameClass\tile</Filter>
+    </ClInclude>
+    <ClInclude Include="FortressScene.h">
+      <Filter>GameStudy\GameClass\fortress</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank.h">
+      <Filter>GameStudy\GameClass\fortress</Filter>
+    </ClInclude>
+    <ClInclude Include="AStarScene.h">
+      <Filter>GameStudy\GameClass\AStarAlgorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="AStarAlgorithms.h">
+      <Filter>GameStudy\GameClass\AStarAlgorithms</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -247,6 +277,24 @@
     </ClCompile>
     <ClCompile Include="txtDataManager.cpp">
       <Filter>Game2DFramework\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>GameStudy\GameClass\starcraft\test</Filter>
+    </ClCompile>
+    <ClCompile Include="TileIntroScene.cpp">
+      <Filter>GameStudy\GameClass\tile</Filter>
+    </ClCompile>
+    <ClCompile Include="FortressScene.cpp">
+      <Filter>GameStudy\GameClass\fortress</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>GameStudy\GameClass\fortress</Filter>
+    </ClCompile>
+    <ClCompile Include="AStarScene.cpp">
+      <Filter>GameStudy\GameClass\AStarAlgorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="AStarAlgorithms.cpp">
+      <Filter>GameStudy\GameClass\AStarAlgorithms</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

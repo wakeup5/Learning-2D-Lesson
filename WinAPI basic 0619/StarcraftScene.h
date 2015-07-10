@@ -10,7 +10,8 @@ class StarcraftScene : public Scene
 private:
 	Image* _background;
 	Image* _map;
-	Unit* _unit;
+	Unit* _unit[3];
+	int _selectNum;
 
 	Image* _camera;
 

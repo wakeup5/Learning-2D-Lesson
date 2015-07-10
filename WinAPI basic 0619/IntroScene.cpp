@@ -5,8 +5,7 @@
 #include "Scourge.h"
 #include "Button.h"
 
-extern Unit* _selectUnit;
-
+Unit* IntroScene::_unit[3];
 Unit* IntroScene::_view;
 int IntroScene::_selectNum;
 int IntroScene::_selectMenu;
@@ -69,7 +68,7 @@ void IntroScene::update(void)
 			if (PtInRect(&_image[i]->boundingBox(), _mousePt))
 			{
 				_selectNum = i;
-				_view = _selectUnit = _unit[i];
+				_view = _unit[i];
 				if(_view) _view->setAngleD(270);
 				break;
 			}
@@ -179,17 +178,21 @@ void IntroScene::nextScene()
 {
 	vector<string> el;
 
-	el.push_back("|");
-	el.push_back("saveunit");
-	el.push_back(_view->getUnitName());
-	el.push_back(to_string(_view->getMaxHP()));
-	el.push_back(to_string(_view->getHP()));
-	el.push_back(to_string(_view->getMaxMP()));
-	el.push_back(to_string(_view->getMP()));
-	el.push_back(to_string(_view->getMaxSpeed()));
-	el.push_back(to_string(_view->getViewAccel()));
+	for (int i = 0; i < 3; i++)
+	{
+		el.push_back("|");
+		//el.push_back("saveunit");
+		el.push_back(_unit[i]->getUnitName());
+		el.push_back(to_string(_unit[i]->getMaxHP()));
+		el.push_back(to_string(_unit[i]->getHP()));
+		el.push_back(to_string(_unit[i]->getMaxMP()));
+		el.push_back(to_string(_unit[i]->getMP()));
+		el.push_back(to_string(_unit[i]->getMaxSpeed()));
+		el.push_back(to_string(_unit[i]->getViewAccel()));
+		el.push_back((i == _selectNum) ? "1" : "0");
+	}
 
-	TXTMANAGER->txtSave("database.txt", el);
+	TXTMANAGER->txtSave("database.txt", el, 500);
 
 	SCENEMANAGER->changeScene("starcraft");
 }

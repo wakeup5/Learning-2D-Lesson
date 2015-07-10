@@ -69,4 +69,39 @@ namespace myUtil
 	{
 		return (degree / 360) * (2 * M_PI);
 	}
+
+	char* vectorArrayCombine(vector<string> vArray, const int size)
+	{
+		char* str = new char[size];
+
+		for (int i = 0; i < vArray.size(); i++)
+		{
+			strncat_s(str, size, vArray[i].c_str(), size);
+			if (i + 1 < vArray.size()) strncat_s(str, size, ",", size);
+		}
+
+		return str;
+	}
+
+	vector<string> charArraySeparation(const char charArray[], const char* separator)
+	{
+		vector<string> vArray;
+		char* temp;
+		char* token;
+		char* tempCharArray = new char[strlen(charArray)];
+
+		//strlen(charArray);
+
+		strcpy_s(tempCharArray, strlen(charArray) + 1, charArray);
+
+		token = strtok_s(tempCharArray, separator, &temp);
+		vArray.push_back(token);
+
+		while (NULL != (token = strtok_s(NULL, separator, &temp)))
+		{
+			vArray.push_back(token);
+		}
+
+		return vArray;
+	}
 }

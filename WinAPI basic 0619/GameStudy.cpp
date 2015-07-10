@@ -1,12 +1,8 @@
 ﻿#include "stdafx.h"
 #include "GameStudy.h"
-#include "StarcraftScene.h"
-#include "IntroScene.h"
-#include "Unit.h"
+#include "AStarScene.h"
 
 using namespace std;
-
-extern Unit* _selectUnit = NULL;
 
 //초기화
 HRESULT GameStudy::initialize(void)
@@ -15,9 +11,8 @@ HRESULT GameStudy::initialize(void)
 
 	imageLoad();
 
-	SCENEMANAGER->addScene("select", new IntroScene());
-	SCENEMANAGER->addScene("starcraft", new StarcraftScene());
-	SCENEMANAGER->changeScene("select");
+	SCENEMANAGER->addScene("AStar", new AStarScene());
+	SCENEMANAGER->changeScene("AStar");
 
 	return S_OK;
 }

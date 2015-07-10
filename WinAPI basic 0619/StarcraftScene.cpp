@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "StarcraftScene.h"
 
-extern Unit* _selectUnit;
-
 StarcraftScene::StarcraftScene()
 {
 }
@@ -15,65 +13,104 @@ StarcraftScene::~StarcraftScene()
 
 HRESULT StarcraftScene::initialize(void)
 {
+	/*
 	_background = IMAGEMANAGER->addImage("space", "resource/starcraft/background.bmp", WIN_SIZE_X, WIN_SIZE_Y);
+	_map = IMAGEMANAGER->addImage("map", "resource/starcraft/background.bmp", 200, 150);
+	IMAGEMANAGER->addImage("map unit", "resource/starcraft/map_unit.bmp", 10, 10);
 
-	vector<string> unitInfo = DATABASE->get("saveunit");
+	vector<string> unitInfo = DATABASE->get("marine");
 	
-	if (unitInfo[1] == "marine") _unit = new Marine;
-	else if (unitInfo[1] == "zergling") _unit = new Zergling;
-	else if (unitInfo[1] == "scourge") _unit = new Scourge;
+	_unit[0] = new Marine;
+	_unit[0]->initialize(RANDOM->getInt(WIN_SIZE_X), RANDOM->getInt(WIN_SIZE_X), RANDOM->getFloat(M_PI * 2), 0);
 
-	_unit->initialize(WIN_SIZE_X / 2, WIN_SIZE_Y / 2, 0, 0);
+	_unit[0]->setMaxHP(atoi(unitInfo[1].c_str()));
+	_unit[0]->setHP(atoi(unitInfo[2].c_str()));
+	_unit[0]->setMaxMP(atoi(unitInfo[3].c_str()));
+	_unit[0]->setMP(atoi(unitInfo[4].c_str()));
+	_unit[0]->setMaxSpeed(atoi(unitInfo[5].c_str()));
+	_unit[0]->setViewAccel(atoi(unitInfo[6].c_str()));
 
-	_unit->setMaxHP(atoi(unitInfo[2].c_str()));
-	_unit->setHP(atoi(unitInfo[3].c_str()));
-	_unit->setMaxMP(atoi(unitInfo[4].c_str()));
-	_unit->setMP(atoi(unitInfo[5].c_str()));
-	_unit->setMaxSpeed(atoi(unitInfo[6].c_str()));
-	_unit->setViewAccel(atoi(unitInfo[7].c_str()));
+	if (atoi(unitInfo[7].c_str())) _selectNum = 0;
+
+	unitInfo = DATABASE->get("zergling");
+
+	_unit[1] = new Zergling;
+	_unit[1]->initialize(RANDOM->getInt(WIN_SIZE_X), RANDOM->getInt(WIN_SIZE_X), RANDOM->getFloat(M_PI * 2), atoi(unitInfo[7].c_str()));
+
+	_unit[1]->setMaxHP(atoi(unitInfo[1].c_str()));
+	_unit[1]->setHP(atoi(unitInfo[2].c_str()));
+	_unit[1]->setMaxMP(atoi(unitInfo[3].c_str()));
+	_unit[1]->setMP(atoi(unitInfo[4].c_str()));
+	_unit[1]->setMaxSpeed(atoi(unitInfo[5].c_str()));
+	_unit[1]->setViewAccel(atoi(unitInfo[6].c_str()));
+
+	if (atoi(unitInfo[7].c_str())) _selectNum = 1;
+
+	unitInfo = DATABASE->get("scourge");
+
+	_unit[2] = new Scourge;
+	_unit[2]->initialize(RANDOM->getInt(WIN_SIZE_X), RANDOM->getInt(WIN_SIZE_X), RANDOM->getFloat(M_PI * 2), atoi(unitInfo[7].c_str()));
+
+	_unit[2]->setMaxHP(atoi(unitInfo[1].c_str()));
+	_unit[2]->setHP(atoi(unitInfo[2].c_str()));
+	_unit[2]->setMaxMP(atoi(unitInfo[3].c_str()));
+	_unit[2]->setMP(atoi(unitInfo[4].c_str()));
+	_unit[2]->setMaxSpeed(atoi(unitInfo[5].c_str()));
+	_unit[2]->setViewAccel(atoi(unitInfo[6].c_str()));
+
+	if (atoi(unitInfo[7].c_str())) _selectNum = 2;
 
 	_camera = IMAGEMANAGER->addImage("camera", WIN_SIZE_X, WIN_SIZE_Y);
 	
 	_bullet = new Bullets();
 	_bullet->initialize(NULL, 500, 50);
+	*/
 	
 
 	return S_OK;
 }
 void StarcraftScene::release(void)
 {
-	SAFE_RELEASE(_unit);
+	SAFE_RELEASE(_unit[0]);
+	SAFE_RELEASE(_unit[1]);
+	SAFE_RELEASE(_unit[2]);
 }
 void StarcraftScene::update(void)
 {
 	//_marine->setAngleR(myUtil::getGradeRadian(_marine->getX(), _marine->getY(), _mousePt.x, _mousePt.y));
 
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _unit->setAngleD(_unit->getAngleD() + 5);
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) _unit->setAngleD(_unit->getAngleD() - 5);
-	if (KEYMANAGER->isStayKeyDown(VK_UP)) _unit->setAccel(_unit->getViewAccel());
-	else if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _unit->setAccel(-_unit->getViewAccel());
-	else _unit->setAccel(-100);
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _unit[_selectNum]->setAngleD(_unit[_selectNum]->getAngleD() + 5);
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) _unit[_selectNum]->setAngleD(_unit[_selectNum]->getAngleD() - 5);
+	if (KEYMANAGER->isStayKeyDown(VK_UP)) _unit[_selectNum]->setAccel(_unit[_selectNum]->getViewAccel());
+	else if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _unit[_selectNum]->setAccel(-_unit[_selectNum]->getViewAccel());
+	else _unit[_selectNum]->setAccel(0);
 
-	if (_unit->getSpeed() < 0)
+	for (int i = 0; i < 3; i++)
 	{
-		_unit->setAccel(0);
-		_unit->setSpeed(0);
+		if (_unit[i]->getSpeed() < 0)
+		{
+			_unit[i]->setAccel(0);
+			_unit[i]->setSpeed(0);
+		}
+		if (_unit[i]->getSpeed() > _unit[i]->getMaxSpeed())
+		{
+			_unit[i]->setAccel(0);
+			_unit[i]->setSpeed(_unit[i]->getMaxSpeed());
+		}
+
+		_unit[i]->update();
+
+		if (_unit[i]->getRect().left < 10) _unit[i]->setX(10 + _unit[i]->getWidth() / 2);
+		if (_unit[i]->getRect().right > _background->getWidth() - 10) _unit[i]->setX(_background->getWidth() - 10 - _unit[i]->getWidth() / 2);
+		if (_unit[i]->getRect().top < 10) _unit[i]->setY(10 + _unit[i]->getHeight() / 2);
+		if (_unit[i]->getRect().bottom > _background->getHeight() - 10) _unit[i]->setY(_background->getHeight() - 10 - _unit[i]->getHeight() / 2);
 	}
-	if (_unit->getSpeed() > _unit->getMaxSpeed())
-	{
-		_unit->setAccel(0);
-		_unit->setSpeed(_unit->getMaxSpeed());
-	}
 
-	_unit->update();
-	_camera->setCenter(-_unit->getX() + _camera->getWidth(), -_unit->getY() + _camera->getHeight());
+	//_camera->setCenter();
 
-	//printf("x-%f, y-%f, speed-%f, accel-%f \n", _unit->getX(), _unit->getY(), _unit->getSpeed(), _unit->getAccel());
-
-	if (_unit->getRect().left < 10) _unit->setX(10 + _unit->getWidth() / 2);
-	if (_unit->getRect().right > _background->getWidth() - 10) _unit->setX(_background->getWidth() - 10 - _unit->getWidth() / 2);
-	if (_unit->getRect().top < 10) _unit->setY(10 + _unit->getHeight() / 2);
-	if (_unit->getRect().bottom > _background->getHeight() - 10) _unit->setY(_background->getHeight() - 10 - _unit->getHeight() / 2);
+	if (KEYMANAGER->isOnceKeyDown(VK_F1)) _selectNum = 0;
+	if (KEYMANAGER->isOnceKeyDown(VK_F2)) _selectNum = 1;
+	if (KEYMANAGER->isOnceKeyDown(VK_F3)) _selectNum = 2;
 
 	/*
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
@@ -88,7 +125,17 @@ void StarcraftScene::update(void)
 void StarcraftScene::render(void)
 {
 	_background->render(_camera->getMemDC());
-	_unit->render(_camera->getMemDC());
-	_camera->render(getMemDC());
-	_bullet->render();
+	for (int i = 0; i < 3; i++) _unit[i]->render(_camera->getMemDC());
+	_camera->render(getMemDC(), -_unit[_selectNum]->getX() + WIN_SIZE_X / 2, -_unit[_selectNum]->getY() + WIN_SIZE_Y / 2, 0, 0, WIN_SIZE_X, WIN_SIZE_Y);
+	//_bullet->render();
+
+	IMAGEMANAGER->render("map", getMemDC(), WIN_SIZE_X - _map->getWidth(), 0);
+
+	for (int i = 0; i < 3; i++)
+	{
+		float ratioX = (float)_map->getWidth() / _background->getWidth();
+		float ratioY = (float)_map->getHeight() / _background->getHeight();
+
+		IMAGEMANAGER->render("map unit", getMemDC(), (WIN_SIZE_X - _map->getWidth()) - 5 + (_unit[i]->getX() * ratioX), -5 + (_unit[i]->getY() * ratioY));
+	}
 }

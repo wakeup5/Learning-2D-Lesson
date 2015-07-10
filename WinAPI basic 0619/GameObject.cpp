@@ -17,6 +17,10 @@ GameObject::GameObject()
 	_angleR = 0.0f;
 
 	_speed = 0.0f;
+
+	_accel = 0;
+	_accelX = 0;
+	_accelY = 0;
 }
 
 
@@ -143,7 +147,8 @@ float GameObject::getAccel()
 
 void GameObject::activate()
 {
-	setSpeed(_speed + (_accel * TIMEMANAGER->getElapsedTime()));
+	setSpeedX(_speedX + (_accelX * TIMEMANAGER->getElapsedTime()));
+	setSpeedY(_speedY + (_accelY * TIMEMANAGER->getElapsedTime()));
 
 	_centerX += _speedX * TIMEMANAGER->getElapsedTime();
 	_centerY += _speedY * TIMEMANAGER->getElapsedTime();
@@ -153,6 +158,6 @@ void GameObject::activate()
 
 void GameObject::activate(float gravity)
 {
-	_speedY += gravity;
+	//setAccelY(gravity);
 	activate();
 }

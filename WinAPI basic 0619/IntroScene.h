@@ -11,7 +11,7 @@ private:
 	Button* _buttonD;
 	Button* _button;
 
-	Unit* _unit[3];
+	static Unit* _unit[3];
 	static Unit* _view;
 	static int _selectNum;
 	static int _selectMenu;

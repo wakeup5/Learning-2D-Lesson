@@ -26,38 +26,64 @@ void Database::release(void)
 void Database::loadDatabase(void)
 {
 	//데이터 읽는다
-	ElementList vTemp;
+	vector<string> vTemp;
 	vTemp = TXTMANAGER->txtLoad("database.txt");
 
 	string str;
-
+	
 	for (int i = 0; i < vTemp.size(); i++)
 	{
 		if (vTemp[i] == "|")
 		{
-			ElementList vElement;
+			Elements vElement;
 			str = vTemp[i + 1];
-			_mElement.insert(make_pair(str, vElement));
+			_database.insert(make_pair(str, vElement));
 			continue;
 		}
-		ElementMIter mIter = _mElement.find(str);
+		DatabaseMapIter mIter = _database.find(str);
 		mIter->second.push_back(vTemp[i]);
 	}
+	
 	vTemp.clear();
 }
 
-vector<string> Database::get(string key)
+
+void Database::saveDatabase()
 {
-	loadDatabase();
-
-	ElementList el;
-
-	ElementMIter mIter = _mElement.find(key);
-
-	if (mIter != _mElement.end()) el = mIter->second;
-
-	return el;
+	
 }
 
+void Database::add(std::string dbname, DataObject* obj)
+{
+	DatabaseMapIter dbIter = _database.find(dbname);
 
+	if (dbIter == _database.end())
+	{
+		Elements elements;
+		_database.insert(make_pair(dbname, elements));
+	}
+	vector<string> temp;
+	int size = obj->toString(temp);
 
+	string objInfo = myUtil::vectorArrayCombine(temp, size);
+
+	_database.find(dbname)->second.push_back(objInfo);
+}
+
+void Database::addDB(std::string dbname, DataObject* obj)
+{
+	DatabaseMapIter dbIter = _database.find(dbname);
+
+	if (dbIter == _database.end())
+	{
+		Elements elements;
+		_database.insert(make_pair(dbname, elements));
+	}
+	vector<string> temp;
+	int size = obj->toString(temp);
+
+	string objInfo = myUtil::vectorArrayCombine(temp, size);
+
+	_database.find(dbname)->second.clear();
+	_database.find(dbname)->second.push_back(objInfo);
+}
